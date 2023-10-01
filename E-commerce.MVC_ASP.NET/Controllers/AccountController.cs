@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using SendGrid.Helpers.Mail;
 using SendGrid;
 using System.Net;
-using Microsoft.IdentityModel.Tokens;
-using Domain.Interfaces;
-using Domain.Models;
+using Contracts.Interfaces;
+using Contracts.Models;
 using Microsoft.AspNetCore.Authorization;
 
 namespace E_commerce.MVC_ASP.NET.Controllers

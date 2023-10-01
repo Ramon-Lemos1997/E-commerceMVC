@@ -1,12 +1,12 @@
-using Domain.Interfaces;
-using E_commerce.MVC_ASP.NET.Infra.SendGrind;
-using E_commerce.MVC_ASP.NET.Services.Account;
-using E_commerce.MVC_ASP.NET.Services.IdentityRoles;
+using Contracts.Interfaces;
+using Infra.Data.SendEmail;
+using Application.Services.Account;
+using Application.Services.IdentityRoles;
 using Infra.Data.Context;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

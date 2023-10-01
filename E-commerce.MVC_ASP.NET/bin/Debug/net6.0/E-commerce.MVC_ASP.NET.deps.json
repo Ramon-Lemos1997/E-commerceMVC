@@ -8,6 +8,8 @@
     ".NETCoreApp,Version=v6.0": {
       "E-commerce.MVC_ASP.NET/1.0.0": {
         "dependencies": {
+          "Application": "1.0.0",
+          "Contracts": "1.0.0",
           "Dapper": "2.0.151",
           "Domain": "1.0.0",
           "Infra.Data": "1.0.0",
@@ -880,6 +882,22 @@
           }
         }
       },
+      "Application/1.0.0": {
+        "dependencies": {
+          "Contracts": "1.0.0",
+          "Domain": "1.0.0",
+          "Infra.Data": "1.0.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.22"
+        },
+        "runtime": {
+          "Application.dll": {}
+        }
+      },
+      "Contracts/1.0.0": {
+        "runtime": {
+          "Contracts.dll": {}
+        }
+      },
       "Domain/1.0.0": {
         "runtime": {
           "Domain.dll": {}
@@ -887,9 +905,11 @@
       },
       "Infra.Data/1.0.0": {
         "dependencies": {
+          "Contracts": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.22",
           "Microsoft.EntityFrameworkCore": "7.0.11",
-          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.11"
+          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.11",
+          "SendGrid": "9.28.1"
         },
         "runtime": {
           "Infra.Data.dll": {}
@@ -1469,6 +1489,16 @@
       "sha512": "sha512-IXoJOXIqc39AIe+CIR7koBtRGMiCt/LPM3lI+PELtDIy9XdyeSrwXFdWV9dzJ2Awl0paLWUaknLxFQ5HpHZUog==",
       "path": "system.windows.extensions/6.0.0",
       "hashPath": "system.windows.extensions.6.0.0.nupkg.sha512"
+    },
+    "Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Contracts/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "Domain/1.0.0": {
       "type": "project",

@@ -1,0 +1,11 @@
+D:\Projetos\E-commerce.MVC_ASP.NET\Contracts\obj\Debug\net6.0\Contracts.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projetos\E-commerce.MVC_ASP.NET\Contracts\obj\Debug\net6.0\Contracts.AssemblyInfoInputs.cache
+D:\Projetos\E-commerce.MVC_ASP.NET\Contracts\obj\Debug\net6.0\Contracts.AssemblyInfo.cs
+D:\Projetos\E-commerce.MVC_ASP.NET\Contracts\obj\Debug\net6.0\Contracts.csproj.CoreCompileInputs.cache
+D:\Projetos\E-commerce.MVC_ASP.NET\Contracts\bin\Debug\net6.0\Contracts.deps.json
+D:\Projetos\E-commerce.MVC_ASP.NET\Contracts\bin\Debug\net6.0\Contracts.dll
+D:\Projetos\E-commerce.MVC_ASP.NET\Contracts\bin\Debug\net6.0\Contracts.pdb
+D:\Projetos\E-commerce.MVC_ASP.NET\Contracts\obj\Debug\net6.0\Contracts.dll
+D:\Projetos\E-commerce.MVC_ASP.NET\Contracts\obj\Debug\net6.0\refint\Contracts.dll
+D:\Projetos\E-commerce.MVC_ASP.NET\Contracts\obj\Debug\net6.0\Contracts.pdb
+D:\Projetos\E-commerce.MVC_ASP.NET\Contracts\obj\Debug\net6.0\ref\Contracts.dll

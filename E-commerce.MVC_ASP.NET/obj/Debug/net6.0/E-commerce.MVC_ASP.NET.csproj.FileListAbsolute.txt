@@ -82,8 +82,10 @@ D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\runti
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\Application.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\Domain.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\Infra.Data.dll
+D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\Application.pdb
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\Domain.pdb
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\Infra.Data.pdb
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\E-commerce.MVC_ASP.NET.csproj.AssemblyReference.cache
@@ -110,3 +112,5 @@ D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\refin
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\E-commerce.MVC_ASP.NET.pdb
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\E-commerce.MVC_ASP.NET.genruntimeconfig.cache
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\ref\E-commerce.MVC_ASP.NET.dll
+D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\Contracts.dll
+D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\Contracts.pdb

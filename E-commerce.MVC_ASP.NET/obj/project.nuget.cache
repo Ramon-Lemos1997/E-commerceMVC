@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "GHpplsZV3nwY5uMAjOoKCS4yk9eCLzUENRYwuq+gCWz/nElEZnX92O93YSPTKkyuFMEXfBiU0rEpSvWAjuSibg==",
+  "dgSpecHash": "2730Ru4kg1P+2zEtJjM98QBXytGvNcVG9nc69sAcWw/5RiXNe7UYWxPkLMHMNsQ4zQZSJ6ZB8Tt512/xYhlIHw==",
   "success": true,
-  "projectFilePath": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\E-commerce.MVC_ASP.NET\\E-commerce.MVC_ASP.NET.csproj",
+  "projectFilePath": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\E-commerce.MVC_ASP.NET\\E-commerceMvcWebUI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Ramon\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Ramon\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
