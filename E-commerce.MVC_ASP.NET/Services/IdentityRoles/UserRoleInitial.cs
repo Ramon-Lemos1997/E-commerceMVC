@@ -1,4 +1,4 @@
-﻿using E_commerce.MVC_ASP.NET.Domain.Interfaces;
+﻿using Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace E_commerce.MVC_ASP.NET.Services.IdentityRoles

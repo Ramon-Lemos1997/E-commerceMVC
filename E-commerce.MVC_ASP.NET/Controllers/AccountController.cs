@@ -4,11 +4,13 @@ using SendGrid.Helpers.Mail;
 using SendGrid;
 using System.Net;
 using Microsoft.IdentityModel.Tokens;
-using E_commerce.MVC_ASP.NET.Domain.Interfaces;
-using E_commerce.MVC_ASP.NET.Models;
+using Domain.Interfaces;
+using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace E_commerce.MVC_ASP.NET.Controllers
 {
+    
     public class AccountController : Controller
     {
         private readonly IAccountInterface _accountService;
@@ -40,7 +42,7 @@ namespace E_commerce.MVC_ASP.NET.Controllers
         {
             return View();
         }
-
+        
         [HttpGet]
         public IActionResult Email()
         {
@@ -54,7 +56,7 @@ namespace E_commerce.MVC_ASP.NET.Controllers
 
             return View();
         }
-
+        [Authorize(Policy = "Admin")]
         [HttpGet]
         public async Task<IActionResult> ConfirmarEmail()
         {

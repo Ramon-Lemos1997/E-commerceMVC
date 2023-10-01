@@ -1,12 +1,6 @@
-﻿
-using SendGrid;
-using Azure.Core;
-using Microsoft.AspNetCore.Identity;
-using System;
-using E_commerce.MVC_ASP.NET.Models;
-using SendGrid.Helpers.Mail.Model;
-using Microsoft.AspNetCore.Mvc;
-using E_commerce.MVC_ASP.NET.Domain.Interfaces;
+﻿using Microsoft.AspNetCore.Identity;
+using Domain.Models;
+using Domain.Interfaces;
 
 namespace E_commerce.MVC_ASP.NET.Services.Account
 {

@@ -1,8 +1,8 @@
 ﻿using SendGrid.Helpers.Mail;
 using SendGrid;
 using E_commerce.MVC_ASP.NET.Services.Account;
-using E_commerce.MVC_ASP.NET.Domain.Interfaces;
-using E_commerce.MVC_ASP.NET.Models;
+using Domain.Interfaces;
+using Domain.Models;
 
 namespace E_commerce.MVC_ASP.NET.Infra.SendGrind
 

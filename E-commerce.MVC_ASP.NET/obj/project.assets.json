@@ -1406,6 +1406,31 @@
             "rid": "win"
           }
         }
+      },
+      "Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Domain.dll": {}
+        }
+      },
+      "Infra.Data/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.22",
+          "Microsoft.EntityFrameworkCore": "7.0.11",
+          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.11"
+        },
+        "compile": {
+          "bin/placeholder/Infra.Data.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Infra.Data.dll": {}
+        }
       }
     }
   },
@@ -3763,11 +3788,23 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "Domain/1.0.0": {
+      "type": "project",
+      "path": "../Domain/Domain.csproj",
+      "msbuildProject": "../Domain/Domain.csproj"
+    },
+    "Infra.Data/1.0.0": {
+      "type": "project",
+      "path": "../Infra.Data/Infra.Data.csproj",
+      "msbuildProject": "../Infra.Data/Infra.Data.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "Dapper >= 2.0.151",
+      "Domain >= 1.0.0",
+      "Infra.Data >= 1.0.0",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 6.0.22",
       "Microsoft.EntityFrameworkCore >= 7.0.11",
       "Microsoft.EntityFrameworkCore.Design >= 7.0.11",
@@ -3804,7 +3841,14 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Domain\\Domain.csproj": {
+              "projectPath": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Domain\\Domain.csproj"
+            },
+            "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Infra.Data\\Infra.Data.csproj": {
+              "projectPath": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Infra.Data\\Infra.Data.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

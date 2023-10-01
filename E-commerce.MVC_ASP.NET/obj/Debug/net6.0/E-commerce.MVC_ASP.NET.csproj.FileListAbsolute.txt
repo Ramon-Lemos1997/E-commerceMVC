@@ -82,6 +82,10 @@ D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\runti
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\Domain.dll
+D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\Infra.Data.dll
+D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\Domain.pdb
+D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\bin\Debug\net6.0\Infra.Data.pdb
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\E-commerce.MVC_ASP.NET.csproj.AssemblyReference.cache
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\E-commerce.MVC_ASP.NET.GeneratedMSBuildEditorConfig.editorconfig
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\E-commerce.MVC_ASP.NET.AssemblyInfoInputs.cache
@@ -97,6 +101,7 @@ D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\stati
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\staticwebassets.pack.json
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\staticwebassets.build.json
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\staticwebassets.development.json
+D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\scopedcss\bundle\E-commerce.MVC_ASP.NET.styles.css
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\scopedcss\projectbundle\E-commerce.MVC_ASP.NET.bundle.scp.css
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\E-commerce.MVC_ASP.NET.csproj.CopyComplete
@@ -105,4 +110,3 @@ D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\refin
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\E-commerce.MVC_ASP.NET.pdb
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\E-commerce.MVC_ASP.NET.genruntimeconfig.cache
 D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\ref\E-commerce.MVC_ASP.NET.dll
-D:\Projetos\E-commerce.MVC_ASP.NET\E-commerce.MVC_ASP.NET\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css

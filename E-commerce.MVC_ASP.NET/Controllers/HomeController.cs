@@ -1,4 +1,4 @@
-﻿using E_commerce.MVC_ASP.NET.Models;
+﻿using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

@@ -1,13 +1,12 @@
-using E_commerce.MVC_ASP.NET.Domain.Interfaces;
+using Domain.Interfaces;
 using E_commerce.MVC_ASP.NET.Infra.SendGrind;
-using E_commerce.MVC_ASP.NET.Infrastructure.DataContext;
 using E_commerce.MVC_ASP.NET.Services.Account;
 using E_commerce.MVC_ASP.NET.Services.IdentityRoles;
+using Infra.Data.Context;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileSystemGlobbing.Internal;
-using System.Reflection;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +40,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.SlidingExpiration = false;
     });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin",
+         policy => policy.RequireRole( "Admin"));
+});
 
 builder.Services.AddScoped<IAccountInterface, AccountService>();
 builder.Services.AddScoped<ISendEmail, SendEmailService>();
