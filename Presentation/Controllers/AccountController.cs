@@ -6,6 +6,7 @@ using System.Net;
 using Contracts.Interfaces;
 using Contracts.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Presentation.Controllers
 {
@@ -47,9 +48,18 @@ namespace Presentation.Controllers
         {
             return View();
         }
+        
         [HttpGet]
-        public IActionResult ResetPassword(string token, string userId)
+        public async Task<IActionResult> ResetPassword(string token, string userId)
         {
+            var user = await _userManager.FindByIdAsync(userId);
+            var tokenUsed = (await _userManager.GetClaimsAsync(user)).FirstOrDefault(c => c.Type == "ResetPassword");
+            if (tokenUsed != null)
+            {
+                ModelState.AddModelError(string.Empty, "Este link já foi usado.");
+                return View("Error");
+               
+            }           
             ViewBag.Token = token;
             ViewBag.UserId = userId;
 
@@ -199,18 +209,8 @@ namespace Presentation.Controllers
         public async Task<IActionResult> Email(EmailModel emailModel)
         {
             if (ModelState.IsValid)
-            {
-                var user = await _userManager.FindByEmailAsync(emailModel.Email);
-                if (user == null)
-                {
-                    ModelState.AddModelError(string.Empty, "Usuário não encontrado.");
-                    return View("Email");
-                }
-
-                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var linkRedefinicao = Url.Action("ResetPassword", "Account", new { token, userId = user.Id }, Request.Scheme);
-
-                var (success, errorMessage) = await _accountService.Email(user.Id, linkRedefinicao);
+            {              
+                var (success, errorMessage) = await _accountService.Email(emailModel.Email);
 
                 if (success)
                 {
@@ -220,7 +220,7 @@ namespace Presentation.Controllers
                 else
                 {
                     ModelState.AddModelError(string.Empty, errorMessage);
-                    return View("Email");
+                    return View();
                 }
             }
             return View("Email", "Account");
@@ -246,7 +246,7 @@ namespace Presentation.Controllers
 
                 if (result.Succeeded)
                 {
-                    // A senha foi redefinida com sucesso. Você pode redirecionar para uma página de sucesso.
+                    var claimResult = await _userManager.AddClaimAsync(user, new Claim("ResetPassword", "true"));
                     return RedirectToAction("ResetPasswordSuccess");
                 }
                 else

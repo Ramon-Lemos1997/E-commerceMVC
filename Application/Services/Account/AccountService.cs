@@ -16,16 +16,21 @@ namespace Application.Services.Account
             _userManager = userManager;
   
         }
+        
 
-
-        public async Task<(bool success, string errorMessage)> Email(string userId, string link)
+        public async Task<(bool success, string errorMessage)> Email(string userEmail)
         {
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByEmailAsync(userEmail);
             if (user == null)
             {            
-                return (false, "Ocorreu um erro ao enviar o e-mail.");
+                return (false, "Usuário não encontrado.");
             }
-                 
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var scheme = "https";
+            var host = "localhost:7034";
+            var link = $"{scheme}://{host}/Account/ResetPassword?token={Uri.EscapeDataString(token)}&userId={Uri.EscapeDataString(user.Id)}";
+
             var subject = "Redefinição de Senha";
             var message = $"Clique <a href=\"{link}\">aqui</a> para redefinir sua senha.";
             var model = new SendEmailModel
@@ -34,16 +39,20 @@ namespace Application.Services.Account
                 Subject = subject,   
                 Message = message    
             };
-            
             try
             {
-                var emailSent = await _sendEmail.SendEmailAsync( model);
+                var emailSent = await _sendEmail.SendEmailAsync(model);
                 if (emailSent)
                 {
+                    var resetPasswordClaim = (await _userManager.GetClaimsAsync(user)).FirstOrDefault(c => c.Type == "ResetPassword");
+                    if (resetPasswordClaim != null)
+                    {
+                        await _userManager.RemoveClaimAsync(user, resetPasswordClaim);                      
+                    }
                     return (true, "Email enviado com sucesso.");
                 }
                 else
-                {             
+                {
                     return (false, "Houve algum erro entre a camada de service e de infraestrutura.");
                 }
             }
@@ -52,6 +61,7 @@ namespace Application.Services.Account
                 return (false, $"Erro ao enviar o e-mail para a camada de infraestrutura.");
             }
         }
+           
 //----------------------------------------------------------------------------------------------------------------------------------------
     }
 }
