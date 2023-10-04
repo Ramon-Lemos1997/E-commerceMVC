@@ -5,15 +5,17 @@
 <h1 class="text-center pt-5">Confirmação de Conta</h1>
 
 <form class="text-center" asp-controller="Account" asp-action="ConfirmarEmail" method="post">
-    @if (ViewBag.ShowEmailSuccessMessage != null && ViewBag.ShowEmailSuccessMessage == true)
+    <div asp-validation-summary="All" class="text-danger"></div>
+    @if (ViewBag.SuccessMessage != null && ViewBag.SuccessMessage == true)
     {
         <div class="alert alert-success mt-1 w-auto">
             Foi enviado um link para a verificação de conta para o email cadastrado.
         </div>
         <meta http-equiv="refresh" content="10;url=/Home/Index">
     }
+
     <h5 class="mt-5">Selecione o campo que deseja verificar:</h5>
-    <div asp-validation-summary="All" class="text-danger"></div>
+
     @if (ViewBag.IsEmailConfirmed != null && ViewBag.IsEmailConfirmed)
     {      
         <div class="form-check form-check-inline mt-1">
@@ -25,7 +27,7 @@
     else
     {
         <div class="form-check form-check-inline mt-1">
-            <input class="form-check-input" type="checkbox" id="emailConfirmation" name="Email" value="true">
+            <input class="form-check-input" type="checkbox" id="emailConfirmation" name="Email" value="@ViewBag.UserEmail">
             <label class="form-check-label" for="emailConfirmation">
                 Confirmar Email
             </label>
@@ -37,14 +39,16 @@
 </form>
 
 
-<script>  
-    document.getElementById("emailConfirmation").addEventListener("change", function () {
-        var confirmButton = document.getElementById("confirmButton");
-        
-        if (this.checked) {
-            confirmButton.removeAttribute("disabled");
-        } else {
-            confirmButton.setAttribute("disabled", "disabled"); 
-        }
-    });
-</script>
+@section scripts {
+    <script>
+        document.getElementById("emailConfirmation").addEventListener("change", function () {
+            var confirmButton = document.getElementById("confirmButton");
+
+            if (this.checked) {
+                confirmButton.removeAttribute("disabled");
+            } else {
+                confirmButton.setAttribute("disabled", "disabled");
+            }
+        });
+    </script>
+}

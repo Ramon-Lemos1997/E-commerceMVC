@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using SendGrid.Helpers.Mail;
 using SendGrid;
 using System.Net;
-using Contracts.Interfaces;
+using Contracts.Interfaces.Identity;
 using Contracts.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Contracts.Interfaces.Infra.Data;
 
 namespace Presentation.Controllers
 {
@@ -44,49 +45,51 @@ namespace Presentation.Controllers
         }
         
         [HttpGet]
-        public IActionResult Email()
+        public IActionResult SendCode()
         {
             return View();
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> ResetPassword(string token, string userId)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            var tokenUsed = (await _userManager.GetClaimsAsync(user)).FirstOrDefault(c => c.Type == "ResetPassword");
-            if (tokenUsed != null)
+            var (success, errorMessage) = await _accountService.CheckIfTokenResetPasswordIsUsedAsync(userId);
+
+            if (!success)
             {
-                ModelState.AddModelError(string.Empty, "Este link já foi usado.");
+                ModelState.AddModelError(string.Empty, errorMessage);
                 return View("Error");
-               
-            }           
+            }
+
             ViewBag.Token = token;
             ViewBag.UserId = userId;
 
             return View();
         }
-        [Authorize(Policy = "Admin")]
+
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> ConfirmarEmail()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var (success, errorMessage, userEmail) = await _accountService.GetUserEmailAsync(User);
 
-            if (user == null)
+            if (!success)
             {
-                ModelState.AddModelError(string.Empty, "Usuário não encontrado");
-                return NotFound();
+                ModelState.AddModelError(string.Empty, errorMessage);
+                return View();
             }
 
-            var isEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
+            var isEmailConfirmed = await _accountService.IsEmailConfirmedAsync(User);
 
             ViewBag.IsEmailConfirmed = isEmailConfirmed;
-            ViewBag.UserEmail = user.Email;
+            ViewBag.UserEmail = userEmail;
             return View();
         }
 
         [HttpGet]
         public async Task<IActionResult> EmailVerificado(string userId, string token)
         {
+           
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
             {
                 ModelState.AddModelError(string.Empty, "Erro ao validar sua chave, tente novamente.");
@@ -94,6 +97,11 @@ namespace Presentation.Controllers
             }
 
             var user = await _userManager.FindByIdAsync(userId);
+            if (user.EmailConfirmed)
+            {
+                ModelState.AddModelError(string.Empty, "Este link já foi usado.");
+                return View("Error");
+            }
 
             if (user == null)
             {
@@ -137,42 +145,20 @@ namespace Presentation.Controllers
                 {
                     await _userManager.AddToRoleAsync(user, "User");
 
-                    var currentDateClaim = new System.Security.Claims.Claim("CadastradoEm", DateTime.Now.ToString());
+                    var currentDateClaim = new Claim("CadastradoEm", DateTime.Now.ToString());
                     await _userManager.AddClaimAsync(user, currentDateClaim);
 
                     await _signInManager.SignInAsync(user, isPersistent: true);
 
                     return RedirectToAction("Index", "Home");
                 }
-
                 foreach (var error in result.Errors)
                 {
-                    string errorMessage;
-
-                    switch (error.Code)
-                    {
-                        case "The Password field is required.":
-                            errorMessage = "O campo de senha é obrigatório.";
-                            break;
-                        case "PasswordRequiresNonAlphanumeric":
-                            errorMessage = "A senha deve conter pelo menos um caractere não alfanumérico.";
-                            break;
-                        case "PasswordRequiresLower":
-                            errorMessage = "A senha deve conter pelo menos uma letra minúscula (a-z).";
-                            break;
-                        case "PasswordRequiresUpper":
-                            errorMessage = "A senha deve conter pelo menos uma letra maiúscula (A-Z).";
-                            break;
-                        case "PasswordTooShort":
-                            errorMessage = "A senha deve ter pelo menos 6 caracteres.";
-                            break;
-                        default:
-                            errorMessage = "Ocorreu um erro ao criar a conta.";
-                            break;
-                    }
-
-                    ModelState.AddModelError(string.Empty, errorMessage);
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
+                return View(model);
+             
+                                 
             }
 
             return View(model);
@@ -206,11 +192,11 @@ namespace Presentation.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Email(EmailModel emailModel)
+        public async Task<IActionResult> SendCode(EmailModel emailModel)
         {
             if (ModelState.IsValid)
             {              
-                var (success, errorMessage) = await _accountService.Email(emailModel.Email);
+                var (success, errorMessage) = await _accountService.SendCode(emailModel.Email);
 
                 if (success)
                 {
@@ -225,33 +211,19 @@ namespace Presentation.Controllers
             }
             return View("Email", "Account");
         }
-
-
         [HttpPost]
-        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel model)
         {
             if (ModelState.IsValid)
             {
-                // Recupere o usuário com base no userId (ID do usuário).
-                var user = await _userManager.FindByIdAsync(model.UserId);
-
-                if (user == null)
-                {
-                    ModelState.AddModelError(string.Empty, "Usuário não encontrado.");
-                    return View(model);
-                }
-
-                // Redefina a senha usando o UserManager.
-                var result = await _userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
+                var result = await _accountService.ResetPasswordAsync(model.UserId, model.Token, model.NewPassword);
 
                 if (result.Succeeded)
                 {
-                    var claimResult = await _userManager.AddClaimAsync(user, new Claim("ResetPassword", "true"));
                     return RedirectToAction("ResetPasswordSuccess");
                 }
                 else
-                {
-                    // Ocorreu um erro ao redefinir a senha, exiba mensagens de erro.
+                {                  
                     foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
@@ -260,7 +232,6 @@ namespace Presentation.Controllers
                 }
             }
 
-            // Se o modelo não for válido, você pode redirecionar de volta para o formulário com erros.
             return View(model);
         }
 
@@ -268,45 +239,26 @@ namespace Presentation.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ConfirmarEmail(bool? Email)
+        public async Task<IActionResult> ConfirmarEmail(string Email)
         {
-            var user = await _userManager.GetUserAsync(User);
-
-            if (user == null || user.EmailConfirmed)
+            var (success, errorMessage) = await _accountService.ConfirmEmailAsync(Email);
+            if (success)
             {
-                ModelState.AddModelError(string.Empty, "Usuário não encontrado ou email já verificado");
+                ViewBag.SuccessMessage = true;
                 return View();
             }
-
-            if (Email == true)
-            {
-                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                var confirmationLink = Url.Action("EmailVerificado", "Account", new { userId = user.Id, token }, Request.Scheme);
-                var emailContent = $"Clique <a href=\"{confirmationLink}\">aqui</a> para confirmar seu Email.";
-
-                var apiKey = "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";
-                var client = new SendGridClient(apiKey);
-                var from = new EmailAddress("lemosramonteste1997@gmail.com", "Confirmação de conta");
-                var subject = "Confirmação de Email";
-                var to = new EmailAddress(user.Email, user.UserName);
-                var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent: null, htmlContent: emailContent);
-                var result = await client.SendEmailAsync(msg);
-
-                if (result.StatusCode == HttpStatusCode.Accepted)
-                {
-                    ViewBag.ShowEmailSuccessMessage = true;
-                    return View();
-                }
-
-                ModelState.AddModelError(string.Empty, "Erro ao enviar o email de confirmação");
+            else
+            { 
+                ModelState.AddModelError(string.Empty, errorMessage);
                 return View();
             }
-
-            ModelState.AddModelError(string.Empty, "Selecione a opção para confirmar o email");
-            return View();
         }
+           
+    
 
 
-        //------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    //------------------------------------------------------------------------------------------------------------------------------------------
     }
 }

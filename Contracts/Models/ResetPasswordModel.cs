@@ -2,7 +2,7 @@
 
 namespace Contracts.Models
 {
-    public class ResetPasswordViewModel
+    public class ResetPasswordModel
     {
         [Required]
         [Display(Name = "ID do Usuário")]

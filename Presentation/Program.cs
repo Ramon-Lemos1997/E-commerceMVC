@@ -1,4 +1,3 @@
-using Contracts.Interfaces;
 using Infra.Data.SendEmail;
 using Application.Services.Account;
 using Application.Services.IdentityRoles;
@@ -6,7 +5,10 @@ using Infra.Data.Context;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
+using Contracts.Interfaces.Identity;
+using Contracts.Interfaces.Infra.Data;
+using Contracts.Interfaces.Roles;
+using Infra.Data.IdentityErrors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,16 +23,18 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(connection));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-          .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+          .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders()
+          .AddErrorDescriber<PortugueseMessages>();
 
 
-
-//builder.Services.Configure<IdentityOptions>(options =>
-//{
-//    options.Password.RequiredLength = 10;
-//    options.Password.RequiredUniqueChars = 3;
-//    options.Password.RequireNonAlphanumeric = false;
-//});
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequiredLength = 10;
+    options.Password.RequiredUniqueChars = 3;
+    options.Password.RequireNonAlphanumeric = true;
+    options.User.RequireUniqueEmail = true;
+    
+});
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

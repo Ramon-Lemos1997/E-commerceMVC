@@ -1,4 +1,4 @@
-﻿using Contracts.Interfaces;
+﻿using Contracts.Interfaces.Roles;
 using Microsoft.AspNetCore.Identity;
 
 namespace Application.Services.IdentityRoles
