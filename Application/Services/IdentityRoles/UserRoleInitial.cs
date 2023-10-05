@@ -1,14 +1,15 @@
 ﻿using Contracts.Interfaces.Roles;
+using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace Application.Services.IdentityRoles
 {
     public class UserRoleInitial : IUserRoleInitial
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UserRoleInitial(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UserRoleInitial(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -43,7 +44,7 @@ namespace Application.Services.IdentityRoles
           
             if (await _userManager.FindByEmailAsync("admin@localhost") == null)
             {
-                IdentityUser user = new IdentityUser();
+                ApplicationUser user = new ApplicationUser();
                 user.UserName = "admin@localhost";
                 user.Email = "admin@localhost";
                 user.NormalizedUserName = "ADMIN@LOCALHOST";

@@ -1,6 +1,7 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+﻿@using Domain.Entities;
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @if (SignInManager.IsSignedIn(User))
 {
@@ -10,10 +11,10 @@
         <a class="nav-link text-warning " asp-area="Admin" asp-controller="Admin" asp-action="Index">Área do administrador</a>               
     }
            
-     
+    var user = await UserManager.GetUserAsync(User);
     <div class="btn-group">
         <button type="button" class="dropdown btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            @User.Identity.Name
+            @user.FirstName
         </button>
 
         <ul class="dropdown-menu dropdown-menu-end">

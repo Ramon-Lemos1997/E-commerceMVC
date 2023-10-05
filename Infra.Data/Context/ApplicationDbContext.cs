@@ -1,12 +1,42 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Domain.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Data.Context
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .ToTable("AspNetUsers"); 
+
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(u => u.FirstName)
+                .HasMaxLength(255);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(u => u.Surname)
+                .HasMaxLength(255);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(u => u.Gender)
+                .HasMaxLength(50);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(u => u.Adress)
+                .HasMaxLength(255);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(u => u.BirthDate);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(u => u.ResetPassword);
         }
 
         //public DbSet<AlunoModel> Alunos { get; set; }

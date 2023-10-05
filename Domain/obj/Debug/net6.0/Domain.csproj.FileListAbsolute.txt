@@ -1,6 +1,7 @@
 D:\Projetos\E-commerce.MVC_ASP.NET\Domain\bin\Debug\net6.0\Domain.deps.json
 D:\Projetos\E-commerce.MVC_ASP.NET\Domain\bin\Debug\net6.0\Domain.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Domain\bin\Debug\net6.0\Domain.pdb
+D:\Projetos\E-commerce.MVC_ASP.NET\Domain\obj\Debug\net6.0\Domain.csproj.AssemblyReference.cache
 D:\Projetos\E-commerce.MVC_ASP.NET\Domain\obj\Debug\net6.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
 D:\Projetos\E-commerce.MVC_ASP.NET\Domain\obj\Debug\net6.0\Domain.AssemblyInfoInputs.cache
 D:\Projetos\E-commerce.MVC_ASP.NET\Domain\obj\Debug\net6.0\Domain.AssemblyInfo.cs

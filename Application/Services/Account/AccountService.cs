@@ -3,24 +3,45 @@ using Contracts.Models;
 using Contracts.Interfaces.Identity;
 using Contracts.Interfaces.Infra.Data;
 using System.Security.Claims;
-using Azure.Core;
-using SendGrid.Helpers.Mail;
-using SendGrid;
-using System.Net;
-using System;
+using Infra.Data.Context;
+using Domain.Entities;
 
 namespace Application.Services.Account
 {
     public class AccountService : IAccountInterface
     {
         private readonly ISendEmail _sendEmail;
-        private readonly UserManager<IdentityUser> _userManager;
-
-        public AccountService(ISendEmail sendEmail, UserManager<IdentityUser> userManager)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _context;
+        public AccountService(ISendEmail sendEmail, UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             _sendEmail = sendEmail;
             _userManager = userManager;
-  
+            _context = context;
+        }
+
+        //______________________________________________________________________________________
+        public async Task<(ApplicationUser user, IdentityResult result)> CreateUserAsync(string userName, string password)
+        {
+            var user = new ApplicationUser
+            {
+                UserName = userName,
+                Email = userName
+            };
+
+            var result = await _userManager.CreateAsync(user, password);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, "User");
+                var currDateClaim = new Claim("CadastradoEm", DateTime.Now.ToString());
+                await _userManager.AddClaimAsync(user, currDateClaim);
+                
+
+
+                return (user, result);
+            }
+
+            return (null, result);
         }
 
         public async Task<(bool success, string errorMessage, string userEmail)> GetUserEmailAsync(ClaimsPrincipal user)
@@ -48,10 +69,10 @@ namespace Application.Services.Account
         }
         public async Task<(bool success, string errorMessage)> CheckIfTokenResetPasswordIsUsedAsync(string userId)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            var tokenUsed = (await _userManager.GetClaimsAsync(user)).FirstOrDefault(c => c.Type == "ResetPassword");
+            var user = await _userManager.FindByIdAsync(userId);         
+            //var tokenUsed = (await _userManager.GetClaimsAsync(user)).FirstOrDefault(c => c.Type == "ResetPassword");
 
-            if (tokenUsed != null)
+            if (user.ResetPassword)
             {
                 return (false, "Este link já foi usado.");
             }
@@ -81,13 +102,14 @@ namespace Application.Services.Account
             };
             try
             {
+                
                 var emailSent = await _sendEmail.SendEmailAsync(model);
                 if (emailSent)
-                {
-                    var resetPasswordClaim = (await _userManager.GetClaimsAsync(user)).FirstOrDefault(c => c.Type == "ResetPassword");
-                    if (resetPasswordClaim != null)
+                {                                     
+                    if (user.ResetPassword)
                     {
-                        await _userManager.RemoveClaimAsync(user, resetPasswordClaim);                      
+                        user.ResetPassword = false;
+                        await _userManager.UpdateAsync(user);                                        
                     }
                     return (true, "Email enviado com sucesso.");
                 }
@@ -115,7 +137,8 @@ namespace Application.Services.Account
 
             if (result.Succeeded)
             {
-                await _userManager.AddClaimAsync(user, new Claim("ResetPassword", "true"));
+                user.ResetPassword = true;
+                await _userManager.UpdateAsync(user);
             }
 
             return result;
@@ -143,6 +166,9 @@ namespace Application.Services.Account
             };
             try
             {
+                user.NormalizedUserName = user.NormalizedUserName;
+                user.UserName = "luis";
+                await _userManager.UpdateAsync(user);
                 var emailSent = await _sendEmail.SendEmailAsync(model);
                         
             }

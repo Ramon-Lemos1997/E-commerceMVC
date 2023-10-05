@@ -8,6 +8,7 @@ using Contracts.Models;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Contracts.Interfaces.Infra.Data;
+using Domain.Entities;
 
 namespace Presentation.Controllers
 {
@@ -16,9 +17,9 @@ namespace Presentation.Controllers
     {
         private readonly IAccountInterface _accountService;
         private readonly IConfiguration _configuration;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IConfiguration configuration, ISendEmail sendEmail, IAccountInterface accountService)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration, ISendEmail sendEmail, IAccountInterface accountService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -133,36 +134,23 @@ namespace Presentation.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser
-                {
-                    UserName = model.Email,
-                    Email = model.Email,
-                };
-
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var (user, result) = await _accountService.CreateUserAsync(model.Email, model.Password);
 
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, "User");
-
-                    var currentDateClaim = new Claim("CadastradoEm", DateTime.Now.ToString());
-                    await _userManager.AddClaimAsync(user, currentDateClaim);
-
                     await _signInManager.SignInAsync(user, isPersistent: true);
-
                     return RedirectToAction("Index", "Home");
                 }
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
-                return View(model);
-             
-                                 
             }
 
             return View(model);
         }
+
+
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel model)
@@ -175,8 +163,8 @@ namespace Presentation.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-
-                ModelState.AddModelError(string.Empty, "Login Inválido");
+              
+                ModelState.AddModelError(string.Empty, "Falha na autenticação. Verifique seu email/senha e tente novamente.");
             }
 
             return View(model);

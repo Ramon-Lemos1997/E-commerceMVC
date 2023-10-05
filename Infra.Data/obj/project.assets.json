@@ -1186,6 +1186,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
+          "Domain": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.22"
         },
         "compile": {
@@ -1193,6 +1194,19 @@
         },
         "runtime": {
           "bin/placeholder/Contracts.dll": {}
+        }
+      },
+      "Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.22"
+        },
+        "compile": {
+          "bin/placeholder/Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Domain.dll": {}
         }
       }
     }
@@ -3178,11 +3192,17 @@
       "type": "project",
       "path": "../Contracts/Contracts.csproj",
       "msbuildProject": "../Contracts/Contracts.csproj"
+    },
+    "Domain/1.0.0": {
+      "type": "project",
+      "path": "../Domain/Domain.csproj",
+      "msbuildProject": "../Domain/Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "Contracts >= 1.0.0",
+      "Domain >= 1.0.0",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 6.0.22",
       "Microsoft.EntityFrameworkCore >= 7.0.11",
       "Microsoft.EntityFrameworkCore.Design >= 7.0.11",
@@ -3220,6 +3240,9 @@
           "projectReferences": {
             "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Contracts\\Contracts.csproj": {
               "projectPath": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Contracts\\Contracts.csproj"
+            },
+            "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Domain\\Domain.csproj": {
+              "projectPath": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Domain\\Domain.csproj"
             }
           }
         }

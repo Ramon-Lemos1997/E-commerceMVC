@@ -98,7 +98,11 @@
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Domain\\Domain.csproj": {
+                "projectPath": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Domain\\Domain.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -171,6 +175,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.22, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -217,6 +227,9 @@
             "projectReferences": {
               "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Contracts\\Contracts.csproj": {
                 "projectPath": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Contracts\\Contracts.csproj"
+              },
+              "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Domain\\Domain.csproj": {
+                "projectPath": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Domain\\Domain.csproj"
               }
             }
           }

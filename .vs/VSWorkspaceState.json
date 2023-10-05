@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Presentation"
   ],
-  "SelectedNode": "\\E-commerceMvcAspNet.sln",
+  "SelectedNode": "\\Presentation\\Program.cs",
   "PreviewInSolutionExplorer": false
 }
