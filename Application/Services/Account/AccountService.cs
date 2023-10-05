@@ -3,7 +3,6 @@ using Contracts.Models;
 using Contracts.Interfaces.Identity;
 using Contracts.Interfaces.Infra.Data;
 using System.Security.Claims;
-using Infra.Data.Context;
 using Domain.Entities;
 
 namespace Application.Services.Account
@@ -12,15 +11,44 @@ namespace Application.Services.Account
     {
         private readonly ISendEmail _sendEmail;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ApplicationDbContext _context;
-        public AccountService(ISendEmail sendEmail, UserManager<ApplicationUser> userManager, ApplicationDbContext context)
+        public AccountService(ISendEmail sendEmail, UserManager<ApplicationUser> userManager)
         {
             _sendEmail = sendEmail;
-            _userManager = userManager;
-            _context = context;
+            _userManager = userManager;        
         }
 
         //______________________________________________________________________________________
+
+        public async Task<OperationResultModel> VerifyEmailAsync(string userId, string token)
+        {
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
+            {
+                return new OperationResultModel(false, "Erro ao validar sua chave, tente novamente.");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return new OperationResultModel(false, "Usuário não encontrado.");
+            }
+
+            if (user.EmailConfirmed)
+            {
+                return new OperationResultModel(false, "Este link já foi usado.");
+            }
+
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+
+            if (result.Succeeded)
+            {
+                return new OperationResultModel(true, "Email confirmado");
+            }
+            else
+            {
+                return new OperationResultModel(false, "Erro ao confirmar o email, tente novamente ou entre em contato com o administrador.");
+            }
+        }
+
         public async Task<(ApplicationUser user, IdentityResult result)> CreateUserAsync(string userName, string password)
         {
             var user = new ApplicationUser
@@ -44,47 +72,48 @@ namespace Application.Services.Account
             return (null, result);
         }
 
-        public async Task<(bool success, string errorMessage, string userEmail)> GetUserEmailAsync(ClaimsPrincipal user)
+        public async Task<(OperationResultModel, string userEmail)> GetUserEmailAsync(ClaimsPrincipal user)
         {
             var currUser = await _userManager.GetUserAsync(user);
 
             if (currUser == null)
             {
-                return (false, "Usuário não encontrado.", null);
+                return (new OperationResultModel(false, "Usuário não encontrado."), null);
             }
 
-            return (true, "Success", currUser.Email);
+            return (new OperationResultModel(true, "Successo"), currUser.Email);
         }
 
         public async Task<bool> IsEmailConfirmedAsync(ClaimsPrincipal user)
         {
-            var currentUser = await _userManager.GetUserAsync(user);
+            var currUser = await _userManager.GetUserAsync(user);
 
-            if (currentUser == null)
+            if (currUser == null)
             {
                 return false;
             }
 
-            return await _userManager.IsEmailConfirmedAsync(currentUser);
+            return await _userManager.IsEmailConfirmedAsync(currUser);
         }
-        public async Task<(bool success, string errorMessage)> CheckIfTokenResetPasswordIsUsedAsync(string userId)
+
+        public async Task<OperationResultModel> CheckIfTokenResetPasswordIsUsedAsync(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);         
-            //var tokenUsed = (await _userManager.GetClaimsAsync(user)).FirstOrDefault(c => c.Type == "ResetPassword");
-
+     
             if (user.ResetPassword)
             {
-                return (false, "Este link já foi usado.");
+                return new OperationResultModel(false, "Este link já foi usado.");             
             }
 
-            return (true, "Success");
+            return new OperationResultModel(true, "Sucesso.");
         }
-        public async Task<(bool success, string errorMessage)> SendCode(string userEmail)
+
+        public async Task<OperationResultModel> SendCode(string userEmail)
         {
             var user = await _userManager.FindByEmailAsync(userEmail);
             if (user == null)
-            {            
-                return (false, "Usuário não encontrado.");
+            {
+                return new OperationResultModel(false, "Usuário não encontrado.");
             }
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -101,8 +130,7 @@ namespace Application.Services.Account
                 Message = message    
             };
             try
-            {
-                
+            {               
                 var emailSent = await _sendEmail.SendEmailAsync(model);
                 if (emailSent)
                 {                                     
@@ -111,16 +139,16 @@ namespace Application.Services.Account
                         user.ResetPassword = false;
                         await _userManager.UpdateAsync(user);                                        
                     }
-                    return (true, "Email enviado com sucesso.");
+                    return new OperationResultModel(true, "Email enviado com sucesso.");
                 }
                 else
                 {
-                    return (false, "Houve algum erro entre a camada de service e de infraestrutura.");
+                    return new OperationResultModel(false, "Houve algum erro entre a camada de service e de infraestrutura.");
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                return (false, $"Erro ao enviar o e-mail para a camada de infraestrutura.");
+                return new OperationResultModel(false, "Erro ao enviar o e-mail para a camada de infraestrutura.");
             }
         }
        
@@ -144,20 +172,20 @@ namespace Application.Services.Account
             return result;
         }
 
-        public async Task<(bool success, string errorMessage)> ConfirmEmailAsync(string userEmail)
+        public async Task<OperationResultModel> ConfirmEmailAsync(string userEmail)
         {
             var user = await _userManager.FindByEmailAsync(userEmail);
             if (user == null || user.EmailConfirmed)
             {
-                return (false, "Usuário não encontrado.");
+                return new OperationResultModel(false, "Usuário não encontrado.");
             }
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var scheme = "https";
             var host = "localhost:7034";
             var link = $"{scheme}://{host}/Account/EmailVerificado?userId={Uri.EscapeDataString(user.Id)}&token={Uri.EscapeDataString(token)}";
 
-            var subject = "Confirmação de Email";
-            var message = $"Clique <a href=\"{link}\">aqui</a> para redefinir sua senha.";
+            var subject = "Confirmação de Conta";
+            var message = $"Clique <a href=\"{link}\">aqui</a> para confirmar sua conta.";
             var model = new SendEmailModel
             {
                 ToEmail = user.Email,
@@ -165,18 +193,15 @@ namespace Application.Services.Account
                 Message = message
             };
             try
-            {
-                user.NormalizedUserName = user.NormalizedUserName;
-                user.UserName = "luis";
+            {             
                 await _userManager.UpdateAsync(user);
-                var emailSent = await _sendEmail.SendEmailAsync(model);
-                        
+                var emailSent = await _sendEmail.SendEmailAsync(model);                        
             }
-            catch (Exception ex)
+            catch 
             {
-                return (false, $"Erro ao enviar o e-mail para a camada de infraestrutura.");
+                return new OperationResultModel(false, "Erro ao enviar o e-mail para a camada de infraestrutura.");
             }
-            return (true, "Success.");
+            return new OperationResultModel(true, "Successo.");
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------

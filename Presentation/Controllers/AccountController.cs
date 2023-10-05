@@ -15,15 +15,11 @@ namespace Presentation.Controllers
     
     public class AccountController : Controller
     {
-        private readonly IAccountInterface _accountService;
-        private readonly IConfiguration _configuration;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IAccountInterface _accountService;       
         private readonly SignInManager<ApplicationUser> _signInManager;
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration, ISendEmail sendEmail, IAccountInterface accountService)
-        {
-            _userManager = userManager;
+        public AccountController(SignInManager<ApplicationUser> signInManager, IAccountInterface accountService)
+        {    
             _signInManager = signInManager;
-            _configuration = configuration;
             _accountService = accountService;
         }
 
@@ -54,11 +50,11 @@ namespace Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> ResetPassword(string token, string userId)
         {
-            var (success, errorMessage) = await _accountService.CheckIfTokenResetPasswordIsUsedAsync(userId);
+            var result = await _accountService.CheckIfTokenResetPasswordIsUsedAsync(userId);
 
-            if (!success)
+            if (!result.Success)
             {
-                ModelState.AddModelError(string.Empty, errorMessage);
+                ModelState.AddModelError(string.Empty, result.Message);
                 return View("Error");
             }
 
@@ -70,13 +66,13 @@ namespace Presentation.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> ConfirmarEmail()
+        public async Task<IActionResult> ConfirmEmail()
         {
-            var (success, errorMessage, userEmail) = await _accountService.GetUserEmailAsync(User);
+            var (result, userEmail) = await _accountService.GetUserEmailAsync(User);
 
-            if (!success)
+            if (!result.Success)
             {
-                ModelState.AddModelError(string.Empty, errorMessage);
+                ModelState.AddModelError(string.Empty, result.Message);
                 return View();
             }
 
@@ -87,39 +83,20 @@ namespace Presentation.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpGet]
-        public async Task<IActionResult> EmailVerificado(string userId, string token)
+        public async Task<IActionResult> VerifiedEmail(string userId, string token)
         {
-           
-            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
-            {
-                ModelState.AddModelError(string.Empty, "Erro ao validar sua chave, tente novamente.");
-                return View("Error");
-            }
+            var result = await _accountService.VerifyEmailAsync(userId, token);
 
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user.EmailConfirmed)
-            {
-                ModelState.AddModelError(string.Empty, "Este link já foi usado.");
-                return View("Error");
-            }
-
-            if (user == null)
-            {
-                ModelState.AddModelError(string.Empty, "Usuário não encontrado.");
-                return View("Error");
-            }
-
-            var result = await _userManager.ConfirmEmailAsync(user, token);
-
-            if (result.Succeeded)
+            if (result.Success)
             {
                 ViewBag.ShowSuccessMessage = true;
                 return View("EmailVerificado");
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Erro ao confirmar o email, tente novamente ou entre em contato com o administrador.");
+                ModelState.AddModelError(string.Empty, result.Message);
                 return View("Error");
             }
         }
@@ -150,8 +127,6 @@ namespace Presentation.Controllers
             return View(model);
         }
 
-
-
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel model)
         {
@@ -170,11 +145,11 @@ namespace Presentation.Controllers
             return View(model);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync(); // Faz o logout do usuário
-
+            await _signInManager.SignOutAsync(); 
             return RedirectToAction("Index", "Home");
         }
 
@@ -184,21 +159,22 @@ namespace Presentation.Controllers
         {
             if (ModelState.IsValid)
             {              
-                var (success, errorMessage) = await _accountService.SendCode(emailModel.Email);
+                var result = await _accountService.SendCode(emailModel.Email);
 
-                if (success)
+                if (result.Success)
                 {
                     ViewBag.ShowSuccessMessage = true;
                     return View();
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, errorMessage);
+                    ModelState.AddModelError(string.Empty, result.Message);
                     return View();
                 }
             }
             return View("Email", "Account");
         }
+
         [HttpPost]
         public async Task<IActionResult> ResetPassword(ResetPasswordModel model)
         {
@@ -223,21 +199,20 @@ namespace Presentation.Controllers
             return View(model);
         }
 
-
-
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ConfirmarEmail(string Email)
+        public async Task<IActionResult> ConfirmEmail(string Email)
         {
-            var (success, errorMessage) = await _accountService.ConfirmEmailAsync(Email);
-            if (success)
+            var result = await _accountService.ConfirmEmailAsync(Email);
+            if (result.Success)
             {
                 ViewBag.SuccessMessage = true;
                 return View();
             }
             else
             { 
-                ModelState.AddModelError(string.Empty, errorMessage);
+                ModelState.AddModelError(string.Empty, result.Message);
                 return View();
             }
         }
