@@ -92,7 +92,7 @@ namespace Presentation.Controllers
             if (result.Success)
             {
                 ViewBag.ShowSuccessMessage = true;
-                return View("EmailVerificado");
+                return View("VerifiedEmail");
             }
             else
             {
@@ -132,11 +132,17 @@ namespace Presentation.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, true);
 
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
+                }
+
+                if (result.IsLockedOut)
+                {
+                    ModelState.AddModelError(string.Empty, "Você excedeu o número de tentativas, aguarde 1 hora e tente novamente.");
+                    return View();
                 }
               
                 ModelState.AddModelError(string.Empty, "Falha na autenticação. Verifique seu email/senha e tente novamente.");

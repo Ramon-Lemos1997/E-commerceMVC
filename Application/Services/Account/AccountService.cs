@@ -182,7 +182,7 @@ namespace Application.Services.Account
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var scheme = "https";
             var host = "localhost:7034";
-            var link = $"{scheme}://{host}/Account/EmailVerificado?userId={Uri.EscapeDataString(user.Id)}&token={Uri.EscapeDataString(token)}";
+            var link = $"{scheme}://{host}/Account/VerifiedEmail?userId={Uri.EscapeDataString(user.Id)}&token={Uri.EscapeDataString(token)}";
 
             var subject = "Confirmação de Conta";
             var message = $"Clique <a href=\"{link}\">aqui</a> para confirmar sua conta.";

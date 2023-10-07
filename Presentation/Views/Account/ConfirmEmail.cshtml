@@ -4,7 +4,7 @@
 
 <h1 class="text-center pt-5">Confirmação de Conta</h1>
 
-<form class="text-center" asp-controller="Account" asp-action="ConfirmarEmail" method="post">
+<form class="text-center" asp-controller="Account" asp-action="ConfirmEmail" method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
     @if (ViewBag.SuccessMessage != null && ViewBag.SuccessMessage == true)
     {

@@ -30,12 +30,18 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
+    //register settings
     options.Password.RequiredLength = 10;
     options.Password.RequiredUniqueChars = 3;
     options.Password.RequireNonAlphanumeric = true;
     options.User.RequireUniqueEmail = true;
-    
-    
+
+    //lockout settings
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+
+
 });
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
