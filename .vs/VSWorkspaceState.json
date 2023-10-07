@@ -1,11 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\E-commerceMVC-stating",
-    "\\E-commerceMVC-stating\\Presentation",
-    "\\E-commerceMVC-stating\\Presentation\\Views",
-    "\\E-commerceMVC-stating\\Presentation\\Views\\Account"
+    "\\Presentation",
+    "\\Presentation\\Views",
+    "\\Presentation\\Views\\Account"
   ],
-  "SelectedNode": "\\E-commerceMVC-stating\\Presentation\\Views\\Account\\VerifiedEmail.cshtml",
+  "SelectedNode": "\\Presentation\\Views\\Account\\VerifiedEmail.cshtml",
   "PreviewInSolutionExplorer": false
 }

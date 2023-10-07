@@ -17,10 +17,12 @@ namespace Presentation.Controllers
     {
         private readonly IAccountInterface _accountService;       
         private readonly SignInManager<ApplicationUser> _signInManager;
-        public AccountController(SignInManager<ApplicationUser> signInManager, IAccountInterface accountService)
-        {    
+        private readonly UserManager<ApplicationUser> _userManager;
+        public AccountController(SignInManager<ApplicationUser> signInManager, IAccountInterface accountService, UserManager<ApplicationUser> userManager)
+        {
             _signInManager = signInManager;
             _accountService = accountService;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -108,7 +110,42 @@ namespace Presentation.Controllers
         }
 
 
+        [HttpGet]
+        public async Task<IActionResult> GetUserById()
+        {
+            // Obtenha o ID do usuário atualmente autenticado
+            var userId = _userManager.GetUserId(User);
 
+            if (string.IsNullOrEmpty(userId))
+            {
+                return BadRequest("ID do usuário não encontrado.");
+            }
+
+            // Use o UserManager para buscar o usuário na tabela Users
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound("Usuário não encontrado.");
+            }
+            var userModel = new DataUserModel
+            {
+                ZipCode = user.ZipCode,
+                Street = user.Street,
+                Neighborhood = user.Neighborhood,
+                Gender = user.Gender,
+                BirthDate = user.BirthDate,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                Surname = user.Surname,
+                City = user.City,
+                HouseNumber = user.HouseNumber,
+                PhoneNumber = user.PhoneNumber,
+                
+            };
+
+            return View(userModel);
+        }
         //-------------------------------------------------------------------------------------------------------------------------------
 
 

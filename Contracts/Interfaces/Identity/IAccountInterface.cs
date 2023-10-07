@@ -7,6 +7,7 @@ namespace Contracts.Interfaces.Identity
 {
     public interface IAccountInterface
     {
+        Task<ApplicationUser> GetUserByIdAsync(string userId);
         Task<OperationResultModel> VerifyEmailAsync(string userId, string token);
         Task<(ApplicationUser user, IdentityResult result)> CreateUserAsync(string userName, string password);
         Task<(OperationResultModel, string userEmail)> GetUserEmailAsync(ClaimsPrincipal user);

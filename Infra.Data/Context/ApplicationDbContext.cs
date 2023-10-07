@@ -44,6 +44,10 @@ namespace Infra.Data.Context
             modelBuilder.Entity<ApplicationUser>()
                 .Property(u => u.ZipCode) 
                 .HasMaxLength(8);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(u => u.City)
+                .HasMaxLength(50);
         }
 
         //public DbSet<AlunoModel> Alunos { get; set; }

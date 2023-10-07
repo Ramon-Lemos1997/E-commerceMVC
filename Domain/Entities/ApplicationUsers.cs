@@ -25,7 +25,14 @@ namespace Domain.Entities
         public string Neighborhood { get; set; } 
 
         [MaxLength(8)]
-        public string ZipCode { get; set; } 
+        public string ZipCode { get; set; }
+
+        [MaxLength(50)] 
+        public string City { get; set; } 
+
+        [MaxLength(10)] 
+        public string HouseNumber { get; set; } 
+
     }
 
 }

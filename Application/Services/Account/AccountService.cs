@@ -19,6 +19,11 @@ namespace Application.Services.Account
 
         //______________________________________________________________________________________
 
+        public async Task<ApplicationUser> GetUserByIdAsync(string userId)
+        {
+            return await _userManager.FindByIdAsync(userId);
+        }
+
         public async Task<OperationResultModel> VerifyEmailAsync(string userId, string token)
         {
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))

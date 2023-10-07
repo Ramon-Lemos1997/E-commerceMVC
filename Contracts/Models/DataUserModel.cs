@@ -6,6 +6,11 @@ namespace Contracts.Models
 {
     public class DataUserModel
     {
+        [Required(ErrorMessage = "O campo Email é obrigatório.")]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
         [Required(ErrorMessage = "O campo Nome é obrigatório.")]
         [MaxLength(255)]
         [Display(Name = "Nome")]
@@ -18,7 +23,7 @@ namespace Contracts.Models
 
         [Required(ErrorMessage = "O campo Gênero é obrigatório.")]
         [Display(Name = "Gênero")]
-        public GenderEnum Gender { get; set; }
+        public string Gender { get; set; }
 
         [Required(ErrorMessage = "O campo Rua é obrigatório.")]
         [MaxLength(100)]
@@ -45,6 +50,16 @@ namespace Contracts.Models
         [MaxLength(20)]
         [Display(Name = "Número de telefone")]
         public string PhoneNumber { get; set; }
+
+        [Required(ErrorMessage = "O campo Cidade é obrigatório.")] 
+        [MaxLength(20)]
+        [Display(Name = "Cidade")]
+        public string City { get; set; }
+
+        [Required(ErrorMessage = "O campo Número é obrigatório.")]
+        [MaxLength(10)]
+        [Display(Name = "Número")]
+        public string HouseNumber { get; set; }
 
     }
 }
