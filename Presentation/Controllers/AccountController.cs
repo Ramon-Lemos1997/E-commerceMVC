@@ -101,6 +101,12 @@ namespace Presentation.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult DataUser()
+        {
+            return View("DataUser");
+        }
+
 
 
         //-------------------------------------------------------------------------------------------------------------------------------
@@ -190,7 +196,8 @@ namespace Presentation.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("ResetPasswordSuccess");
+                    ViewBag.SuccessMessage = true;
+                    return View();
                 }
                 else
                 {                  
@@ -223,7 +230,15 @@ namespace Presentation.Controllers
             }
         }
            
-    
+        public async Task<IActionResult> DataUser(DataUserModel model)
+        {
+            if (ModelState.IsValid)
+            {     
+                 return View();
+            }
+            
+            return View(model);
+        }
 
 
 

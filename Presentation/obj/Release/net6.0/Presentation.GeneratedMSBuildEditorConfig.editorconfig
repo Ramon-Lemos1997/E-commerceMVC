@@ -9,77 +9,81 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Presentation
 build_property.RootNamespace = Presentation
-build_property.ProjectDir = D:\Windows\Downloads\E-commerceMVC-stating\Presentation\
+build_property.ProjectDir = D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\Windows\Downloads\E-commerceMVC-stating\Presentation
+build_property.MSBuildProjectDirectory = D:\Projetos\E-commerce.MVC_ASP.NET\Presentation
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/Windows/Downloads/E-commerceMVC-stating/Presentation/Views/Account/AccessDenied.cshtml]
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/AccessDenied.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxBY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Windows/Downloads/E-commerceMVC-stating/Presentation/Views/Account/ConfirmEmail.cshtml]
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/ConfirmEmail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxDb25maXJtRW1haWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Windows/Downloads/E-commerceMVC-stating/Presentation/Views/Account/Error.cshtml]
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/DataUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxEYXRhVXNlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxFcnJvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Windows/Downloads/E-commerceMVC-stating/Presentation/Views/Account/Login.cshtml]
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Windows/Downloads/E-commerceMVC-stating/Presentation/Views/Account/Register.cshtml]
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Windows/Downloads/E-commerceMVC-stating/Presentation/Views/Account/ResetPassword.cshtml]
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/ResetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZXNldFBhc3N3b3JkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Windows/Downloads/E-commerceMVC-stating/Presentation/Views/Account/SendCode.cshtml]
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/SendCode.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxTZW5kQ29kZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Windows/Downloads/E-commerceMVC-stating/Presentation/Views/Account/VerifiedEmail.cshtml]
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/VerifiedEmail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxWZXJpZmllZEVtYWlsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Windows/Downloads/E-commerceMVC-stating/Presentation/Views/Home/Index.cshtml]
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Windows/Downloads/E-commerceMVC-stating/Presentation/Views/Home/Privacy.cshtml]
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Windows/Downloads/E-commerceMVC-stating/Presentation/Views/Shared/Error.cshtml]
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Windows/Downloads/E-commerceMVC-stating/Presentation/Views/Shared/_LoginAdminPartial.cshtml]
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Shared/_LoginAdminPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpbkFkbWluUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Windows/Downloads/E-commerceMVC-stating/Presentation/Views/Shared/_LoginPartial.cshtml]
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Windows/Downloads/E-commerceMVC-stating/Presentation/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Windows/Downloads/E-commerceMVC-stating/Presentation/Views/_ViewImports.cshtml]
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Windows/Downloads/E-commerceMVC-stating/Presentation/Views/_ViewStart.cshtml]
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Windows/Downloads/E-commerceMVC-stating/Presentation/Views/Shared/_Layout.cshtml]
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-fhvjq1vla1

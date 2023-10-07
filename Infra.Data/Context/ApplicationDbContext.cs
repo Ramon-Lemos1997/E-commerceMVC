@@ -27,16 +27,23 @@ namespace Infra.Data.Context
             modelBuilder.Entity<ApplicationUser>()
                 .Property(u => u.Gender)
                 .HasMaxLength(50);
-
-            modelBuilder.Entity<ApplicationUser>()
-                .Property(u => u.Adress)
-                .HasMaxLength(255);
-
+          
             modelBuilder.Entity<ApplicationUser>()
                 .Property(u => u.BirthDate);
 
             modelBuilder.Entity<ApplicationUser>()
                 .Property(u => u.ResetPassword);
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(u => u.Street) 
+                .HasMaxLength(100);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(u => u.Neighborhood) 
+                .HasMaxLength(100);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(u => u.ZipCode) 
+                .HasMaxLength(8);
         }
 
         //public DbSet<AlunoModel> Alunos { get; set; }

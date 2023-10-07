@@ -8,13 +8,19 @@
       
     @if (User.IsInRole("Admin"))
     {
-        <a class="nav-link text-warning " asp-area="Admin" asp-controller="Admin" asp-action="Index">Área do administrador</a>               
+        <a class="nav-link text-warning " asp-area="Admin" asp-controller="Admin" asp-action="Index"><i class="bi bi-star mx-2"></i>Área do administrador</a>
     }
            
     var user = await UserManager.GetUserAsync(User);
     <div class="btn-group">
-        <button type="button" class="dropdown btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            @user.FirstName
+        <button type="button" class="dropdown btn btn-secondary dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person-check mx-1"></i>
+            @if (string.IsNullOrWhiteSpace(user.FirstName))
+            {
+                @user.Email
+            }
+           @user.FirstName
+                     
         </button>
 
         <ul class="dropdown-menu dropdown-menu-end">
