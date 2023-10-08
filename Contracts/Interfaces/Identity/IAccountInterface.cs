@@ -9,7 +9,7 @@ namespace Contracts.Interfaces.Identity
     {
    
         Task<OperationResultModel> VerifyEmailAsync(string userId, string token);
-        Task<(ApplicationUser user, IdentityResult result)> CreateUserAsync(string userName, string password);
+        Task<(ApplicationUser user, IdentityResult result)> CreateUserAsync(string userEmail, string password);
         Task<(OperationResultModel, string userEmail)> GetUserEmailAsync(ClaimsPrincipal user);
         Task<bool> IsEmailConfirmedAsync(ClaimsPrincipal user);
         Task<OperationResultModel> CheckIfTokenResetPasswordIsUsedAsync(string userId);
@@ -18,6 +18,9 @@ namespace Contracts.Interfaces.Identity
         Task<OperationResultModel> ConfirmEmailAsync( string email);
         Task<(OperationResultModel, InfoUserModel)> GetInfoUserAsync(ClaimsPrincipal user);
         Task<OperationResultModel> UpdateInfoUserAsync(InfoUserModel model, ClaimsPrincipal user);
+        Task<IdentityResult> UpdatePasswordAsync(string newPassowrd, string currPassword, ClaimsPrincipal user);
+
+
 
     }
 }

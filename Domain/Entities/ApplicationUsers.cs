@@ -6,6 +6,8 @@ namespace Domain.Entities
 {
     public class ApplicationUser : IdentityUser
     {
+        public DateTime? CreationDate { get; set; }
+
         [MaxLength(255)]
         public string FirstName { get; set; }
 

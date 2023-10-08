@@ -1,19 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SendGrid.Helpers.Mail;
-using SendGrid;
-using System.Net;
 using Contracts.Interfaces.Identity;
 using Contracts.Models;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-using Contracts.Interfaces.Infra.Data;
 using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using System.IO;
-using System.Reflection.Emit;
-using System.Reflection;
-using System;
+
 
 namespace Presentation.Controllers
 {
@@ -144,7 +135,14 @@ namespace Presentation.Controllers
             return View(userModel);
         }
 
-       
+        [Authorize]
+        [HttpGet]
+        public IActionResult UpdatePassword()
+        {
+            return View();
+        }
+
+
 
         //-------------------------------------------------------------------------------------------------------------------------------
 
@@ -290,7 +288,31 @@ namespace Presentation.Controllers
 
         }
 
-       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdatePassword(UpdatePasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _accountService.UpdatePasswordAsync(model.NewPassword, model.CurrPassword, User);
+
+                if (result.Succeeded)
+                {
+                    ViewBag.SuccessMessage = true;
+                    return View();
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                    return View(model);
+                }                              
+            }
+
+            return View(model);
+        }
 
 
 

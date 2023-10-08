@@ -42,6 +42,10 @@ namespace Infra.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("CreationDate")
+                        .HasMaxLength(30)
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");

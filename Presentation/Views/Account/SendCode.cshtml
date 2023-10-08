@@ -1,20 +1,23 @@
-﻿@page
-@model EmailModel
+﻿@model EmailModel
 
-<h1 class="pt-5">Recuperação de Senha</h1>
+<div class="pt-5"></div>
 
 @if (ViewBag.ShowSuccessMessage != null && ViewBag.ShowSuccessMessage == true)
 {
     <div class="alert alert-success mt-5 w-auto">
         Foi enviado um link para a redefinição de senha para o email cadastrado.
     </div>
-    <meta http-equiv="refresh" content="10;url=/Home/Index">
+    <meta http-equiv="refresh" content="1;url=/Home/Index">
 }
-<form asp-controller="Account" asp-action="SendCode" class="mt-5" method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group mt-3">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" class="form-control" required />
-    </div>
-    <button type="submit" class="btn btn-primary mt-3">Enviar Link de Recuperação</button>
-</form>
+<h1 class="text-center pt-5">Conecte-se</h1>
+<div class="container  border rounded mt-5">
+    <form  class="mb-3" asp-controller="Account" asp-action="SendCode" method="post">
+        <div asp-validation-summary="All" class="alert-danger"></div>
+        <div class="form-group mt-3">
+            <label class="form-label" asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" placeholder="Insira seu email" required />
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Enviar Link de Recuperação</button>
+    </form>
+</div>
+

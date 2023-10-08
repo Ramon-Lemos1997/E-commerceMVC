@@ -1,18 +1,19 @@
 ﻿@model LoginModel
-
-<div class="row mt-5">
-    <div class="col-md-12 mt-5">
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
+<div class="pt-5"></div>
+<h1 class="text-center pt-5">Conecte-se</h1>
+<div class="container  border rounded mt-5">
+    <div class="col-md-12 mb-3 ">
+        <form asp-controller="Account" asp-action="Login" method="post">
+            <div asp-validation-summary="All" class="alert-danger"></div>
             <div class="form-group">
                 <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
+                <input asp-for="Email" class="form-control mt-1" placeholder="Insira seu email" required />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
             <div class="form-group mt-2">
                 <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" />
+                <input asp-for="Password" class="form-control mt-1" placeholder="Insira sua senha" required />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
 
@@ -23,8 +24,8 @@
             </div>
 
             <button type="submit" class="btn btn-primary mt-3">Login</button>
-            <a asp-controller="Account" asp-action="SendCode" class="btn btn-warning mt-3 mx-2">Esqueci minha senha</a>           
+            <a asp-controller="Account" asp-action="SendCode" class="btn btn-warning mt-3 mx-2">Esqueci minha senha</a>
         </form>
     </div>
-
 </div>
+

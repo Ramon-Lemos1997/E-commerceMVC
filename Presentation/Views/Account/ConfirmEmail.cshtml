@@ -1,14 +1,16 @@
-﻿
+﻿<div class="pt-5"></div>
+<div class="pt-5"></div>
+<div class="pt-5"></div>
 <h1 class="text-center pt-5">Confirmação de Conta</h1>
 
 <form class="text-center" asp-controller="Account" asp-action="ConfirmEmail" method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
+    <div asp-validation-summary="All" class="alert-danger"></div>
     @if (ViewBag.SuccessMessage != null && ViewBag.SuccessMessage == true)
     {
         <div class="alert alert-success mt-1 w-auto">
             Foi enviado um link para a verificação de conta para o email cadastrado.
         </div>
-        <meta http-equiv="refresh" content="10;url=/Home/Index">
+        <meta http-equiv="refresh" content="1;url=/Home/Index">
     }
 
     <h5 class="mt-5 mb-5">Selecione o campo que deseja verificar:</h5>

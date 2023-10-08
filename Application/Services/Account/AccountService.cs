@@ -4,6 +4,7 @@ using Contracts.Interfaces.Identity;
 using Contracts.Interfaces.Infra.Data;
 using System.Security.Claims;
 using Domain.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Services.Account
 {
@@ -64,10 +65,15 @@ namespace Application.Services.Account
             }
 
             var currUser = await _userManager.FindByIdAsync(User);
-
+                  
             if (currUser == null)
             {
                 return new OperationResultModel(false, "Usuário não encontrado.");
+            }
+
+            if (currUser.Email != model.Email)
+            {
+                currUser.EmailConfirmed = false;             
             }
    
             currUser.UserName = model.Email;
@@ -92,9 +98,8 @@ namespace Application.Services.Account
                 return new OperationResultModel(true, "Successo");
             }
 
-            return new OperationResultModel(false, "Algo deu errado");
+            return new OperationResultModel(false, "Erro ao atualizar os dados");
         }
-
 
         public async Task<OperationResultModel> VerifyEmailAsync(string userId, string token)
         {
@@ -126,23 +131,36 @@ namespace Application.Services.Account
             }
         }
 
-        public async Task<(ApplicationUser user, IdentityResult result)> CreateUserAsync(string userName, string password)
+        public async Task<(ApplicationUser user, IdentityResult result)> CreateUserAsync(string userEmail, string password)
         {
+            // Obtém a data e hora atual no fuso horário do Brasil
+            TimeZoneInfo brazilTimeZone = TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time");
+            DateTime brazilDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, brazilTimeZone);
+
             var user = new ApplicationUser
             {
-                UserName = userName,
-                Email = userName
+                UserName = userEmail,
+                Email = userEmail,
+                CreationDate = brazilDateTime,
+                BirthDate = DateTime.MinValue,
+                FirstName = string.Empty,
+                Surname = string.Empty, 
+                Gender = string.Empty, 
+                City = string.Empty, 
+                Street = string.Empty, 
+                Neighborhood = string.Empty, 
+                ZipCode = string.Empty, 
+                Nation = string.Empty, 
+                HouseNumber = string.Empty, 
+                State = string.Empty 
             };
 
             var result = await _userManager.CreateAsync(user, password);
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, "User");
-                var currDateClaim = new Claim("CadastradoEm", DateTime.Now.ToString());
-                await _userManager.AddClaimAsync(user, currDateClaim);
-                
-
-
+                //var currDateClaim = new Claim("CadastradoEm", DateTime.Now.ToString());
+                //await _userManager.AddClaimAsync(user, currDateClaim);
                 return (user, result);
             }
 
@@ -279,6 +297,28 @@ namespace Application.Services.Account
                 return new OperationResultModel(false, "Erro ao enviar o e-mail para a camada de infraestrutura.");
             }
             return new OperationResultModel(true, "Successo.");
+        }
+
+        public async Task<IdentityResult> UpdatePasswordAsync(string newPassword, string currPassword, ClaimsPrincipal user)
+        {
+            Console.WriteLine("CONTROLADOR CHAMADO");
+            var User = _userManager.GetUserId(user);
+
+            if (User == null)
+            {
+                return IdentityResult.Failed(new IdentityError { Description = "Usuário não encontrado." });
+            }
+
+            var currUser = await _userManager.FindByIdAsync(User);
+
+            if (currUser == null)
+            {
+                return IdentityResult.Failed(new IdentityError { Description = "Usuário não encontrado." });
+            }                
+
+            var result = await _userManager.ChangePasswordAsync(currUser, currPassword, newPassword);          
+
+            return result;
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------

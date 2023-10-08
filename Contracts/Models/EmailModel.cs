@@ -6,6 +6,7 @@ namespace Contracts.Models
     {
         [Required(ErrorMessage = "O campo Email é obrigatório.")]
         [EmailAddress(ErrorMessage = "Insira um email válido.")]
+        [Display(Name = "Email")]
         public string Email { get; set; }
     }
 }

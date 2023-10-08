@@ -33,6 +33,7 @@ namespace Infra.Data.Context
 
             modelBuilder.Entity<ApplicationUser>()
                 .Property(u => u.ResetPassword);
+
             modelBuilder.Entity<ApplicationUser>()
                 .Property(u => u.Street) 
                 .HasMaxLength(100);
@@ -52,6 +53,12 @@ namespace Infra.Data.Context
             modelBuilder.Entity<ApplicationUser>()
                 .Property(u => u.State)
                 .HasMaxLength(30);
+
+            modelBuilder.Entity<ApplicationUser>()
+               .Property(u => u.CreationDate)
+               .HasMaxLength(30);
+
+            
         }
 
         //public DbSet<AlunoModel> Alunos { get; set; }

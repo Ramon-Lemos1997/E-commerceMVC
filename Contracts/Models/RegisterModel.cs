@@ -11,6 +11,7 @@ namespace Contracts.Models
         
         [Required(ErrorMessage = "O campo Password é obrigatório.")]
         [DataType(DataType.Password)]
+        [Display(Name ="Senha")]
         public string? Password { get; set; }
 
         [DataType(DataType.Password)]
