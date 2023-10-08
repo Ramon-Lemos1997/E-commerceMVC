@@ -28,10 +28,16 @@ namespace Domain.Entities
         public string ZipCode { get; set; }
 
         [MaxLength(50)] 
-        public string City { get; set; } 
+        public string City { get; set; }
+
+        [MaxLength(50)]
+        public string Nation { get; set; }
 
         [MaxLength(10)] 
-        public string HouseNumber { get; set; } 
+        public string HouseNumber { get; set; }
+
+        [MaxLength(30)]
+        public string State { get; set; }
 
     }
 

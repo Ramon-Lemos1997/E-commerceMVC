@@ -1,0 +1,123 @@
+﻿@using Contracts.Enums;
+@model InfoUserModel
+
+<div >
+    <form class="p-2 mx-auto" asp-controller="Account" asp-action="UpdateInfoUser" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        @if (ViewBag.SuccessMessage != null && ViewBag.SuccessMessage == true)
+        {
+            <div class="alert alert-success mt-1 w-auto">
+                Seus dados foram atualizados com sucesso!
+            </div>
+            <meta http-equiv="refresh" content="3;url=/Account/InfoUser">
+        }
+        <h1 class="text-center pt-5">Detalhes da conta</h1>
+
+        <div class="container  border rounded ">
+            <div class="row mt-3">
+                <div class="col">
+                    <label class="form-label" asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" required />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col">
+                    <label class="form-label" asp-for="FirstName"></label>
+                    <input asp-for="FirstName" class="form-control" required />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label class="form-label" asp-for="Surname"></label>
+                    <input asp-for="Surname" class="form-control" required />
+                    <span asp-validation-for="Surname" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mt-3 ">
+                <div class="col">
+                    <label class="form-label" asp-for="BirthDate"></label>
+                    <input asp-for="BirthDate" class="form-control" required />
+                    <span asp-validation-for="BirthDate" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label class="form-label" asp-for="Gender"></label>
+                    <select asp-for="Gender" class="form-control" required>
+                        <option value="">Selecione um gênero</option>
+                        @foreach (var gender in Enum.GetValues(typeof(GenderEnum)))
+                        {
+                            <option value="@gender">@gender</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>                 
+            </div>
+
+            <div class="row mt-3">
+                <div class="col">
+                    <label class="form-label" asp-for="Nation"></label>
+                    <input asp-for="Nation" class="form-control" required />
+                    <span asp-validation-for="Nation" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label class="form-label" asp-for="State"></label>
+                    <select asp-for="State" class="form-control" required>
+                            <option value="">Selecione um estado</option>
+                            @foreach (var state in Enum.GetValues(typeof(StatesEnum)))
+                            {
+                                <option value="@state">@state</option>
+                            }
+                        </select>
+                        <span asp-validation-for="State" class="text-danger"></span>               
+                </div>
+            </div>
+
+            <div class="row mt-3 ">
+                <div class="col">
+                    <label class="form-label" asp-for="City"></label>
+                    <input asp-for=City class="form-control" required />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label class="form-label" asp-for="Neighborhood"></label>
+                    <input asp-for="Neighborhood" class="form-control" required />
+                    <span asp-validation-for="Neighborhood" class="text-danger"></span>
+                </div>                          
+            </div>
+
+            <div class="row mt-3">
+                <div class="col">
+                    <label class="form-label" asp-for="Street"></label>
+                    <input asp-for="Street" class="form-control" required />
+                    <span asp-validation-for="Street" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label class="form-label" asp-for="HouseNumber"></label>
+                    <input asp-for="HouseNumber" class="form-control" required />
+                    <span asp-validation-for="HouseNumber" class="text-danger"></span>
+                </div>              
+            </div>
+                         
+            <div class="row mt-3 ">                            
+                <div class="col mb-3">
+                    <label class="form-label" asp-for="ZipCode"></label>
+                    <input type="number" asp-for="ZipCode" class="form-control" required />
+                    <span asp-validation-for="ZipCode" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label class="form-label" asp-for="PhoneNumber"></label>
+                    <input asp-for="PhoneNumber" class="form-control" required />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+            </div>
+          </div>
+        <a asp-controller="Account" asp-action="InfoUser" class="btn btn-primary mt-3 m-2"><i class="bi bi-arrow-return-left mx-2"></i>Voltar</a>
+        <button type="submit" class="btn btn-success mt-3 m-2"><i class=" bi bi-cloud-upload mx-2"></i>Atualizar dados</button>
+    </form>
+</div>
+
+@section scripts {
+    
+    
+}

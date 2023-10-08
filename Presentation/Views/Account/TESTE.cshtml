@@ -1,0 +1,14 @@
+﻿@page
+@model Contracts.Models.EmailModel
+
+<div>
+    <form asp-controller="Account" asp-action="TESTE" class="mt-5" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group mt-3">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="form-control" required />
+            
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Enviar Link de Recuperação</button>
+    </form>
+</div>

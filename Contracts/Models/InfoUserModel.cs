@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Contracts.Models
 {
-    public class DataUserModel
+    public class InfoUserModel
     {
+
         [Required(ErrorMessage = "O campo Email é obrigatório.")]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -22,8 +23,19 @@ namespace Contracts.Models
         public string Surname { get; set; }
 
         [Required(ErrorMessage = "O campo Gênero é obrigatório.")]
+        [MaxLength(30)]
         [Display(Name = "Gênero")]
         public string Gender { get; set; }
+
+        [Required(ErrorMessage = "O campo Estado é obrigatório.")]
+        [MaxLength(30)]
+        [Display(Name = "Estado")]
+        public string State { get; set; }
+
+        [Required(ErrorMessage = "O campo País é obrigatório.")]
+        [MaxLength(50)]
+        [Display(Name = "País")]
+        public string Nation { get; set; }
 
         [Required(ErrorMessage = "O campo Rua é obrigatório.")]
         [MaxLength(100)]
@@ -36,7 +48,9 @@ namespace Contracts.Models
         public string Neighborhood { get; set; }
 
         [Required(ErrorMessage = "O campo CEP é obrigatório.")]
-        [StringLength(8, ErrorMessage = "O CEP deve conter exatamente 8 dígitos.")]
+        [MinLength(8, ErrorMessage = "O CEP deve conter exatamente 8 dígitos.")]
+        [MaxLength(8, ErrorMessage = "O CEP deve conter exatamente 8 dígitos.")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "O campo Número de telefone deve conter apenas números.")]
         [Display(Name = "CEP")]
         public string ZipCode { get; set; }     
      

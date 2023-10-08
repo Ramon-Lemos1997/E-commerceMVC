@@ -13,11 +13,10 @@ using Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Configuration.AddJsonFile("appsettings.json");
 
-
 builder.Services.AddControllersWithViews();
+
 var connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

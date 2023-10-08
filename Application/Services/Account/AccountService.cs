@@ -18,11 +18,83 @@ namespace Application.Services.Account
         }
 
         //______________________________________________________________________________________
-
-        public async Task<ApplicationUser> GetUserByIdAsync(string userId)
+        public async Task<(OperationResultModel, InfoUserModel)> GetInfoUserAsync(ClaimsPrincipal user)
         {
-            return await _userManager.FindByIdAsync(userId);
+            var User = _userManager.GetUserId(user);
+
+            if (User == null)
+            {
+                return (new OperationResultModel(false, "Usuário não encontrado."), null);
+            }
+
+            var currUser = await _userManager.FindByIdAsync(User);
+
+            if (currUser == null)
+            {
+                return (new OperationResultModel(false, "Usuário não encontrado."), null);
+            }
+
+            var userModel = new InfoUserModel
+            {
+                ZipCode = currUser.ZipCode,
+                Street = currUser.Street,
+                Neighborhood = currUser.Neighborhood,
+                Gender = currUser.Gender,
+                BirthDate = currUser.BirthDate,
+                Email = currUser.Email,
+                FirstName = currUser.FirstName,
+                Surname = currUser.Surname,
+                City = currUser.City,
+                HouseNumber = currUser.HouseNumber,
+                PhoneNumber = currUser.PhoneNumber,
+                State = currUser.State,
+                Nation = currUser.Nation,
+            };
+
+            return (new OperationResultModel(true, "Successo"), userModel);
         }
+
+        public async Task<OperationResultModel> UpdateInfoUserAsync( InfoUserModel model, ClaimsPrincipal user)
+        {
+            var User = _userManager.GetUserId(user);
+
+            if (User == null)
+            {
+                return new OperationResultModel(false, "Usuário não encontrado.");
+            }
+
+            var currUser = await _userManager.FindByIdAsync(User);
+
+            if (currUser == null)
+            {
+                return new OperationResultModel(false, "Usuário não encontrado.");
+            }
+   
+            currUser.UserName = model.Email;
+            currUser.Nation = model.Nation;
+            currUser.Email = model.Email;
+            currUser.FirstName = model.FirstName;
+            currUser.Surname = model.Surname;
+            currUser.BirthDate = model.BirthDate;
+            currUser.Gender = model.Gender;
+            currUser.State = model.State;
+            currUser.Street = model.Street;
+            currUser.HouseNumber = model.HouseNumber;
+            currUser.Neighborhood = model.Neighborhood;
+            currUser.PhoneNumber = model.PhoneNumber;
+            currUser.City = model.City; 
+            currUser.ZipCode = model.ZipCode;
+
+            var result = await _userManager.UpdateAsync(currUser);
+
+            if (result.Succeeded)
+            {
+                return new OperationResultModel(true, "Successo");
+            }
+
+            return new OperationResultModel(false, "Algo deu errado");
+        }
+
 
         public async Task<OperationResultModel> VerifyEmailAsync(string userId, string token)
         {
@@ -113,7 +185,7 @@ namespace Application.Services.Account
             return new OperationResultModel(true, "Sucesso.");
         }
 
-        public async Task<OperationResultModel> SendCode(string userEmail)
+        public async Task<OperationResultModel> SendCodeAsync(string userEmail)
         {
             var user = await _userManager.FindByEmailAsync(userEmail);
             if (user == null)

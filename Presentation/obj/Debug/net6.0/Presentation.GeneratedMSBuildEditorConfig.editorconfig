@@ -24,20 +24,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxDb25maXJtRW1haWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/DataUser.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxEYXRhVXNlci5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxFcnJvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/GetUserById.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxHZXRVc2VyQnlJZC5jc2h0bWw=
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/InfoUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxJbmZvVXNlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/MyAccount.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxNeUFjY291bnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/Register.cshtml]
@@ -50,6 +50,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/SendCode.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxTZW5kQ29kZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/TESTE.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxURVNURS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/UpdateInfoUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxVcGRhdGVJbmZvVXNlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/VerifiedEmail.cshtml]
@@ -66,10 +74,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Shared/_LoginAdminPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpbkFkbWluUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Shared/_LoginPartial.cshtml]

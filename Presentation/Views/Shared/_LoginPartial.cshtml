@@ -4,8 +4,7 @@
 @inject UserManager<ApplicationUser> UserManager
 
 @if (SignInManager.IsSignedIn(User))
-{
-      
+{     
     @if (User.IsInRole("Admin"))
     {
         <a class="nav-link text-warning " asp-area="Admin" asp-controller="Admin" asp-action="Index"><i class="bi bi-star mx-2"></i>Área do administrador</a>
@@ -19,8 +18,7 @@
             {
                 @user.Email
             }
-           @user.FirstName
-                     
+           @user.FirstName                     
         </button>
 
         <ul class="dropdown-menu dropdown-menu-end">
@@ -32,9 +30,9 @@
                 </li>
             } *@
             <li>
-                <form method="get" asp-controller="Account" asp-action="ConfirmEmail">
+                <form method="get" asp-controller="Account" asp-action="MyAccount">                  
                     <button type="submit" class="dropdown-item ">
-                        Dados do usuário
+                        Conta
                     </button>
                 </form>
             </li>
@@ -44,13 +42,9 @@
                         Logout
                     </button>
                 </form>              
-            </li>
-               
+            </li>              
         </ul>
-    </div>
-
-           
-    
+    </div>          
 }
 else
 {

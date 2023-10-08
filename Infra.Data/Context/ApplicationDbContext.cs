@@ -48,6 +48,10 @@ namespace Infra.Data.Context
             modelBuilder.Entity<ApplicationUser>()
                 .Property(u => u.City)
                 .HasMaxLength(50);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .Property(u => u.State)
+                .HasMaxLength(30);
         }
 
         //public DbSet<AlunoModel> Alunos { get; set; }

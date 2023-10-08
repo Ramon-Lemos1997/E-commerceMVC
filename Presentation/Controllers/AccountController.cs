@@ -9,21 +9,25 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Contracts.Interfaces.Infra.Data;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using System.IO;
+using System.Reflection.Emit;
+using System.Reflection;
+using System;
 
 namespace Presentation.Controllers
 {
-    
     public class AccountController : Controller
     {
-        private readonly IAccountInterface _accountService;       
+        private readonly IAccountInterface _accountService;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly UserManager<ApplicationUser> _userManager;
-        public AccountController(SignInManager<ApplicationUser> signInManager, IAccountInterface accountService, UserManager<ApplicationUser> userManager)
+        public AccountController(SignInManager<ApplicationUser> signInManager, IAccountInterface accountService)
         {
             _signInManager = signInManager;
             _accountService = accountService;
-            _userManager = userManager;
         }
+
+        //________________________________________________________________________________________________________________________________________________________
 
         [HttpGet]
         public IActionResult Register()
@@ -42,7 +46,7 @@ namespace Presentation.Controllers
         {
             return View();
         }
-        
+
         [HttpGet]
         public IActionResult SendCode()
         {
@@ -103,49 +107,45 @@ namespace Presentation.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet]
-        public IActionResult DataUser()
+        public IActionResult MyAccount()
         {
-            return View("DataUser");
+            return View();
         }
 
-
+        [Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetUserById()
+        public async Task<IActionResult> InfoUser()
         {
-            // Obtenha o ID do usuário atualmente autenticado
-            var userId = _userManager.GetUserId(User);
+            var (result, userModel) = await _accountService.GetInfoUserAsync(User);
 
-            if (string.IsNullOrEmpty(userId))
+            if (!result.Success)
             {
-                return BadRequest("ID do usuário não encontrado.");
+                ModelState.AddModelError(string.Empty, result.Message);
+                return View();
             }
-
-            // Use o UserManager para buscar o usuário na tabela Users
-            var user = await _userManager.FindByIdAsync(userId);
-
-            if (user == null)
-            {
-                return NotFound("Usuário não encontrado.");
-            }
-            var userModel = new DataUserModel
-            {
-                ZipCode = user.ZipCode,
-                Street = user.Street,
-                Neighborhood = user.Neighborhood,
-                Gender = user.Gender,
-                BirthDate = user.BirthDate,
-                Email = user.Email,
-                FirstName = user.FirstName,
-                Surname = user.Surname,
-                City = user.City,
-                HouseNumber = user.HouseNumber,
-                PhoneNumber = user.PhoneNumber,
-                
-            };
 
             return View(userModel);
         }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> UpdateInfoUser()
+        {
+            var (result, userModel) = await _accountService.GetInfoUserAsync(User);
+
+            if (!result.Success)
+            {
+                ModelState.AddModelError(string.Empty, result.Message);
+                return View();
+            }
+
+            return View(userModel);
+        }
+
+       
+
         //-------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -187,7 +187,7 @@ namespace Presentation.Controllers
                     ModelState.AddModelError(string.Empty, "Você excedeu o número de tentativas, aguarde 1 hora e tente novamente.");
                     return View();
                 }
-              
+
                 ModelState.AddModelError(string.Empty, "Falha na autenticação. Verifique seu email/senha e tente novamente.");
             }
 
@@ -198,7 +198,7 @@ namespace Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync(); 
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 
@@ -207,8 +207,8 @@ namespace Presentation.Controllers
         public async Task<IActionResult> SendCode(EmailModel emailModel)
         {
             if (ModelState.IsValid)
-            {              
-                var result = await _accountService.SendCode(emailModel.Email);
+            {
+                var result = await _accountService.SendCodeAsync(emailModel.Email);
 
                 if (result.Success)
                 {
@@ -225,6 +225,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPasswordModel model)
         {
             if (ModelState.IsValid)
@@ -237,7 +238,7 @@ namespace Presentation.Controllers
                     return View();
                 }
                 else
-                {                  
+                {
                     foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
@@ -251,7 +252,6 @@ namespace Presentation.Controllers
 
         [Authorize]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ConfirmEmail(string Email)
         {
             var result = await _accountService.ConfirmEmailAsync(Email);
@@ -261,25 +261,40 @@ namespace Presentation.Controllers
                 return View();
             }
             else
-            { 
+            {
                 ModelState.AddModelError(string.Empty, result.Message);
                 return View();
             }
         }
-           
-        public async Task<IActionResult> DataUser(DataUserModel model)
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateInfoUser(InfoUserModel model)
         {
             if (ModelState.IsValid)
-            {     
-                 return View();
+            {
+                var result = await _accountService.UpdateInfoUserAsync(model, User);
+                if (result.Success)
+                {
+                    ViewBag.SuccessMessage = true;
+                    return View();
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, result.Message);
+                    return View();
+                }
             }
-            
             return View(model);
+
         }
 
+       
 
 
 
-    //------------------------------------------------------------------------------------------------------------------------------------------
+
+        //------------------------------------------------------------------------------------------------------------------------------------------
     }
 }

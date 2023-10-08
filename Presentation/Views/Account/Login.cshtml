@@ -1,6 +1,5 @@
 ﻿@model LoginModel
 
-
 <div class="row mt-5">
     <div class="col-md-12 mt-5">
         <form method="post">
@@ -24,7 +23,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary mt-3">Login</button>
-            <a class="btn btn-primary mt-3 ms-2 " href="@Url.Action("SendCode", "Account")">Esqueci minha senha</a>
+            <a asp-controller="Account" asp-action="SendCode" class="btn btn-warning mt-3 mx-2">Esqueci minha senha</a>           
         </form>
     </div>
 
