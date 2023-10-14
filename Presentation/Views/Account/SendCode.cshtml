@@ -7,9 +7,9 @@
     <div class="alert alert-success mt-5 w-auto">
         Foi enviado um link para a redefinição de senha para o email cadastrado.
     </div>
-    <meta http-equiv="refresh" content="1;url=/Home/Index">
+    <meta http-equiv="refresh" content="3;url=/Home/Index">
 }
-<h1 class="text-center pt-5">Conecte-se</h1>
+<h1 class="text-center pt-5">Recupere seu acesso</h1>
 <div class="container  border rounded mt-5">
     <form  class="mb-3" asp-controller="Account" asp-action="SendCode" method="post">
         <div asp-validation-summary="All" class="alert-danger"></div>
@@ -21,3 +21,29 @@
     </form>
 </div>
 
+@* # Documentação da View 'Conectar'
+
+## Propósito:
+Esta view é parte de um aplicativo web e é usada para permitir que os usuários se conectem à sua conta ou solicitem um link de recuperação de senha. A view exibe um formulário onde os usuários podem inserir seu email.
+
+## Estrutura:
+- A view começa com uma margem superior (`<div class="pt-5"></div>`) para criar espaço vertical na página.
+- Se uma mensagem de sucesso (`ViewBag.ShowSuccessMessage`) for definida como verdadeira, uma mensagem de sucesso será exibida e a página será redirecionada para a página inicial após 1 segundo.
+- Existe um título centrado "Conecte-se" (`<h1>`).
+- O formulário (`<form>`) permite aos usuários inserir seu email e enviar um link de recuperação.
+- Há uma seção de validação de modelo (`<div asp-validation-summary="All" class="alert-danger"></div>`).
+- O campo de email é um campo de entrada de texto (`<input>`) com a etiqueta "Insira seu email".
+- O botão "Enviar Link de Recuperação" (`<button>`) permite aos usuários enviar o pedido.
+
+## Comportamento:
+- Os usuários inserem seu email no campo de entrada.
+- Se o email for válido e o botão "Enviar Link de Recuperação" for clicado, o aplicativo processará a solicitação.
+
+## Dependências:
+- Esta view depende de uma estrutura web ASP.NET.
+- O modelo `EmailModel` é usado para vincular o campo de entrada de email na view.
+
+## Notas Adicionais:
+- Certifique-se de que a ação 'SendCode' no controlador 'Account' esteja implementada para processar o envio do link de recuperação de senha.
+- Validações e verificações adicionais podem ser implementadas no lado do servidor para garantir a segurança e a integridade dos dados.
+ *@

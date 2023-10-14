@@ -28,3 +28,36 @@
         </form>
     </div>
 </div>
+
+
+
+@*                 # Documentação da View 'Registrar-se'
+
+## Propósito:
+Esta view faz parte de um aplicativo web e é usada para permitir que os usuários se registrem no sistema. A view exibe um formulário onde os usuários podem inserir seu email, senha e confirmar a senha.
+
+## Estrutura:
+- A view começa com uma margem superior (`<div class="pt-5"></div>`) para criar espaço vertical na página.
+- Existe um título centrado "Registrar-se" (`<h1>`).
+- O formulário (`<form>`) permite aos usuários inserir seu email, senha e confirmar a senha.
+- Há uma seção de validação de modelo (`<div asp-validation-summary="All" class="alert-danger"></div>`).
+
+### Campos:
+- Email: Campo de entrada de texto para o email do usuário.
+- Password: Campo de entrada de senha para a senha do usuário.
+- Confirmar Password: Campo de entrada de senha para confirmar a senha do usuário.
+
+## Comportamento:
+- Os usuários inserem seu email no campo "Email".
+- Eles inserem uma senha no campo "Password".
+- Eles confirmam a senha no campo "Confirmar Password".
+- Quando o botão "Registrar-se" é clicado, o aplicativo processa o registro do usuário.
+
+## Dependências:
+- Esta view depende de uma estrutura web ASP.NET.
+- O modelo `RegisterModel` é usado para vincular os campos de entrada de email e senha na view.
+
+## Notas Adicionais:
+- Certifique-se de que a ação 'Register' no controlador 'Account' esteja implementada para processar o registro do usuário.
+- É importante implementar as devidas validações, verificações de segurança e lógica de negócios no lado do servidor para garantir a integridade e a segurança dos dados do usuário.
+ *@

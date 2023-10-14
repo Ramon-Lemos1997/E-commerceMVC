@@ -1,10 +1,13 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Application",
+    "\\Application\\Services",
+    "\\Application\\Services\\Account",
     "\\Presentation",
     "\\Presentation\\Views",
     "\\Presentation\\Views\\Account"
   ],
-  "SelectedNode": "\\Presentation\\Views\\Account\\VerifiedEmail.cshtml",
+  "SelectedNode": "\\Application\\Services\\Account\\AccountService.cs",
   "PreviewInSolutionExplorer": false
 }

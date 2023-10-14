@@ -5,6 +5,8 @@ using Contracts.Models;
 using Microsoft.AspNetCore.Authorization;
 using Domain.Entities;
 
+//Sigo um padrão basicamente em toda controller, onde espero receber um operationResultModel do servince, e quando necessário algum dado adicional, o operation
+//possui Success = bit e Message = string
 
 namespace Presentation.Controllers
 {
@@ -23,30 +25,32 @@ namespace Presentation.Controllers
         [HttpGet]
         public IActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
         [HttpGet]
         public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
         [HttpGet]
-        public async Task<IActionResult> AccessDenied()
-        {
-            return View();
-        }
-
+        public async Task<IActionResult> AccessDenied() => View();
+            
         [HttpGet]
-        public IActionResult SendCode()
-        {
-            return View();
-        }
+        public IActionResult SendCode() => View();
 
         [HttpGet]
         public async Task<IActionResult> ResetPassword(string token, string userId)
-        {
+        {          
             var result = await _accountService.CheckIfTokenResetPasswordIsUsedAsync(userId);
 
             if (!result.Success)
@@ -100,10 +104,7 @@ namespace Presentation.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult MyAccount()
-        {
-            return View();
-        }
+        public IActionResult MyAccount() => View();
 
         [Authorize]
         [HttpGet]
@@ -137,10 +138,7 @@ namespace Presentation.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult UpdatePassword()
-        {
-            return View();
-        }
+        public IActionResult UpdatePassword() => View();
 
 
 
@@ -152,16 +150,17 @@ namespace Presentation.Controllers
         {
             if (ModelState.IsValid)
             {
-                var (user, result) = await _accountService.CreateUserAsync(model.Email, model.Password);
+                var (result, user) = await _accountService.CreateUserAsync(model.Email, model.Password);
 
-                if (result.Succeeded)
+                if (result.Success)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: true);
                     return RedirectToAction("Index", "Home");
                 }
-                foreach (var error in result.Errors)
+                else
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    ModelState.AddModelError(string.Empty, result.Message);
+                    return View();
                 }
             }
 
@@ -230,17 +229,14 @@ namespace Presentation.Controllers
             {
                 var result = await _accountService.ResetPasswordAsync(model.UserId, model.Token, model.NewPassword);
 
-                if (result.Succeeded)
+                if (result.Success)
                 {
                     ViewBag.SuccessMessage = true;
                     return View();
                 }
                 else
                 {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
+                    ModelState.AddModelError(string.Empty, result.Message);
                     return View(model);
                 }
             }
@@ -296,17 +292,14 @@ namespace Presentation.Controllers
             {
                 var result = await _accountService.UpdatePasswordAsync(model.NewPassword, model.CurrPassword, User);
 
-                if (result.Succeeded)
+                if (result.Success)
                 {
                     ViewBag.SuccessMessage = true;
                     return View();
                 }
                 else
                 {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
+                    ModelState.AddModelError(string.Empty, result.Message);
                     return View(model);
                 }                              
             }

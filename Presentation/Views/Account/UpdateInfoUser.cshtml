@@ -3,6 +3,7 @@
 
 <div >
     <form class="p-2 mx-auto" asp-controller="Account" asp-action="UpdateInfoUser" method="post">
+        <div asp-validation-summary="All" class="alert-danger"></div>
         @if (ViewBag.SuccessMessage != null && ViewBag.SuccessMessage == true)
         {
             <div class="alert alert-success mt-1 w-auto">
@@ -11,7 +12,6 @@
             <meta http-equiv="refresh" content="1;url=/Account/InfoUser">
         }
         <h1 class="text-center pt-5">Detalhes da conta</h1>
-        <div asp-validation-summary="All" class="alert-danger"></div>
 
         <div class="container  border rounded ">
             <div class="row mt-3">
@@ -117,7 +117,44 @@
     </form>
 </div>
 
-@section scripts {
-    
-    
-}
+
+
+@* # Documentação da View 'UpdateInfoUser'
+
+## Propósito:
+Esta view é usada para permitir que os usuários atualizem informações pessoais em sua conta. Ela é parte de um aplicativo web e oferece um formulário onde os usuários podem inserir informações como email, nome, data de nascimento, gênero, etc.
+
+## Estrutura:
+- O formulário é enviado para a ação 'UpdateInfoUser' no controlador 'Account' usando o método HTTP POST.
+- Se uma mensagem de sucesso (`ViewBag.SuccessMessage`) for definida como verdadeira, uma mensagem de sucesso será exibida e a página será redirecionada para a página 'InfoUser' após 1 segundo.
+
+### Campos de Informação Pessoal:
+- Email
+- Nome
+- Sobrenome
+- Data de Nascimento
+- Gênero
+- Nacionalidade
+- Estado
+- Cidade
+- Bairro
+- Rua
+- Número da Casa
+- Código Postal (CEP)
+- Número de Telefone
+
+## Comportamento:
+- Os usuários podem voltar para a página anterior clicando no botão "Voltar" ou podem atualizar seus dados pessoais clicando no botão "Atualizar dados".
+- O botão "Atualizar dados" só estará habilitado quando todos os campos obrigatórios estiverem preenchidos.
+- As opções de gênero são carregadas a partir da enumeração `GenderEnum`.
+- As opções de estado são carregadas a partir da enumeração `StatesEnum`.
+
+## Dependências:
+- Esta view depende de uma estrutura web ASP.NET.
+- Ela faz uso de enumerações (`GenderEnum` e `StatesEnum`) para preencher as opções de gênero e estado.
+- Estilos CSS e classes do Bootstrap são usados para o layout e a aparência da página.
+
+## Notas Adicionais:
+- Certifique-se de que a ação 'UpdateInfoUser' no controlador 'Account' esteja implementada para processar a atualização das informações pessoais do usuário.
+- É importante que as validações e regras de negócios associadas a esses campos sejam implementadas no lado do servidor para garantir a segurança e a integridade dos dados.
+ *@

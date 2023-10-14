@@ -21,7 +21,7 @@ namespace Infra.Data.SendEmail
             {
                 var apiKey = _configuration["SendGridSettings:Key"];
                 var client = new SendGridClient(apiKey);
-                var from = new EmailAddress("lemosramonteste1997@gmail.com", "Recuperação de conta");
+                var from = new EmailAddress("lemosramonteste1997@gmail.com", "Ramon Lemos");
                 var to = new EmailAddress(model.ToEmail);
                 var msg = MailHelper.CreateSingleEmail(from, to, model.Subject, plainTextContent: null, htmlContent: model.Message);
 

@@ -1,0 +1,49 @@
+﻿@using Domain.Entities;
+@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<ApplicationUser>
+
+@if (Model.Any())
+{
+    <div class="container mt-5">
+        <h1 class="text-center pb-5">Usuários</h1>
+        <div class="table-responsive">
+            <table id="MyDataTables" class="table table-white table-hover mt-5">
+                <thead>
+                    <tr>
+                        <th scope="col">Email</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Sobrenome</th>              
+                        <th scope="col">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>@user.Email</td>
+                            <td>@user.FirstName</td>
+                            <td>@user.Surname</td>                  
+                            <td>
+                                <a asp-controller="AdminUser" asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger m-2">Excluir</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <a asp-controller="Admin" asp-action="Index" class="btn btn-primary mx-2 m-2"><i class="bi bi-arrow-return-left mx-2"></i>Voltar</a>
+    </div>    
+}
+else
+{
+    <div class="card mt-5">
+        <div class="card-header">
+            Não existem usuários.
+        </div>    
+    </div>
+}
+
+
+
+
+

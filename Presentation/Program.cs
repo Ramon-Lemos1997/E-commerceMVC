@@ -13,6 +13,7 @@ using Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//settings para usar o appsettinhs json no projeto
 builder.Configuration.AddJsonFile("appsettings.json");
 
 builder.Services.AddControllersWithViews();
@@ -22,6 +23,7 @@ var connection = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(connection));
 
+//settings gerais para usar o identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
           .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders()
           .AddErrorDescriber<PortugueseMessages>();
@@ -43,21 +45,34 @@ builder.Services.Configure<IdentityOptions>(options =>
 
 });
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
-    {
-        options.Cookie.Name = "AspNetCore.Cookies";
-        options.ExpireTimeSpan = TimeSpan.FromSeconds(20);
-        options.SlidingExpiration = false;
-    });
+//configuração do cookie gerado pelo identity
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.Name = "AspNetCore.Cookies";
+    options.ExpireTimeSpan = TimeSpan.FromDays(1); 
+    options.SlidingExpiration = false;
+});
 
+////configuração de cookies de forma geral, ainda sem uso
+//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+//    .AddCookie(options =>
+//    {
+//        options.Cookie.Name = "AspNetCore.Cookies";
+//        options.ExpireTimeSpan = TimeSpan.FromSeconds(20);
+//        options.SlidingExpiration = false;
+//    });
+
+//settinhs de roles
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Admin",
          policy => policy.RequireRole("Admin"));
 });
 
+//injeções de dependências gerais
 builder.Services.AddScoped<IAccountInterface, AccountService>();
+builder.Services.AddScoped<IAdminRoleInterface, AdminRoleService>();
 builder.Services.AddScoped<ISendEmail, SendEmailService>();
 builder.Services.AddScoped<IUserRoleInitial, UserRoleInitial>();
 
@@ -76,10 +91,18 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-await CriarPerfisUsuariosAsync(app);
+//await CriarPerfisUsuariosAsync(app);
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "MinhaArea",
+      pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}"
+    );
+});
 
 app.MapControllerRoute(
     name: "default",
@@ -87,16 +110,16 @@ app.MapControllerRoute(
 
 app.Run();
 
-
-async Task CriarPerfisUsuariosAsync(WebApplication app)
-{
-    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
-    using (var scope = scopedFactory.CreateScope())
-    {
-        var service = scope.ServiceProvider.GetService<IUserRoleInitial>();
-        await service.RolesAsync();
-        //await service.UsersAsync();
-        //var service = scope.ServiceProvider.GetService<IUserClaimInital>();
-        //await service.UserClaims();
-    }
-}
+//criar roles iniciais e usuários e claim's
+//async Task CriarPerfisUsuariosAsync(WebApplication app)
+//{
+//    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+//    using (var scope = scopedFactory.CreateScope())
+//    {
+//        var service = scope.ServiceProvider.GetService<IUserRoleInitial>();
+//        await service.RolesAsync();
+//        //await service.UsersAsync();
+//        //var service = scope.ServiceProvider.GetService<IUserClaimInital>();
+//        //await service.UserClaims();
+//    }
+//}

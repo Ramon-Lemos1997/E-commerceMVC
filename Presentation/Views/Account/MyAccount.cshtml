@@ -14,3 +14,27 @@
 </div>
 
 
+@* # Documentação da View 'Configurações da Conta'
+
+## Propósito:
+Esta view faz parte de um aplicativo web e é usada para exibir as configurações da conta do usuário. Ela fornece links para a página inicial, detalhes da conta e confirmação de email.
+
+## Estrutura:
+- A view começa com três `<div>` vazias com a classe "pt-5", criando espaço vertical na página.
+- Em seguida, há um contêiner (`<div class="container mt-5">`) que envolve o conteúdo principal.
+- Dentro do contêiner, há um cabeçalho com o título "Configurações da conta" (`<h1>`).
+- Existem três botões que permitem ao usuário navegar para diferentes páginas:
+  - "Voltar" (`<a asp-controller="Home" asp-action="Index">`) para retornar à página inicial.
+  - "Detalhes" (`<a asp-controller="Account" asp-action="InfoUser">`) para visualizar os detalhes da conta.
+  - "Confirme sua conta" (`<a asp-controller="Account" asp-action="ConfirmEmail">`) para confirmar o email da conta.
+
+## Comportamento:
+- Os botões de navegação permitem que o usuário acesse diferentes seções do aplicativo, como detalhes da conta ou confirmação de email.
+
+## Dependências:
+- Esta view depende de uma estrutura web ASP.NET.
+
+## Notas Adicionais:
+- Certifique-se de que as ações correspondentes nos controladores 'Home' e 'Account' estejam implementadas para processar a navegação do usuário e exibir as páginas relevantes.
+- O uso de ícones Bootstrap (por exemplo, `<i class="bi bi-arrow-return-left mx-2"></i>`) é uma boa prática para melhorar a usabilidade e a estética da página.
+ *@

@@ -50,3 +50,33 @@
         });
     </script>
 }
+
+
+@* ## Documentação da View 'ConfirmEmail'
+
+### Propósito:
+Esta view é parte de um sistema de confirmação de email em um aplicativo web. Ela é usada para permitir que os usuários confirmem seu endereço de email após o registro.
+
+### Estrutura:
+- A view começa com três `<div>` vazias com a classe "pt-5", criando espaço vertical na página.
+- Em seguida, exibe um título centrado "Confirmação de Conta" (`<h1>`).
+- Um formulário (`<form>`) é usado para permitir que os usuários confirmem seu email.
+- Há uma seção de validação de modelo (`<div asp-validation-summary="All" class="alert-danger"></div>`) para exibir erros de validação, se houverem.
+- Se uma mensagem de sucesso (`ViewBag.SuccessMessage`) for definida como verdadeira, uma mensagem de sucesso será exibida e a página será redirecionada para a página inicial após 1 segundo.
+- A próxima seção permite aos usuários selecionar o campo que desejam verificar: o email.
+- Dependendo do estado do email (`ViewBag.IsEmailConfirmed`), a view exibirá ou uma mensagem de confirmação ou um checkbox para confirmar o email.
+- Um botão "Confirmar" está presente, mas é desabilitado até que o usuário marque a caixa de seleção "Confirmar Email".
+
+### Comportamento:
+- Os usuários podem voltar para a página anterior clicando no botão "Voltar" ou podem confirmar seu email marcando a caixa de seleção e clicando no botão "Confirmar".
+- Quando a caixa de seleção é marcada, o botão "Confirmar" é habilitado por meio de JavaScript.
+- Se a confirmação do email for bem-sucedida, uma mensagem de sucesso é exibida e o usuário é redirecionado para a página inicial.
+
+### Dependências:
+- Esta view depende de uma estrutura web ASP.NET.
+- Ela faz uso de JavaScript para habilitar/desabilitar o botão de confirmação com base na seleção da caixa de seleção.
+
+### Notas Adicionais:
+- Certifique-se de que a ação "ConfirmEmail" no controlador "Account" esteja implementada para processar a confirmação do email.
+- Os estilos CSS e classes de Bootstrap são usados para o layout e a aparência da página.
+ *@

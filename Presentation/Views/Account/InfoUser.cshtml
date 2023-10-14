@@ -91,3 +91,35 @@ else
     <h1 class="text-center justify-content-center">Usuário não encontrado.</h1>
 }
 
+@* # Documentação da View 'Detalhes da Conta'
+
+## Propósito:
+Esta view faz parte de um aplicativo web e é usada para exibir os detalhes da conta de um usuário, como email, nome, data de nascimento, gênero, endereço, número de telefone, etc.
+
+## Estrutura:
+- A view começa verificando se o modelo (`InfoUserModel`) não é nulo. Se o modelo não for nulo, os detalhes da conta são exibidos.
+- Se o modelo for nulo, uma mensagem "Usuário não encontrado" é exibida.
+
+### Detalhes da Conta (Quando o Modelo Não É Nulo):
+- A view exibe os detalhes da conta em um formulário com campos de entrada desativados.
+- Os detalhes da conta incluem email, nome, data de nascimento, gênero, nacionalidade, estado, cidade, bairro, rua, número da casa, CEP e número de telefone.
+- Cada campo é acompanhado por uma etiqueta (`<label>`) que descreve o campo.
+- Os campos de entrada (`<input>`) estão definidos como desabilitados (`disabled`) para que não possam ser editados pelo usuário.
+- Abaixo dos campos de entrada, existem botões para permitir que o usuário:
+  - "Voltar" (`<a asp-controller="Account" asp-action="MyAccount">`) para retornar à página de detalhes da conta.
+  - "Atualizar Dados" (`<a asp-controller="Account" asp-action="UpdateInfoUser">`) para atualizar os detalhes da conta.
+  - "Alterar Senha" (`<a asp-controller="Account" asp-action="UpdatePassword">`) para alterar a senha da conta.
+
+## Comportamento:
+- Se o modelo `InfoUserModel` não for nulo, os detalhes da conta são exibidos em campos de entrada desativados.
+- O usuário pode visualizar, mas não editar, os detalhes da conta.
+- Os botões de ação permitem que o usuário navegue para outras páginas relevantes, como a página de atualização de informações ou a página de alteração de senha.
+
+## Dependências:
+- Esta view depende de uma estrutura web ASP.NET.
+- O modelo `InfoUserModel` é usado para exibir os detalhes da conta.
+
+## Notas Adicionais:
+- Certifique-se de que as ações correspondentes nos controladores 'Account' estejam implementadas para processar as atualizações de informações e alterações de senha, conforme apropriado.
+- A validação de acesso às páginas deve ser implementada para garantir que apenas o usuário autenticado tenha acesso às informações da conta.
+ *@

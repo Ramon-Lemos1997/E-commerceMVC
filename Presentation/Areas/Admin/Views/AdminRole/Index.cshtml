@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<IdentityRole>
+
+@if (Model.Any())
+{
+    <div class="container mt-5">
+        <h1 class="text-center pb-5">Cargos gerais</h1>
+        <div class="table-responsive">
+            <table id="MyDataTables" class="table table-white table-hover mt-5">
+                <thead>
+                    <tr>
+                        <th scope="col">Cargo</th>
+                        <th scope="col">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var role in Model)
+                    {
+                        <tr>
+                            <td>@role.Name</td>
+                            <td>
+                                <a asp-controller="AdminRole" asp-action="Delete" asp-route-id="@role.Id" class="btn btn-danger m-2">Excluir</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <a asp-controller="Admin" asp-action="Index" class="btn btn-primary mx-2 m-2"><i class="bi bi-arrow-return-left mx-2"></i>Voltar</a>
+        <a class="btn btn-success mx-2" asp-controller="AdminRole" asp-action="Create"> Criar novo cargo</a>
+    </div>
+}
+else
+{
+    <h1 class="pt-5">Nenhum cargo encontrado.</h1>
+}

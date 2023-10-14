@@ -1,6 +1,6 @@
 ﻿@model LoginModel
 <div class="pt-5"></div>
-<h1 class="text-center pt-5">Conecte-se</h1>
+<h1 class="text-center pt-5">Conectar-se</h1>
 <div class="container  border rounded mt-5">
     <div class="col-md-12 mb-3 ">
         <form asp-controller="Account" asp-action="Login" method="post">
@@ -23,9 +23,42 @@
                 <span asp-validation-for="RememberMe" class="form-check-label"></span>
             </div>
 
-            <button type="submit" class="btn btn-primary mt-3">Login</button>
+            <button type="submit" class="btn btn-primary mt-3">Entrar</button>
             <a asp-controller="Account" asp-action="SendCode" class="btn btn-warning mt-3 mx-2">Esqueci minha senha</a>
         </form>
     </div>
 </div>
 
+
+@* 
+            # Documentação da View 'Conectar-se'
+
+## Propósito:
+Esta view faz parte de um aplicativo web e é usada para permitir que os usuários se conectem à sua conta. A view exibe um formulário onde os usuários podem inserir seu email e senha.
+
+## Estrutura:
+- A view começa com uma margem superior (`<div class="pt-5"></div>`) para criar espaço vertical na página.
+- Existe um título centrado "Conecte-se" (`<h1>`).
+- O formulário (`<form>`) permite aos usuários inserir seu email e senha.
+- Há uma seção de validação de modelo (`<div asp-validation-summary="All" class="alert-danger"></div>`).
+
+### Campos:
+- Email: Campo de entrada de texto para o email do usuário.
+- Password: Campo de entrada de senha para a senha do usuário.
+- Lembrar-me: Checkbox para permitir que o usuário escolha se deseja permanecer conectado.
+
+## Comportamento:
+- Os usuários inserem seu email no campo "Email".
+- Eles inserem sua senha no campo "Password".
+- Eles podem marcar a caixa "Lembrar-me" para permanecer conectados.
+- Quando o botão "Login" é clicado, o aplicativo processa a solicitação de login.
+- O botão "Esqueci minha senha" permite que os usuários solicitem um link de recuperação de senha.
+
+## Dependências:
+- Esta view depende de uma estrutura web ASP.NET.
+- O modelo `LoginModel` é usado para vincular os campos de entrada de email e senha na view.
+
+## Notas Adicionais:
+- Certifique-se de que a ação 'Login' e 'SendCode' no controlador 'Account' estejam implementadas para processar o login do usuário e solicitar um link de recuperação de senha.
+- Validações e verificações de segurança adequadas devem ser implementadas no lado do servidor para proteger as contas dos usuários.
+ *@

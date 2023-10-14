@@ -1,0 +1,21 @@
+﻿
+
+@if (ViewBag.ShowSuccessMessage != null && ViewBag.ShowSuccessMessage == true)
+{
+    <div class="alert alert-success mt-5 w-auto">
+        Foi enviado um link para a redefinição de senha para o email cadastrado.
+    </div>
+    <meta http-equiv="refresh" content="3;url=/Home/Index">
+}
+<h1 class="text-center pt-5">Crie um novo cargo para a aplicação</h1>
+<div class="container  border rounded mt-5">
+    <form class="mb-3" asp-controller="AdminRole" asp-action="Create" method="post">
+        <div asp-validation-summary="All" class="alert-danger"></div>
+        <div class="form-group mt-3">
+            <label for="roleName" class="form-label">Nome do cargo</label>
+            <input name="roleName" class="form-control" placeholder="Insira um cargo" required />
+        </div>
+        <a asp-area="Admin" asp-controller="AdminRole" asp-action="Index" class="btn btn-primary mt-3 m-2"><i class="bi bi-arrow-return-left mx-2"></i>Voltar</a>
+        <button type="submit" class="btn btn-success mt-3 m-2">Criar</button>
+    </form>
+</div>

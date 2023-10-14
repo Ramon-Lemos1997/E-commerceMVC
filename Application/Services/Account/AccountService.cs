@@ -4,7 +4,6 @@ using Contracts.Interfaces.Identity;
 using Contracts.Interfaces.Infra.Data;
 using System.Security.Claims;
 using Domain.Entities;
-using Microsoft.Extensions.Logging;
 
 namespace Application.Services.Account
 {
@@ -21,11 +20,16 @@ namespace Application.Services.Account
         //______________________________________________________________________________________
         public async Task<(OperationResultModel, InfoUserModel)> GetInfoUserAsync(ClaimsPrincipal user)
         {
+            if (user == null)
+            {
+                return (new OperationResultModel(false, "Nenhum dado recebido."), null);
+            }
+
             var User = _userManager.GetUserId(user);
 
             if (User == null)
             {
-                return (new OperationResultModel(false, "Usuário não encontrado."), null);
+                return (new OperationResultModel(false, "Nenhum Id encontrado."), null);
             }
 
             var currUser = await _userManager.FindByIdAsync(User);
@@ -57,11 +61,16 @@ namespace Application.Services.Account
 
         public async Task<OperationResultModel> UpdateInfoUserAsync( InfoUserModel model, ClaimsPrincipal user)
         {
+            if (user == null)
+            {
+                return new OperationResultModel(false, "Nenhum dado recebido.");
+            }
+
             var User = _userManager.GetUserId(user);
 
             if (User == null)
             {
-                return new OperationResultModel(false, "Usuário não encontrado.");
+                return new OperationResultModel(false, "Nenhum Id encontrado.");
             }
 
             var currUser = await _userManager.FindByIdAsync(User);
@@ -105,10 +114,11 @@ namespace Application.Services.Account
         {
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
             {
-                return new OperationResultModel(false, "Erro ao validar sua chave, tente novamente.");
+                return new OperationResultModel(false, "Erro ao validar seus dados, tente novamente.");
             }
 
             var user = await _userManager.FindByIdAsync(userId);
+
             if (user == null)
             {
                 return new OperationResultModel(false, "Usuário não encontrado.");
@@ -131,13 +141,17 @@ namespace Application.Services.Account
             }
         }
 
-        public async Task<(ApplicationUser user, IdentityResult result)> CreateUserAsync(string userEmail, string password)
+        public async Task<(OperationResultModel, ApplicationUser user)> CreateUserAsync(string userEmail, string password)
         {
+            if (userEmail == null || password == null)
+            {
+                return (new OperationResultModel(false, "Nenhum dado recebido."), null);
+            }
+    
             // Obtém a data e hora atual no fuso horário do Brasil
             TimeZoneInfo brazilTimeZone = TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time");
             DateTime brazilDateTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, brazilTimeZone);
-
-            var user = new ApplicationUser
+            var currUser = new ApplicationUser
             {
                 UserName = userEmail,
                 Email = userEmail,
@@ -155,20 +169,25 @@ namespace Application.Services.Account
                 State = string.Empty 
             };
 
-            var result = await _userManager.CreateAsync(user, password);
+            var result = await _userManager.CreateAsync(currUser, password);
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, "User");
+                await _userManager.AddToRoleAsync(currUser, "User");
                 //var currDateClaim = new Claim("CadastradoEm", DateTime.Now.ToString());
                 //await _userManager.AddClaimAsync(user, currDateClaim);
-                return (user, result);
+                return (new OperationResultModel(true, "Usuário criado com sucesso"), currUser);
             }
 
-            return (null, result);
+            return (new OperationResultModel(false, "Falha ao criar o usuário"), null);
         }
 
         public async Task<(OperationResultModel, string userEmail)> GetUserEmailAsync(ClaimsPrincipal user)
         {
+            if (user == null)
+            {
+                return (new OperationResultModel(false, "Nenhum dado recebido."), null);
+            }
+          
             var currUser = await _userManager.GetUserAsync(user);
 
             if (currUser == null)
@@ -181,6 +200,11 @@ namespace Application.Services.Account
 
         public async Task<bool> IsEmailConfirmedAsync(ClaimsPrincipal user)
         {
+            if (user == null)
+            {
+                return false;
+            }
+
             var currUser = await _userManager.GetUserAsync(user);
 
             if (currUser == null)
@@ -193,6 +217,10 @@ namespace Application.Services.Account
 
         public async Task<OperationResultModel> CheckIfTokenResetPasswordIsUsedAsync(string userId)
         {
+            if (userId == null)
+            {
+                return new OperationResultModel(false, "Usuário não encontrado");
+            }
             var user = await _userManager.FindByIdAsync(userId);         
      
             if (user.ResetPassword)
@@ -205,7 +233,13 @@ namespace Application.Services.Account
 
         public async Task<OperationResultModel> SendCodeAsync(string userEmail)
         {
+            if (userEmail == null)
+            {
+                return new OperationResultModel(false, "Nenhum dado recebido.");
+            }
+
             var user = await _userManager.FindByEmailAsync(userEmail);
+
             if (user == null)
             {
                 return new OperationResultModel(false, "Usuário não encontrado.");
@@ -247,13 +281,19 @@ namespace Application.Services.Account
             }
         }
        
-        public async Task<IdentityResult> ResetPasswordAsync(string userId, string token, string newPassword)
+        public async Task<OperationResultModel> ResetPasswordAsync(string userId, string token, string newPassword)
         {
+            if (userId == null || token == null || newPassword == null)
+            {
+                return new OperationResultModel(false, "Nenhum dado recebido.");
+            }
+         
             var user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
-            {               
-                return IdentityResult.Failed(new IdentityError { Description = "Usuário não encontrado." });
+            {
+                return new OperationResultModel(false, "Usuário não encontrado.");
+  
             }
 
             var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
@@ -262,18 +302,26 @@ namespace Application.Services.Account
             {
                 user.ResetPassword = true;
                 await _userManager.UpdateAsync(user);
+                return new OperationResultModel(true, "Senha redefinida com sucesso.");
             }
 
-            return result;
+            return new OperationResultModel(false, "Falha em redefinir senha.");
         }
 
         public async Task<OperationResultModel> ConfirmEmailAsync(string userEmail)
         {
+            if (userEmail == null)
+            {
+                return new OperationResultModel(false, "Nenhum dado recebido.");
+            }
+
             var user = await _userManager.FindByEmailAsync(userEmail);
+
             if (user == null || user.EmailConfirmed)
             {
                 return new OperationResultModel(false, "Usuário não encontrado.");
             }
+
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var scheme = "https";
             var host = "localhost:7034";
@@ -281,12 +329,14 @@ namespace Application.Services.Account
 
             var subject = "Confirmação de Conta";
             var message = $"Clique <a href=\"{link}\">aqui</a> para confirmar sua conta.";
+
             var model = new SendEmailModel
             {
                 ToEmail = user.Email,
                 Subject = subject,
                 Message = message
             };
+
             try
             {             
                 await _userManager.UpdateAsync(user);
@@ -299,26 +349,35 @@ namespace Application.Services.Account
             return new OperationResultModel(true, "Successo.");
         }
 
-        public async Task<IdentityResult> UpdatePasswordAsync(string newPassword, string currPassword, ClaimsPrincipal user)
+        public async Task<OperationResultModel> UpdatePasswordAsync(string newPassword, string currPassword, ClaimsPrincipal user)
         {
-            Console.WriteLine("CONTROLADOR CHAMADO");
+            if (newPassword == null || currPassword == null || user == null)
+            {
+                return new OperationResultModel(false, "Nenhum dado recebido.");
+            }
+
             var User = _userManager.GetUserId(user);
 
             if (User == null)
             {
-                return IdentityResult.Failed(new IdentityError { Description = "Usuário não encontrado." });
+                return new OperationResultModel(false, "Usuário não encontrado.");              
             }
 
             var currUser = await _userManager.FindByIdAsync(User);
 
             if (currUser == null)
             {
-                return IdentityResult.Failed(new IdentityError { Description = "Usuário não encontrado." });
+                return new OperationResultModel(false, "Usuário não encontrado.");
             }                
 
-            var result = await _userManager.ChangePasswordAsync(currUser, currPassword, newPassword);          
+            var result = await _userManager.ChangePasswordAsync(currUser, currPassword, newPassword);
+     
+            if (result.Succeeded)
+            {
+                return new OperationResultModel(true, "Senha atualizada com sucesso.");
+            }
 
-            return result;
+            return new OperationResultModel(false, "Falha ao atualizar a senha.");
         }
 
         //----------------------------------------------------------------------------------------------------------------------------------------
