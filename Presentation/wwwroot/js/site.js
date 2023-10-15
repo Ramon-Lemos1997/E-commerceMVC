@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     $('.MyDataTables').DataTable({
         responsive: true,
+        lengthMenu: [[7, 15, 25, 50], [7, 10, 25, 50]],
         language: {
 
             "decimal": "",

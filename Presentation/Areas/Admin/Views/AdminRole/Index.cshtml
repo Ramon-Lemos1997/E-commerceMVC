@@ -3,7 +3,7 @@
 
 @if (Model.Any())
 {
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
         @if (TempData["MessageSuccess"] != null)
         {
             <div class="alert alert-success text-right" role="alert">
@@ -16,7 +16,8 @@
                 <thead>
                     <tr>
                         <th scope="col">Privilégio</th>
-                        <th scope="col">Ação</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,6 +25,9 @@
                     {
                         <tr>
                             <td>@role.Name</td>
+                            <td>
+                                <a asp-controller="AdminRole" asp-action="UsersOfRole" asp-route-id="@role.Id" class="btn btn-info m-2">Usuários presentes neste privilégio</a>
+                            </td>
                             <td>
                                 <a asp-controller="AdminRole" asp-action="Delete" asp-route-id="@role.Id" class="btn btn-danger m-2">Excluir</a>
                             </td>
@@ -38,5 +42,9 @@
 }
 else
 {
-    <h1 class="pt-5">Nenhum cargo encontrado.</h1>
+    <div class="pt-5"></div>
+    <div class="pt-5"></div>
+    <div class="pt-5"></div>
+    <h1 class="pt-5 text-center">Não há privilégios na aplicação.</h1>
+    <meta http-equiv="refresh" content="4;url=/Admin">  
 }

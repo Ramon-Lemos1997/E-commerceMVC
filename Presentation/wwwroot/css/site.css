@@ -16,3 +16,8 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.custom-bootstrap-component {
+    z-index: 9999;
+}
+

@@ -284,6 +284,7 @@ D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\staticwebassets
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\staticwebassets.pack.json
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\staticwebassets.build.json
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\staticwebassets.development.json
+D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\scopedcss\Areas\Admin\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\scopedcss\bundle\Presentation.styles.css
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\scopedcss\projectbundle\Presentation.bundle.scp.css

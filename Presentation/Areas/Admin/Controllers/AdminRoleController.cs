@@ -40,9 +40,23 @@ namespace Presentation.Areas.Admin.Controllers
         
             ModelState.AddModelError(string.Empty, result.Message);
             return View();          
-        }   
+        }
 
+        [HttpGet]
+        public async Task<IActionResult> UsersOfRole(string id)
+        {
+            var roleId = id;
+            var (result, roleName, usersOfRoles) = await _adminRoleService.GetUsersOfRoleAsync(roleId);
 
+            if (result.Success)
+            {
+                ViewBag.Name = roleName;
+                return View(usersOfRoles);
+            }
+
+            ModelState.AddModelError(string.Empty, result.Message);
+            return View();
+        }
         //------------------------------------------------------------------------------------------------------------------------
 
 
@@ -55,7 +69,7 @@ namespace Presentation.Areas.Admin.Controllers
                 var result = await _adminRoleService.CreateRoleAsync(roleName);
                 if (result.Success)
                 {
-                    TempData["MessageSuccess"] = "Regra criada com sucesso.";
+                    TempData["MessageSuccess"] = "Privilégio criado com sucesso.";
                     return RedirectToAction("Index");
                 }
            
@@ -76,7 +90,7 @@ namespace Presentation.Areas.Admin.Controllers
 
             if (result.Success)
             {
-                TempData["MessageSuccess"] = "Regra excluída com sucesso.";
+                TempData["MessageSuccess"] = "Privilégio excluído com sucesso.";
                 return RedirectToAction("Index");
             }
            
