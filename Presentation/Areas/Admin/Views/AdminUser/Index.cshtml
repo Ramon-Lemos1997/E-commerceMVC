@@ -5,15 +5,29 @@
 @if (Model.Any())
 {
     <div class="container mt-5">
+        @if(TempData["MessageSuccess"] != null)
+        {
+            <div class="alert alert-success text-right" role="alert">
+                @TempData["MessageSuccess"]
+            </div>
+        }
+        @if (TempData["MessageError"] != null)
+        {
+            <div class="alert alert-danger text-right" role="alert">
+                @TempData["MessageError"]
+            </div>
+        }
         <h1 class="text-center pb-5">Usuários</h1>
         <div class="table-responsive">
-            <table id="MyDataTables" class="table table-white table-hover mt-5">
+            <table class="MyDataTables table table-white table-hover mt-5">
                 <thead>
                     <tr>
                         <th scope="col">Email</th>
                         <th scope="col">Nome</th>
-                        <th scope="col">Sobrenome</th>              
-                        <th scope="col">Ação</th>
+                        <th scope="col">Sobrenome</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,10 +36,16 @@
                         <tr>
                             <td>@user.Email</td>
                             <td>@user.FirstName</td>
-                            <td>@user.Surname</td>                  
+                            <td>@user.Surname</td>                           
+                            <td>
+                                <a asp-controller="AdminUser" asp-action="InfoUser" asp-route-id="@user.Id" class="btn btn-info m-2">Detalhes</a>
+                            </td>
+                            <td>
+                                <a asp-controller="AdminUser" asp-action="UpdateRole" asp-route-id="@user.Id" class="btn btn-warning m-2">Redefinir privilégio</a>
+                            </td>
                             <td>
                                 <a asp-controller="AdminUser" asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger m-2">Excluir</a>
-                            </td>
+                            </td>                                                
                         </tr>
                     }
                 </tbody>

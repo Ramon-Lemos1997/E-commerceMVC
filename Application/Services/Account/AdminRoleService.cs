@@ -1,26 +1,14 @@
 ﻿using Contracts.Interfaces.Identity;
-using Contracts.Interfaces.Infra.Data;
 using Contracts.Models;
-using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Presentation.Areas.Admin.Models;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services.Account
 {
     public class AdminRoleService : IAdminRoleInterface
     {
-        private readonly UserManager<ApplicationUser> _userManager;
         private RoleManager<IdentityRole> _roleManager;
-        public AdminRoleService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
-        {
-            _userManager = userManager;
+        public AdminRoleService(RoleManager<IdentityRole> roleManager)
+        { 
             _roleManager = roleManager;
         }
 

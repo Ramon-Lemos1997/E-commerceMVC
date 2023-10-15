@@ -73,6 +73,7 @@ builder.Services.AddAuthorization(options =>
 //injeções de dependências gerais
 builder.Services.AddScoped<IAccountInterface, AccountService>();
 builder.Services.AddScoped<IAdminRoleInterface, AdminRoleService>();
+builder.Services.AddScoped<IAdminUserInterface, AdminUserService>();
 builder.Services.AddScoped<ISendEmail, SendEmailService>();
 builder.Services.AddScoped<IUserRoleInitial, UserRoleInitial>();
 

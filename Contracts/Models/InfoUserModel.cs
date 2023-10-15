@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Data;
 
 
 namespace Contracts.Models
 {
     public class InfoUserModel
     {
+        public string Id { get; set; }
 
         [Required(ErrorMessage = "O campo Email é obrigatório.")]
         [EmailAddress]
@@ -73,6 +75,11 @@ namespace Contracts.Models
         [MaxLength(10)]
         [Display(Name = "Número")]
         public string HouseNumber { get; set; }
+
+        [Display(Name ="Privilégio")]
+        public string UserRole { get; set; }
+
+        public List<string> Roles { get; set; }
 
     }
 }

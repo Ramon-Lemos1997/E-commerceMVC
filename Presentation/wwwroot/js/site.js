@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $('#MyDataTables').DataTable({
+    $('.MyDataTables').DataTable({
         responsive: true,
         language: {
 

@@ -1,4 +1,4 @@
-﻿using Application.Services.Account;
+﻿using Contracts.Interfaces.Identity;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -10,63 +10,113 @@ namespace Presentation.Areas.Admin.Controllers
     [Authorize(Roles = ("Admin"))]
     public class AdminUserController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IAdminUserInterface _adminUserService;
+        private readonly IAccountInterface _accountService;
 
-        public AdminUserController(UserManager<ApplicationUser> userManager)
+        public AdminUserController(UserManager<ApplicationUser> userManager, IAdminUserInterface adminUserService, IAccountInterface accountService)
         {
-           this._userManager = userManager;
+            _adminUserService = adminUserService;
+            _accountService = accountService;
         }
 
+        //------------------------------------------------------------------------------------------------------------------------
+
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var users = _userManager.Users;
-            return View(users);
+            var (result, users) = await _adminUserService.GetUsersAsync();
+
+            if (result.Success)
+            {
+                return View(users);
+            }
+
+            ModelState.AddModelError(string.Empty, result.Message);
+            return View();    
         }
 
         [HttpGet]
         public async Task<IActionResult> Delete(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var (result, userModel) = await _adminUserService.GetInfoUserByIdAsync(id);
 
-            // Verifique se o usuário existe
-            if (user == null)
+            if (result.Success)
             {
-                return NotFound();
+                return View(userModel);
             }
-            ViewBag.Success = true;
-            return View(user);
+
+            ModelState.AddModelError(string.Empty, result.Message);
+            return View();
+        }
+
+        //recupero a informações do usuário selecionado
+        [HttpGet]
+        public async Task<IActionResult> InfoUser(string id)
+        {
+            var (result, userModel) = await _adminUserService.GetInfoUserByIdAsync(id);
+
+            if (!result.Success)
+            {
+                ModelState.AddModelError(string.Empty, result.Message);
+                return View();
+            }
+
+            return View(userModel);
+        }
+
+        //recupero a informações do usuário selecionado
+        [HttpGet]
+        public async Task<IActionResult> UpdateRole(string id)
+        {
+            var (result, userModel) = await _adminUserService.GetInfoUserByIdAsync(id);
+
+            if (!result.Success)
+            {
+                ModelState.AddModelError(string.Empty, result.Message);
+                return View();
+            }
+
+            return View(userModel);
+        }
+
+        //-----------------------------------------------------------------------------------------------------------------------
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateRole(string userId, string selectedRole)
+        {
+
+
+            var result = await _adminUserService.UpdateRoleUserAsync(User, userId, selectedRole);
+
+            if (result.Success)
+            {
+                TempData["MessageSuccess"] ="O privilégio do usuário foi redefinido com sucesso.";
+                return RedirectToAction("Index");
+            }
+
+            TempData["MessageError"] = result.Message;
+            return RedirectToAction(nameof(Index));
+            
         }
 
 
 
         [HttpPost, ActionName("Delete")] //o actionName permite que tenha métodos iguais
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteUser(string id)
+        public async Task<IActionResult> DeleteUser(string userId)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var result = await _adminUserService.DeleteUserAsync(userId);
 
-            if(user == null)
+            if(result.Success)
             {
-                ViewBag.errormessage = $"usuário com id = {id} não foi encontrado";
-                return View("NotFound");
+                TempData["MessageSuccess"] = "Usuário excluído com sucesso.";
+                return RedirectToAction("Index");
             }
-            else
-            {
-                var result = await _userManager.DeleteAsync(user);
 
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index");
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-
-                return View("Index");
-            }
+            ModelState.AddModelError(string.Empty, result.Message);
+            return View();
         }
 
 

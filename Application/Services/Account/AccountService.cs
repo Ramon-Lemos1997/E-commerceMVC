@@ -135,10 +135,8 @@ namespace Application.Services.Account
             {
                 return new OperationResultModel(true, "Email confirmado");
             }
-            else
-            {
-                return new OperationResultModel(false, "Erro ao confirmar o email, tente novamente ou entre em contato com o administrador.");
-            }
+           
+            return new OperationResultModel(false, "Erro ao confirmar o email, tente novamente ou entre em contato com o administrador.");          
         }
 
         public async Task<(OperationResultModel, ApplicationUser user)> CreateUserAsync(string userEmail, string password)

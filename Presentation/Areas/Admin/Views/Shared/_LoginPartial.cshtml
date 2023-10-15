@@ -23,14 +23,14 @@
 
         <ul class="dropdown-menu dropdown-menu-end">          
             <li>
-                <form method="get" asp-controller="Account" asp-action="MyAccount">                  
+                <form asp-area="" asp-controller="Account" asp-action="MyAccount" method="get">
                     <button type="submit" class="dropdown-item ">
                         Conta
                     </button>
                 </form>
             </li>
-            <li>                              
-                <form method="post" asp-controller="Account" asp-action="Logout">
+            <li>
+                <form asp-area="" asp-controller="Account" asp-action="Logout" method="post">
                     <button type="submit" class="dropdown-item ">
                         Logout
                     </button>
@@ -41,15 +41,5 @@
 }
 else
 {
-    <ul class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">
-            Registrar-se
-        </a>
-    </ul>
-
-    <ul class="nav-item ">
-        <a class="nav-link text-dark " asp-controller="Account" asp-action="Login">
-            Login
-        </a>
-    </ul>
+   <div>Nada a exibir</div>
 }

@@ -4,12 +4,18 @@
 @if (Model.Any())
 {
     <div class="container mt-5">
-        <h1 class="text-center pb-5">Cargos gerais</h1>
+        @if (TempData["MessageSuccess"] != null)
+        {
+            <div class="alert alert-success text-right" role="alert">
+                @TempData["MessageSuccess"]
+            </div>
+        }
+        <h1 class="text-center pb-5">Privilégios gerais</h1>
         <div class="table-responsive">
-            <table id="MyDataTables" class="table table-white table-hover mt-5">
+            <table class="MyDataTables table table-white table-hover mt-5">
                 <thead>
                     <tr>
-                        <th scope="col">Cargo</th>
+                        <th scope="col">Privilégio</th>
                         <th scope="col">Ação</th>
                     </tr>
                 </thead>
@@ -26,8 +32,8 @@
                 </tbody>
             </table>
         </div>
-        <a asp-controller="Admin" asp-action="Index" class="btn btn-primary mx-2 m-2"><i class="bi bi-arrow-return-left mx-2"></i>Voltar</a>
-        <a class="btn btn-success mx-2" asp-controller="AdminRole" asp-action="Create"> Criar novo cargo</a>
+        <a asp-controller="Admin" asp-action="Index" class="btn btn-primary mt-3 mx-2 "><i class="bi bi-arrow-return-left mx-2"></i>Voltar</a>
+        <a class="btn btn-success mt-3 mx-2" asp-controller="AdminRole" asp-action="Create"> Criar novo privilégio</a>
     </div>
 }
 else

@@ -1,0 +1,125 @@
+﻿@model InfoUserModel
+
+@if (Model != null)
+{
+    <h1 class="text-center pt-5">Detalhes do usuário</h1>
+
+    <div class="container  border rounded ">
+        <div class="row mt-3">
+            <div class="col">
+                <label class="form-label" asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" disabled />
+            </div>
+            <div class="col">
+                <label class="form-label" asp-for="UserRole"></label>
+                <input asp-for="UserRole" class="form-control" disabled />
+            </div>
+        </div>                     
+
+        <div class="row mt-3">
+            <div class="col">
+                <label class="form-label" asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" disabled />
+            </div>
+            <div class="col">
+                <label class="form-label" asp-for="Surname"></label>
+                <input asp-for="Surname" class="form-control" disabled />
+            </div>
+        </div>
+
+        <div class="row mt-3 ">
+            <div class="col">
+                <label class="form-label" asp-for="BirthDate"></label>
+                <input asp-for="BirthDate" class="form-control" disabled />
+            </div>
+            <div class="col">
+                <label class="form-label" asp-for="Gender"></label>
+                <input asp-for="Gender" class="form-control" disabled />
+            </div>          
+        </div>
+
+        <div class="row mt-3 ">
+            <div class="col">
+                <label class="form-label" asp-for="Nation"></label>
+                <input asp-for="Nation" class="form-control" disabled />
+            </div>
+            <div class="col">
+                <label class="form-label" asp-for="State"></label>
+                <input asp-for="State" class="form-control" disabled />
+            </div>
+        </div>
+
+        <div class="row mt-3 ">
+            <div class="col">
+                <label class="form-label" asp-for="City"></label>
+                <input asp-for=City class="form-control" disabled />
+            </div>
+            <div class="col">
+                <label class="form-label" asp-for="Neighborhood"></label>
+                <input asp-for="Neighborhood" class="form-control" disabled />
+            </div>          
+        </div>
+
+        <div class="row mt-3 ">       
+            <div class="col">
+                <label class="form-label" asp-for="Street"></label>
+                <input asp-for="Street" class="form-control" disabled />
+            </div>
+            <div class="col">
+                <label class="form-label" asp-for="HouseNumber"></label>
+                <input asp-for="HouseNumber" class="form-control" disabled />
+            </div>
+        </div>
+
+        <div class="row mt-3 mb-3">
+            <div class="col">
+                <label class="form-label" asp-for="ZipCode"></label>
+                <input asp-for="ZipCode" class="form-control" disabled />
+            </div>
+            <div class="col">
+                <label class="form-label" asp-for="PhoneNumber"></label>
+                <input asp-for="PhoneNumber" class="form-control" disabled />
+            </div>
+        </div>          
+    </div>
+    
+     <a asp-controller="AdminUser" asp-action="Index" class="btn btn-primary mx-2 m-2"><i class="bi bi-arrow-return-left mx-2"></i>Voltar</a>
+}
+   
+else
+{
+    <h1 class="text-center justify-content-center">Usuário não encontrado.</h1>
+}
+
+@* # Documentação da View 'Detalhes da Conta'
+
+## Propósito:
+Esta view faz parte de um aplicativo web e é usada para exibir os detalhes da conta de um usuário, como email, nome, data de nascimento, gênero, endereço, número de telefone, etc.
+
+## Estrutura:
+- A view começa verificando se o modelo (`InfoUserModel`) não é nulo. Se o modelo não for nulo, os detalhes da conta são exibidos.
+- Se o modelo for nulo, uma mensagem "Usuário não encontrado" é exibida.
+
+### Detalhes da Conta (Quando o Modelo Não É Nulo):
+- A view exibe os detalhes da conta em um formulário com campos de entrada desativados.
+- Os detalhes da conta incluem email, nome, data de nascimento, gênero, nacionalidade, estado, cidade, bairro, rua, número da casa, CEP e número de telefone.
+- Cada campo é acompanhado por uma etiqueta (`<label>`) que descreve o campo.
+- Os campos de entrada (`<input>`) estão definidos como desabilitados (`disabled`) para que não possam ser editados pelo usuário.
+- Abaixo dos campos de entrada, existem botões para permitir que o usuário:
+  - "Voltar" (`<a asp-controller="Account" asp-action="MyAccount">`) para retornar à página de detalhes da conta.
+  - "Atualizar Dados" (`<a asp-controller="Account" asp-action="UpdateInfoUser">`) para atualizar os detalhes da conta.
+  - "Alterar Senha" (`<a asp-controller="Account" asp-action="UpdatePassword">`) para alterar a senha da conta.
+
+## Comportamento:
+- Se o modelo `InfoUserModel` não for nulo, os detalhes da conta são exibidos em campos de entrada desativados.
+- O usuário pode visualizar, mas não editar, os detalhes da conta.
+- Os botões de ação permitem que o usuário navegue para outras páginas relevantes, como a página de atualização de informações ou a página de alteração de senha.
+
+## Dependências:
+- Esta view depende de uma estrutura web ASP.NET.
+- O modelo `InfoUserModel` é usado para exibir os detalhes da conta.
+
+## Notas Adicionais:
+- Certifique-se de que as ações correspondentes nos controladores 'Account' estejam implementadas para processar as atualizações de informações e alterações de senha, conforme apropriado.
+- A validação de acesso às páginas deve ser implementada para garantir que apenas o usuário autenticado tenha acesso às informações da conta.
+ *@

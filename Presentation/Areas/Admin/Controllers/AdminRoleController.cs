@@ -4,29 +4,25 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace Presentation.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
     public class AdminRoleController : Controller
-    {
-        private readonly UserManager<ApplicationUser> _userManager;
-
+    {      
         private readonly IAdminRoleInterface _adminRoleService;
-        private RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         public AdminRoleController(RoleManager<IdentityRole> roleManager, IAdminRoleInterface adminRoleService, UserManager<ApplicationUser> userManager)
         {
             _adminRoleService = adminRoleService;
             _roleManager = roleManager;
-            _userManager = userManager;
         }
 
         //---------------------------------------------------------------------------------------------------------------------------------------
 
 
         [HttpGet]
-        public ViewResult Index() => View(_roleManager.Roles);
+        public ViewResult Index() => (_roleManager.Roles != null ? View(_roleManager.Roles) : View());
         
         [HttpGet]
         public ViewResult Create() => View();
@@ -36,6 +32,7 @@ namespace Presentation.Areas.Admin.Controllers
         {
             var roleId = id;
             var (result, role) = await _adminRoleService.GetRoleNameByIdAsync(roleId);
+
             if (result.Success)
             {
                 return View(role);
@@ -44,6 +41,7 @@ namespace Presentation.Areas.Admin.Controllers
             ModelState.AddModelError(string.Empty, result.Message);
             return View();          
         }   
+
 
         //------------------------------------------------------------------------------------------------------------------------
 
@@ -57,13 +55,14 @@ namespace Presentation.Areas.Admin.Controllers
                 var result = await _adminRoleService.CreateRoleAsync(roleName);
                 if (result.Success)
                 {
+                    TempData["MessageSuccess"] = "Regra criada com sucesso.";
                     return RedirectToAction("Index");
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, result.Message);
-                    return View();
-                }
+           
+                
+                ModelState.AddModelError(string.Empty, result.Message);
+                return View();
+                
             }
 
             return View();
@@ -77,13 +76,13 @@ namespace Presentation.Areas.Admin.Controllers
 
             if (result.Success)
             {
+                TempData["MessageSuccess"] = "Regra excluída com sucesso.";
                 return RedirectToAction("Index");
             }
-            else
-            {
-                ModelState.AddModelError(string.Empty, result.Message);
-                return View();
-            }
+           
+            ModelState.AddModelError(string.Empty, result.Message);
+            return View();
+            
         }
 
 
