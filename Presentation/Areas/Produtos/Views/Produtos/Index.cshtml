@@ -1,0 +1,68 @@
+﻿@using Domain.Entities
+@model IEnumerable<Produtos>
+
+<div class="pt-5"></div>
+<div class="pt-5"></div>
+<div class="pt-5"></div>
+
+<div asp-validation-summary="ModelOnly" class="alert alert-light text-danger border border-danger rounded mt-2" role="alert"></div>
+
+@if (Model != null && Model.Any())
+{
+    <div class="container">
+        <div class="row flex-wrap">
+            @foreach (var produto in Model)
+            {
+                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 d-flex align-items-streach mt-5">
+                    <div class="card text-center bg-light">
+                        <a asp-controller="Produtos" asp-action="Detalhes">
+                            <img src="~/images/@produto.PathImage" class="img-thumbnail">
+                        </a>
+                        <div class="card-body ">
+                            <a class="nav-link text-dark" asp-controller="Produtos" asp-action="Detalhes">
+                                @((produto.Name.Length > 30) ? produto.Name.Substring(0, 30) + "..." : produto.Name)
+                            </a>
+                        </div>
+                        <a class="nav-link text-dark mb-2" asp-controller="Produtos" asp-action="Detalhes">
+                            <strong>@produto.Price.ToString("C2")</strong>
+                        </a>
+                        <a class="position-absolute bottom-0 end-0 p-3 text-danger " id="favoriteButton" onclick="handleFavoriteClick()">
+                            <i class="bi bi-heart" id="emptyHeartIcon" style="display: inline;"></i>
+                            <i class="bi bi-heart-fill" id="filledHeartIcon" style="display: none;"></i>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <a asp-controller="Produtos" asp-action="Save" class="btn btn-info m-2">save</a>
+}
+else
+{
+    <div class="text-center mt-5">
+        <h1 class="display-4">A loja está temporariamente sem produtos. Por favor, volte em breve.</h1>
+    </div>
+}
+
+@* <a asp-controller="Produtos" asp-action="Save" class="btn btn-info m-2">save</a>
+ *@
+
+@section Scripts {
+    <script>
+        var isFavorited = false;
+
+        function handleFavoriteClick() {
+            isFavorited = !isFavorited;
+            var emptyHeartIcon = document.getElementById('emptyHeartIcon');
+            var filledHeartIcon = document.getElementById('filledHeartIcon');
+
+            if (isFavorited) {
+                emptyHeartIcon.style.display = 'none';
+                filledHeartIcon.style.display = 'inline';
+            } else {
+                emptyHeartIcon.style.display = 'inline';
+                filledHeartIcon.style.display = 'none';
+            }
+        }
+    </script>
+}

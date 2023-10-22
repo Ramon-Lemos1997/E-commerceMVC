@@ -1,7 +1,5 @@
-﻿using Contracts.Interfaces.Identity;
-using Domain.Entities;
+﻿using Domain.Interfaces.Identity;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Areas.Admin.Controllers
@@ -11,12 +9,10 @@ namespace Presentation.Areas.Admin.Controllers
     public class AdminUserController : Controller
     {
         private readonly IAdminUserInterface _adminUserService;
-        private readonly IAccountInterface _accountService;
 
-        public AdminUserController(UserManager<ApplicationUser> userManager, IAdminUserInterface adminUserService, IAccountInterface accountService)
+        public AdminUserController(IAdminUserInterface adminUserService)
         {
             _adminUserService = adminUserService;
-            _accountService = accountService;
         }
 
         //------------------------------------------------------------------------------------------------------------------------
@@ -88,7 +84,7 @@ namespace Presentation.Areas.Admin.Controllers
         {
 
 
-            var result = await _adminUserService.UpdateRoleUserAsync(User, userId, selectedRole);
+            var result = await _adminUserService.UpdateRoleUserAsync(userId, selectedRole);
 
             if (result.Success)
             {
@@ -115,8 +111,8 @@ namespace Presentation.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
-            ModelState.AddModelError(string.Empty, result.Message);
-            return View();
+            TempData["MessageError"] = result.Message;
+            return RedirectToAction(nameof(Index));
         }
 
 

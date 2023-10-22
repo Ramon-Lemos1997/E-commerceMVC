@@ -1,4 +1,4 @@
-﻿@model InfoUserModel
+﻿@model InfoUserForAdminModel
 
 @if (Model != null)
 {
@@ -13,7 +13,7 @@
             <div class="col">
                 <label class="form-label" asp-for="UserRole"></label>
                 <input asp-for="UserRole" class="form-control" disabled />
-            </div>
+            </div>               
         </div>                     
 
         <div class="row mt-3">
@@ -35,7 +35,14 @@
             <div class="col">
                 <label class="form-label" asp-for="Gender"></label>
                 <input asp-for="Gender" class="form-control" disabled />
-            </div>          
+            </div>
+            <div class="col">
+                <label class="form-label" asp-for="AccountConfirmed"></label>
+                @{
+                    string confirmedText = Model.AccountConfirmed ? "Sim" : "Não";
+                }
+                <input value="@confirmedText" class="form-control" disabled />
+            </div>
         </div>
 
         <div class="row mt-3 ">

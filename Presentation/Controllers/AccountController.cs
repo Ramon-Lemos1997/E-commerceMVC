@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Contracts.Interfaces.Identity;
-using Contracts.Models;
+using Domain.Interfaces.Identity;
+using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Domain.Entities;
 
@@ -227,6 +227,8 @@ namespace Presentation.Controllers
                 ModelState.AddModelError(string.Empty, result.Message);
                 return View(model);              
             }
+            ViewBag.UserId = model.UserId;
+            ViewBag.Token = model.Token;
             return View(model);
         }
 
@@ -256,16 +258,16 @@ namespace Presentation.Controllers
             {
                 var result = await _accountService.UpdateInfoUserAsync(model, User);
                 if (result.Success)
-                {
-                    ViewBag.SuccessMessage = true;
-                    return View();
+                {                   
+                    TempData["MessageSuccess"] = "Seus dados foram atualizados com sucesso.";
+                    return RedirectToAction(nameof(InfoUser));
                 }
                
                 ModelState.AddModelError(string.Empty, result.Message);
                 return View();
             }
+            
             return View(model);
-
         }
 
         //atualizar senha do usuário
@@ -279,12 +281,12 @@ namespace Presentation.Controllers
 
                 if (result.Success)
                 {
-                    ViewBag.SuccessMessage = true;
-                    return View();
+                    TempData["MessageSuccess"] = "Senha atualizada com sucesso.";
+                    return RedirectToAction(nameof(InfoUser));
                 }
                
                 ModelState.AddModelError(string.Empty, result.Message);
-                return View(model);                                            
+                return View();                                            
             }
 
             return View(model);

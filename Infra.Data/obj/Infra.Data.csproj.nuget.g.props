@@ -13,6 +13,8 @@
     <SourceRoot Include="C:\Users\Ramon\.nuget\packages\" />
   </ItemGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)sixlabors.imagesharp\3.0.2\build\SixLabors.ImageSharp.props" Condition="Exists('$(NuGetPackageRoot)sixlabors.imagesharp\3.0.2\build\SixLabors.ImageSharp.props')" />
+    <Import Project="$(NuGetPackageRoot)sixlabors.imagesharp.web\3.0.1\build\SixLabors.ImageSharp.Web.props" Condition="Exists('$(NuGetPackageRoot)sixlabors.imagesharp.web\3.0.1\build\SixLabors.ImageSharp.Web.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore\7.0.11\buildTransitive\net6.0\Microsoft.EntityFrameworkCore.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore\7.0.11\buildTransitive\net6.0\Microsoft.EntityFrameworkCore.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore.design\7.0.11\build\net6.0\Microsoft.EntityFrameworkCore.Design.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore.design\7.0.11\build\net6.0\Microsoft.EntityFrameworkCore.Design.props')" />
   </ImportGroup>

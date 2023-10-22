@@ -1,4 +1,4 @@
-﻿using Contracts.Interfaces.Identity;
+﻿using Domain.Interfaces.Identity;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -93,9 +93,9 @@ namespace Presentation.Areas.Admin.Controllers
                 TempData["MessageSuccess"] = "Privilégio excluído com sucesso.";
                 return RedirectToAction("Index");
             }
-           
-            ModelState.AddModelError(string.Empty, result.Message);
-            return View();
+
+            TempData["MessageError"] = result.Message;
+            return RedirectToAction(nameof(Index));
             
         }
 

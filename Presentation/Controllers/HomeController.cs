@@ -1,4 +1,4 @@
-﻿using Contracts.Models;
+﻿using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

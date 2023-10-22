@@ -1,12 +1,4 @@
 ﻿
-
-@if (ViewBag.ShowSuccessMessage != null && ViewBag.ShowSuccessMessage == true)
-{
-    <div class="alert alert-success mt-5 w-auto">
-        Foi enviado um link para a redefinição de senha para o email cadastrado.
-    </div>
-    <meta http-equiv="refresh" content="3;url=/Home/Index">
-}
 <h1 class="text-center pt-5">Crie um novo privilégio para a aplicação</h1>
 <div class="container  border rounded mt-5">
     <form class="mb-3" asp-controller="AdminRole" asp-action="Create" method="post">

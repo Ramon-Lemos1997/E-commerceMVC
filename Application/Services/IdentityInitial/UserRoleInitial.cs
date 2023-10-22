@@ -1,4 +1,4 @@
-﻿using Contracts.Interfaces.Roles;
+﻿using Domain.Interfaces.Roles;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 

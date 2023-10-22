@@ -1,10 +1,8 @@
 D:\Projetos\E-commerce.MVC_ASP.NET\Application\bin\Debug\net6.0\Application.deps.json
 D:\Projetos\E-commerce.MVC_ASP.NET\Application\bin\Debug\net6.0\Application.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Application\bin\Debug\net6.0\Application.pdb
-D:\Projetos\E-commerce.MVC_ASP.NET\Application\bin\Debug\net6.0\Contracts.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Application\bin\Debug\net6.0\Domain.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Application\bin\Debug\net6.0\Infra.Data.dll
-D:\Projetos\E-commerce.MVC_ASP.NET\Application\bin\Debug\net6.0\Contracts.pdb
 D:\Projetos\E-commerce.MVC_ASP.NET\Application\bin\Debug\net6.0\Domain.pdb
 D:\Projetos\E-commerce.MVC_ASP.NET\Application\bin\Debug\net6.0\Infra.Data.pdb
 D:\Projetos\E-commerce.MVC_ASP.NET\Application\obj\Debug\net6.0\Application.csproj.AssemblyReference.cache

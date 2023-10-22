@@ -3,6 +3,12 @@
 @if (Model != null)
 {
     <h1 class="text-center pt-5">Detalhes da conta</h1>
+    @if (TempData["MessageSuccess"] != null)
+    {
+        <div class="alert alert-success text-right" role="alert">
+            @TempData["MessageSuccess"]
+        </div>
+    }
 
     <div class="container  border rounded ">
         <div class="row mt-3">

@@ -4,7 +4,7 @@
 <div class="container  border rounded mt-5">
     <div class="col-md-12 mb-3 ">
         <form asp-controller="Account" asp-action="Login" method="post">
-            <div asp-validation-summary="All" class="alert-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="alert alert-light text-danger border border-danger rounded mt-2" role="alert"></div>
             <div class="form-group">
                 <label asp-for="Email"></label>
                 <input asp-for="Email" class="form-control mt-1" placeholder="Insira seu email" required />

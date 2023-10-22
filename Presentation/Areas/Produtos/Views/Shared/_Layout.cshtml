@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html class="h-100" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] E-commerceMVC</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/E-commerce.MVC_ASP.NET.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.min.css" rel="stylesheet">
+
+    <style>
+        /* Defina box-sizing para todos os elementos HTML */
+        html {
+            box-sizing: border-box;
+        }
+
+        /* Herde o box-sizing para o elemento body */
+        body {
+            box-sizing: inherit;
+        }
+    </style>
+
+
+</head>
+<body class="position-relative m-0 min-vh-100">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow position-fixed w-100 top-0 custom-bootstrap-component">
+            <div class="container-fluid">
+                <a class="navbar-brand text-dark" asp-area="" asp-controller="Home" asp-action="Index"><i class="bi bi-houses-fill mx-2"></i>About</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center text-center">
+                    <ul class="navbar-nav flex-grow-1">
+                     
+                    </ul>
+                    <partial name="_LoginPartial.cshtml" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container ">
+        <main role="main" class="pb-5 pt-5">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer border-top footer text-muted bg-light bottom-0  position-absolute w-100">
+        <div class="container d-flex align-items-center text-dark">
+            &copy; 2023 - ProjetoPessoal - <a class="nav-link text-primary" asp-area="" asp-controller="Home" asp-action="Index">About</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

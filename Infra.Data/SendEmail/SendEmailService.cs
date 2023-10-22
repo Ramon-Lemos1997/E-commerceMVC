@@ -1,8 +1,8 @@
 ﻿using SendGrid.Helpers.Mail;
 using SendGrid;
 using Microsoft.Extensions.Configuration;
-using Contracts.Models;
-using Contracts.Interfaces.Infra.Data;
+using Domain.Models;
+using Domain.Interfaces.Infra.Data;
 
 namespace Infra.Data.SendEmail
 

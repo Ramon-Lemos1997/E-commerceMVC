@@ -10,6 +10,12 @@
                 @TempData["MessageSuccess"]
             </div>
         }
+        @if (TempData["MessageError"] != null)
+        {
+            <div class="alert alert-danger text-right" role="alert">
+                @TempData["MessageError"]
+            </div>
+        }
         <h1 class="text-center pb-5">Privilégios gerais</h1>
         <div class="table-responsive">
             <table class="MyDataTables table table-white table-hover mt-5">
@@ -26,7 +32,7 @@
                         <tr>
                             <td>@role.Name</td>
                             <td>
-                                <a asp-controller="AdminRole" asp-action="UsersOfRole" asp-route-id="@role.Id" class="btn btn-info m-2">Usuários presentes neste privilégio</a>
+                                <a asp-controller="AdminRole" asp-action="UsersOfRole" asp-route-id="@role.Id" class="btn btn-info m-2">Usuários presentes</a>
                             </td>
                             <td>
                                 <a asp-controller="AdminRole" asp-action="Delete" asp-route-id="@role.Id" class="btn btn-danger m-2">Excluir</a>

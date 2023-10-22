@@ -1,5 +1,5 @@
-﻿using Contracts.Interfaces.Identity;
-using Contracts.Models;
+﻿using Domain.Interfaces.Identity;
+using Domain.Models;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -64,7 +64,14 @@ namespace Application.Services.Account
             {
                 return new OperationResultModel(false, "Usuário não encontrado.");
             }
-           
+
+            var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+            
+            if (isAdmin)
+            {
+                return new OperationResultModel(false, "Você não tem permissão para excluir este usuário.");
+            }
+
             var result = await _userManager.DeleteAsync(user);
 
             if (result.Succeeded)
@@ -77,7 +84,7 @@ namespace Application.Services.Account
         }
 
         //obter a info do user, utilizo tanto do detalhes, quanto na tela de redefinir o privilégio
-        public async Task<(OperationResultModel, InfoUserModel)> GetInfoUserByIdAsync(string userId)
+        public async Task<(OperationResultModel, InfoUserForAdminModel)> GetInfoUserByIdAsync(string userId)
         {
             if (userId == null)
             {
@@ -95,7 +102,7 @@ namespace Application.Services.Account
             var userRole = await _userManager.GetRolesAsync(currUser);
 
 
-            var userModel = new InfoUserModel
+            var userModel = new InfoUserForAdminModel
             {
                 ZipCode = currUser.ZipCode,
                 Street = currUser.Street,
@@ -113,6 +120,7 @@ namespace Application.Services.Account
                 UserRole = userRole.FirstOrDefault(), //uso o first pois quero pegar a primeira role do user, na minha aplicação quero que cada user tenha apenas uma role
                 Roles = allRoles,
                 Id = currUser.Id,
+                AccountConfirmed = currUser.EmailConfirmed,
             };
 
             return (new OperationResultModel(true, "Successo"), userModel);
@@ -121,9 +129,9 @@ namespace Application.Services.Account
         //recebo o user logado, o user que irá receber a modificação e a nova role, faço as verificações se existem e depois
         // verifico se possui a mesma role, se não possuirem permito a mudança, somente admin podem fazer esta alteração
         //utilizo o first para pega a role do user, cada user tem apenas uma
-        public async Task<OperationResultModel> UpdateRoleUserAsync(ClaimsPrincipal user, string userId, string selectedRole)
+        public async Task<OperationResultModel> UpdateRoleUserAsync(string userId, string selectedRole)
         {
-            if (user == null ||userId == null || selectedRole == null)
+            if (userId == null || selectedRole == null)
             {
                 return new OperationResultModel(false, "Nenhum dado recebido.");
             }      
@@ -143,23 +151,15 @@ namespace Application.Services.Account
             }
           
             var userRole = await _userManager.GetRolesAsync(userForUpdate);
-            var currRoleForUpdate = userRole.FirstOrDefault();
+            var currRoleForUpdate = userRole.FirstOrDefault(); // uso o first pois cada user tem apenas uma role
 
-            //verifico se o user atual está tentando mudar o privilégio de outro user com a mesma role
-            var loggedInUser = await _userManager.GetUserAsync(user);
+            //verifico se quem estou atualizando é admin
+            var isAdmin = await _userManager.IsInRoleAsync(userForUpdate, "Admin");
 
-            if (loggedInUser == null)
+            if (isAdmin)
             {
-                return new OperationResultModel(false, "Erro na operação.");
-            }
-            var userLoggedRole = await _userManager.GetRolesAsync(loggedInUser);
-            var firstRoleOfUserLogged = userLoggedRole.FirstOrDefault();
-            
-            //usuários tem a mesma role
-            if (firstRoleOfUserLogged == currRoleForUpdate)
-            {
-                return new OperationResultModel(false, "Você não tem permissão para alterar o privilégio deste usuário.");
-            }
+                return new OperationResultModel(false, "Você não tem permissão para redefinir o privilégio deste usuário.");
+            }   
        
             //removo todas roles do user, pois não tem o método de update
             if (currRoleForUpdate != null)

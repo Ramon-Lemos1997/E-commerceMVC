@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "GSBIXaGQq5DZ7qYpoN3qtmo4Le6VdokT+omQU90PVM0=",
+  "Hash": "nsCgJZzGmIFoXjjyuWcOLXrue1Car5oEEEKugAFVq2Q=",
   "Source": "Presentation",
   "BasePath": "_content/Presentation",
   "Mode": "Default",
@@ -83,6 +83,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\images\\9b77040c-934a-40e2-81bb-80f4d397a05b.jpeg",
+      "SourceId": "Presentation",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\",
+      "BasePath": "_content/Presentation",
+      "RelativePath": "images/9b77040c-934a-40e2-81bb-80f4d397a05b.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\9b77040c-934a-40e2-81bb-80f4d397a05b.jpeg"
+    },
+    {
+      "Identity": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\images\\9bdbd87a-8ff6-4046-a72f-d77e06e70129.jpeg",
+      "SourceId": "Presentation",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\",
+      "BasePath": "_content/Presentation",
+      "RelativePath": "images/9bdbd87a-8ff6-4046-a72f-d77e06e70129.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\9bdbd87a-8ff6-4046-a72f-d77e06e70129.jpeg"
     },
     {
       "Identity": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\js\\site.js",

@@ -1,19 +1,12 @@
-﻿@using Contracts.Enums;
+﻿@using Domain.Enums;
 @model InfoUserModel
 
 <div >
     <form class="p-2 mx-auto" asp-controller="Account" asp-action="UpdateInfoUser" method="post">
-        <div asp-validation-summary="All" class="alert-danger"></div>
-        @if (ViewBag.SuccessMessage != null && ViewBag.SuccessMessage == true)
-        {
-            <div class="alert alert-success mt-1 w-auto">
-                Seus dados foram atualizados com sucesso!
-            </div>
-            <meta http-equiv="refresh" content="1;url=/Account/InfoUser">
-        }
+        <div asp-validation-summary="ModelOnly" class="alert alert-light text-danger border border-danger rounded mt-2" role="alert"></div>
         <h1 class="text-center pt-5">Detalhes da conta</h1>
 
-        <div class="container  border rounded ">
+        <div class="container border rounded ">
             <div class="row mt-3">
                 <div class="col">
                     <label class="form-label" asp-for="Email"></label>

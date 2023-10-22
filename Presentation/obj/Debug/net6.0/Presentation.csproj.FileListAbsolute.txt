@@ -62,6 +62,7 @@ D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Microsoft.Ident
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Microsoft.IO.RecyclableMemoryStream.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Microsoft.NET.StringTools.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Microsoft.SqlServer.Server.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Microsoft.VisualStudio.Debugger.Contracts.dll
@@ -85,6 +86,8 @@ D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\NuGet.ProjectMo
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\NuGet.Protocol.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\NuGet.Versioning.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\SendGrid.dll
+D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\SixLabors.ImageSharp.dll
+D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\SixLabors.ImageSharp.Web.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\StarkbankEcdsa.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\System.CodeDom.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\System.Composition.AttributedModel.dll
@@ -262,11 +265,9 @@ D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\runtimes\win\li
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Application.dll
-D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Contracts.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Domain.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Infra.Data.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Application.pdb
-D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Contracts.pdb
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Domain.pdb
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Infra.Data.pdb
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\Presentation.csproj.AssemblyReference.cache
@@ -274,6 +275,7 @@ D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\Presentation.Ge
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\Presentation.AssemblyInfoInputs.cache
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\Presentation.AssemblyInfo.cs
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\Presentation.csproj.CoreCompileInputs.cache
+D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\Presentation.MvcApplicationPartsAssemblyInfo.cs
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\Presentation.MvcApplicationPartsAssemblyInfo.cache
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\Presentation.RazorAssemblyInfo.cache
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\Presentation.RazorAssemblyInfo.cs
@@ -285,6 +287,7 @@ D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\staticwebassets
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\staticwebassets.build.json
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\staticwebassets.development.json
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\scopedcss\Areas\Admin\Views\Shared\_Layout.cshtml.rz.scp.css
+D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\scopedcss\Areas\Produtos\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\scopedcss\bundle\Presentation.styles.css
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\obj\Debug\net6.0\scopedcss\projectbundle\Presentation.bundle.scp.css

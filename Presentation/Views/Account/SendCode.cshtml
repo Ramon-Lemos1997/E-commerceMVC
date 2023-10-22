@@ -12,10 +12,11 @@
 <h1 class="text-center pt-5">Recupere seu acesso</h1>
 <div class="container  border rounded mt-5">
     <form  class="mb-3" asp-controller="Account" asp-action="SendCode" method="post">
-        <div asp-validation-summary="All" class="alert-danger"></div>
+        <div asp-validation-summary="ModelOnly" class="alert alert-light text-danger border border-danger rounded mt-2" role="alert"></div>
         <div class="form-group mt-3">
             <label class="form-label" asp-for="Email"></label>
             <input asp-for="Email" class="form-control" placeholder="Insira seu email" required />
+            <span asp-validation-for="Email" class="text-danger"></span>
         </div>
         <button type="submit" class="btn btn-primary mt-3">Enviar Link de Recuperação</button>
     </form>

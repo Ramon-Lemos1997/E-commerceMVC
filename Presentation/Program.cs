@@ -2,19 +2,32 @@ using Infra.Data.SendEmail;
 using Application.Services.Account;
 using Application.Services.IdentityRoles;
 using Infra.Data.Context;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Contracts.Interfaces.Identity;
-using Contracts.Interfaces.Infra.Data;
-using Contracts.Interfaces.Roles;
+using Domain.Interfaces.Identity;
+using Domain.Interfaces.Infra.Data;
+using Domain.Interfaces.Roles;
 using Infra.Data.IdentityErrors;
 using Domain.Entities;
+using SixLabors.ImageSharp.Web.DependencyInjection;
+using SixLabors.ImageSharp.Web.Caching;
+using Infra.Data.Images;
+using Domain.Interfaces.Produtos;
+using Application.Services.Loja;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //settings para usar o appsettinhs json no projeto
 builder.Configuration.AddJsonFile("appsettings.json");
+
+//settings limite de upload
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.Limits.MaxRequestBodySize = 15 * 1024 * 1024;
+});
+
+//settings para usar o www.root
+builder.Services.AddSingleton(builder.Environment);
 
 builder.Services.AddControllersWithViews();
 
@@ -70,7 +83,21 @@ builder.Services.AddAuthorization(options =>
          policy => policy.RequireRole("Admin"));
 });
 
+//settings tratamento de images
+builder.Services.AddImageSharp(options =>
+{
+    options.BrowserMaxAge = TimeSpan.FromDays(7);
+    options.CacheMaxAge = TimeSpan.FromDays(7);
+    options.CacheHashLength = 8;
+}).Configure<PhysicalFileSystemCacheOptions>(options =>
+{
+    options.CacheFolder = "img/cache";
+});
+
+
 //injeções de dependências gerais
+builder.Services.AddScoped<IProdutosInterface, ProdutosService>();
+builder.Services.AddScoped<IImagesInterface, UploadImagesService>();
 builder.Services.AddScoped<IAccountInterface, AccountService>();
 builder.Services.AddScoped<IAdminRoleInterface, AdminRoleService>();
 builder.Services.AddScoped<IAdminUserInterface, AdminUserService>();
@@ -88,6 +115,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseImageSharp();
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -100,8 +128,16 @@ app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
-      name: "MinhaArea",
+      name: "Admin",
       pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}"
+    );
+});
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "Produtos",
+      pattern: "{area:exists}/{controller=Produtos}/{action=Index}/{id?}"
     );
 });
 

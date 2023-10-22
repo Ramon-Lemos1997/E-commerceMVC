@@ -2,9 +2,7 @@ D:\Projetos\E-commerce.MVC_ASP.NET\Infra.Data\bin\Debug\net6.0\Infra.Data.deps.j
 D:\Projetos\E-commerce.MVC_ASP.NET\Infra.Data\bin\Debug\net6.0\Infra.Data.runtimeconfig.json
 D:\Projetos\E-commerce.MVC_ASP.NET\Infra.Data\bin\Debug\net6.0\Infra.Data.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Infra.Data\bin\Debug\net6.0\Infra.Data.pdb
-D:\Projetos\E-commerce.MVC_ASP.NET\Infra.Data\bin\Debug\net6.0\Contracts.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Infra.Data\bin\Debug\net6.0\Domain.dll
-D:\Projetos\E-commerce.MVC_ASP.NET\Infra.Data\bin\Debug\net6.0\Contracts.pdb
 D:\Projetos\E-commerce.MVC_ASP.NET\Infra.Data\bin\Debug\net6.0\Domain.pdb
 D:\Projetos\E-commerce.MVC_ASP.NET\Infra.Data\obj\Debug\net6.0\Infra.Data.csproj.AssemblyReference.cache
 D:\Projetos\E-commerce.MVC_ASP.NET\Infra.Data\obj\Debug\net6.0\Infra.Data.GeneratedMSBuildEditorConfig.editorconfig

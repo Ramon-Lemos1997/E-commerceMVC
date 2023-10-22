@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Contracts.Models;
-using Contracts.Interfaces.Identity;
-using Contracts.Interfaces.Infra.Data;
+using Domain.Models;
+using Domain.Interfaces.Identity;
+using Domain.Interfaces.Infra.Data;
 using System.Security.Claims;
 using Domain.Entities;
 
@@ -175,8 +175,12 @@ namespace Application.Services.Account
                 //await _userManager.AddClaimAsync(user, currDateClaim);
                 return (new OperationResultModel(true, "Usuário criado com sucesso"), currUser);
             }
+            var errors = result.Errors.Select(e => e.Description);
+            var errorMessage = string.Join(Environment.NewLine, errors);
+            return (new OperationResultModel(false, errorMessage), null);
 
-            return (new OperationResultModel(false, "Falha ao criar o usuário"), null);
+
+
         }
 
         public async Task<(OperationResultModel, string userEmail)> GetUserEmailAsync(ClaimsPrincipal user)
@@ -366,7 +370,13 @@ namespace Application.Services.Account
             if (currUser == null)
             {
                 return new OperationResultModel(false, "Usuário não encontrado.");
-            }                
+            }
+            var passwordCorrect = await _userManager.CheckPasswordAsync(currUser, currPassword);
+
+            if (!passwordCorrect)
+            {
+                return new OperationResultModel(false, "A senha atual está incorreta. Verifique e tente novamente.");
+            }
 
             var result = await _userManager.ChangePasswordAsync(currUser, currPassword, newPassword);
      

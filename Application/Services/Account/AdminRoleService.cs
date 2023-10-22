@@ -1,5 +1,5 @@
-﻿using Contracts.Interfaces.Identity;
-using Contracts.Models;
+﻿using Domain.Interfaces.Identity;
+using Domain.Models;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 
@@ -45,17 +45,22 @@ namespace Application.Services.Account
 
             if (findRole == null)
             {
-                return new OperationResultModel(false, "Cargo não encontrada.");
+                return new OperationResultModel(false, "Privilégio não encontrada.");
+            }
+
+            if (findRole.Name == "Admin")
+            {
+                return new OperationResultModel(false, "Você não tem permissão para excluir o privilégio de administrador.");
             }
 
             var deleteRole = await _roleManager.DeleteAsync(findRole);
 
             if (deleteRole.Succeeded)
             {
-                return new OperationResultModel(true, "Cargo excluído com sucesso.");
+                return new OperationResultModel(true, "Privilégio excluído com sucesso.");
             }
 
-            return new OperationResultModel(false, "falha ao  excluir cargo.");
+            return new OperationResultModel(false, "falha ao  excluir privilégio.");
         }
 
         public async Task<(OperationResultModel, IdentityRole role)> GetRoleNameByIdAsync(string roleId)
