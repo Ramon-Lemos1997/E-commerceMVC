@@ -1,0 +1,98 @@
+﻿@using Domain.Models;
+@using Domain.Enums;
+@model ProductModel
+
+@if (TempData["MessageSuccess"] != null)
+{
+    <div class="alert alert-light text-success border-success rounded mt-5" role="alert">
+        @TempData["MessageSuccess"]
+    </div>
+}
+<div>
+    <form class="p-2 mx-auto" asp-action="SaveProduct" asp-controller="Produtos" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="alert alert-light text-danger border border-danger rounded mt-2" role="alert"></div>
+        
+        <h1 class="text-center pt-5">Cadastrar um novo produto</h1>
+
+        <div class="container border rounded">
+            <div class="row mt-3">
+                <div class="col">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Insira o nome do produto" required />
+                    <span class="text-danger" asp-validation-for="Name"></span>
+                </div>
+                <div class="col">
+                    <label class="form-label" asp-for="Category"></label>
+                    <select asp-for="Category" class="form-control" required>
+                        <option value="">Selecione uma categoria</option>
+                        @foreach (var category in Enum.GetValues(typeof(ProductsCategoryEnum)))
+                        {
+                            <option value="@category">@category</option>
+                        }
+                    </select>
+                    <span class="text-danger" asp-validation-for="Category" class="text-danger"></span>
+                </div>  
+            </div>
+
+            <div class="row mt-3">
+                <div class="col">
+                    <label asp-for="Price" class="form-label"></label>
+                    <input type="text" pattern="\d+(,\d{1,2})?" asp-for="Price" class="form-control" placeholder="Insira o preço do produto (formato aceito, 00,00)" required />
+                    <span class="text-danger" asp-validation-for="Price"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="Stock" class="form-label"></label>
+                    <input asp-for="Stock" class="form-control" placeholder="Insira a quantidade disponível" required />
+                    <span class="text-danger" asp-validation-for="Stock"></span>
+                </div>
+            </div>
+
+               
+            <div class="form-group mt-2">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" placeholder="Descreva os pontos relevantes do produto " rows="4" required></textarea>
+                <span class="text-danger" asp-validation-for="Description"></span>
+            </div>
+            <div  class="form-group mt-2">
+                <label asp-for="Image" class="form-label"></label>
+                <input type="file" asp-for="Image" class="form-control" required accept=".jpg, .jpeg, .png" />
+                <span class="text-danger" asp-validation-for="Image"></span>
+                <img class="img-thumbnail" id="imgPreview" style="max-width: 10em; max-height: 10em; margin-top: 10px;" />
+            </div>
+                
+            <a asp-area="Admin" asp-controller="Admin" asp-action="Index" class="btn btn-primary mt-3 m-2"><i class="bi bi-arrow-return-left mx-2"></i>Voltar</a>
+            <button type="submit" class="btn btn-success mt-3 m-2">Cadastrar</button>
+            
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const inputImage = document.querySelector("input[type=file]");
+            const imgPreview = document.querySelector("#imgPreview");
+
+            inputImage.addEventListener("change", function () {
+                const file = this.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function () {
+                    imgPreview.src = reader.result
+                }
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
+}
+
+
+
+@* O código fornecido é uma página de formulário que permite o cadastro de um novo produto. Ele contém campos para inserir o nome, a categoria, o preço, o estoque
+, a descrição e a imagem do produto. Ao selecionar uma imagem para upload, uma visualização da imagem é exibida em um elemento de imagem com uma classe "img-thumbnail",
+e algumas propriedades de estilo são aplicadas, incluindo uma largura máxima de 10em, uma altura máxima de 10em e uma margem superior de 10px. Além disso, o código inclui 
+manipulação de eventos para exibir a visualização da imagem selecionada. A página também possui elementos para lidar com a validação e exibição de mensagens de sucesso
+durante o envio do formulário. *@

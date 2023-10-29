@@ -7,6 +7,13 @@ namespace Presentation.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
+        public AdminController()
+        {
+            
+        }
+
+        //----------------------------------------------------------------------------------------------------------
+        [HttpGet]
         public IActionResult Index() => View();
         
     }

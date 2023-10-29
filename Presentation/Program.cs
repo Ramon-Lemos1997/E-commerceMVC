@@ -14,6 +14,7 @@ using SixLabors.ImageSharp.Web.Caching;
 using Infra.Data.Images;
 using Domain.Interfaces.Produtos;
 using Application.Services.Loja;
+using Infra.Data.Pagination;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +24,7 @@ builder.Configuration.AddJsonFile("appsettings.json");
 //settings limite de upload
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
-    serverOptions.Limits.MaxRequestBodySize = 15 * 1024 * 1024;
+    serverOptions.Limits.MaxRequestBodySize = 30 * 1024 * 1024;
 });
 
 //settings para usar o www.root
@@ -96,12 +97,13 @@ builder.Services.AddImageSharp(options =>
 
 
 //injeções de dependências gerais
+builder.Services.AddScoped<IPagesInterface, PagesService>();
 builder.Services.AddScoped<IProdutosInterface, ProdutosService>();
-builder.Services.AddScoped<IImagesInterface, UploadImagesService>();
+builder.Services.AddScoped<IImagesInterface, ImagesService>();
 builder.Services.AddScoped<IAccountInterface, AccountService>();
 builder.Services.AddScoped<IAdminRoleInterface, AdminRoleService>();
 builder.Services.AddScoped<IAdminUserInterface, AdminUserService>();
-builder.Services.AddScoped<ISendEmail, SendEmailService>();
+builder.Services.AddScoped<ISendEmail, EmailService>();
 builder.Services.AddScoped<IUserRoleInitial, UserRoleInitial>();
 
 var app = builder.Build();

@@ -11,6 +11,8 @@ namespace Infra.Data.Context
         }
 
         public DbSet<Produtos> Produtos { get; set; }
+        public DbSet<ShoppingCart> ShoppingCartUser { get; set; }
+        public DbSet<FavoriteProducts> FavoriteProductsUser { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

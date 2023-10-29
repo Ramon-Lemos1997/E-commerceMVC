@@ -8,7 +8,7 @@
 {
     <div class="d-flex justify-content-center align-items-center ">
         <form class="p-2 mx-auto col-6 border rounded" asp-controller="AdminRole" asp-action="Delete" method="post">
-            <div asp-validation-summary="All" class="alert-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="alert alert-light text-danger border border-danger rounded mt-2" role="alert"></div>
             <h1 class="text-center pt-5">Tem certeza que deseja excluir este privilégio?</h1>
 
             <div class="container">
@@ -19,10 +19,19 @@
                     </div>
                 </div>
             </div>
-            <a asp-area="Admin" asp-controller="AdminRole" asp-action="Index" class="btn btn-primary mt-3 m-2"><i class="bi bi-arrow-return-left mt-3 mx-2"></i>Voltar</a>
-            <button type="submit" class="btn btn-danger mt-3 m-2">Excluir</button>
+            <a asp-area="Admin" asp-controller="AdminRole" asp-action="Index" class="btn  btn-primary mt-3 m-2">Voltar</a>
+            <button type="submit" class="btn  btn-danger mt-3 m-2">Excluir</button>
         </form>
     </div>
+}
+
+else
+{
+    <div class="pt-5"></div>
+    <div class="pt-5"></div>
+    <div class="pt-5"></div>
+    <h1 class="pt-5 text-center">Privilégio não encontrado.</h1>
+    <meta http-equiv="refresh" content="4;url=/Admin">
 }
 
 

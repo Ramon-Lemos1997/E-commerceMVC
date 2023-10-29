@@ -4,7 +4,7 @@
 
 @if (ViewBag.SuccessMessage != null && ViewBag.SuccessMessage == true)
 {
-    <div class="alert alert-success mt-1 w-auto">
+    <div class="alert alert-light text-success border-success rounded mt-5">
         Foi enviado um link para a verificação de conta para o email cadastrado.
     </div>
     <meta http-equiv="refresh" content="10;url=/Home/Index">
@@ -15,7 +15,7 @@
     <div asp-validation-summary="ModelOnly" class="alert alert-light text-danger border border-danger rounded mt-2" role="alert"></div>  
 
     <h5 class="mt-5 mb-5">Selecione o campo que deseja verificar:</h5>
-    <a asp-controller="Account" asp-action="MyAccount" class="btn btn-primary d-sm-inline-flex mx-5 mt-1"><i class="bi bi-arrow-return-left mx-2"></i>Voltar</a>
+    <a asp-controller="Account" asp-action="MyAccount" class="btn  btn-primary d-sm-inline-flex mx-5 mt-1">Voltar</a>
     
     @if (ViewBag.IsEmailConfirmed != null && ViewBag.IsEmailConfirmed)
     {      
@@ -34,7 +34,7 @@
             </label>
         </div>
 
-        <button type="submit" id="confirmButton" class="btn btn-success mt-1" disabled>Confirmar</button>
+        <button type="submit" id="confirmButton" class="btn  btn-success mt-1" disabled>Confirmar</button>
     }
 </form>
 

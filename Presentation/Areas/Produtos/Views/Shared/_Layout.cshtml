@@ -24,26 +24,28 @@
 
 
 </head>
-<body class="position-relative m-0 min-vh-100">
+<body class="position-relative m-0 min-vh-100 bg-light " style="min-width : 372px;">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow position-fixed w-100 top-0 custom-bootstrap-component">
-            <div class="container-fluid">
-                <a class="navbar-brand text-dark" asp-area="" asp-controller="Home" asp-action="Index"><i class="bi bi-houses-fill mx-2"></i>About</a>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow position-fixed w-100 top-0 custom-bootstrap-component text-sm-center mb-3">
+            <div class="container-fluid d-flex justify-content-between">
+                <a class="navbar-brand ms-4 text-dark" asp-area="Produtos" asp-controller="Produtos" asp-action="Index"><i class="bi bi-shop mx-2"></i>Store.com.br</a>                           
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center text-center">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center text-center ">
                     <ul class="navbar-nav flex-grow-1">
-                     
+                        <li class="nav-item">
+                            <a class="nav-link custom-link text-dark " asp-area="" asp-controller="Home" asp-action="Index"><i class="bi bi-houses-fill mx-2"></i>About</a>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial.cshtml" />
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container ">
-        <main role="main" class="pb-5 pt-5">
+    <div class="container bg-light ">
+        <main role="main" class="pb-5 pt-5">            
             @RenderBody()
         </main>
     </div>

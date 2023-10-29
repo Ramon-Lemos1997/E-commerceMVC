@@ -28,14 +28,14 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow position-fixed w-100 top-0 custom-bootstrap-component">
             <div class="container-fluid">
-                <a class="navbar-brand text-dark" asp-area="" asp-controller="Home" asp-action="Index"><i class="bi bi-houses-fill mx-2"></i>About</a>
+                <a class="navbar-brand ms-4 text-dark" asp-area="Produtos" asp-controller="Produtos" asp-action="Index"><i class="bi bi-shop mx-2"></i>Store.com.br</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center  text-center">
                     <ul class="navbar-nav flex-grow-1">
-                     
+                        <a class="nav-link custom-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><i class="bi bi-houses-fill mx-2"></i>About</a>
                     </ul>
                     <partial name="_LoginPartial.cshtml" />
                 </div>

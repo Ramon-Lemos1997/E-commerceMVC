@@ -2,18 +2,18 @@
 @using Microsoft.AspNetCore.Identity;
 @model IEnumerable<ApplicationUser>
 
-@if (Model.Any())
+@if (Model != null && Model.Any())
 {
     <div class="container mt-5">
         @if(TempData["MessageSuccess"] != null)
         {
-            <div class="alert alert-success text-right" role="alert">
+            <div class="alert alert-light text-success border-success rounded mt-5" role="alert">
                 @TempData["MessageSuccess"]
             </div>
         }
         @if (TempData["MessageError"] != null)
         {
-            <div class="alert alert-danger text-right" role="alert">
+            <div class="alert alert-light text-danger border border-danger rounded mt-5" role="alert">
                 @TempData["MessageError"]
             </div>
         }
@@ -38,20 +38,20 @@
                             <td>@user.FirstName</td>
                             <td>@user.Surname</td>                           
                             <td>
-                                <a asp-controller="AdminUser" asp-action="InfoUser" asp-route-id="@user.Id" class="btn btn-info m-2">Detalhes</a>
+                                <a asp-controller="AdminUser" asp-action="InfoUser" asp-route-id="@user.Id" class="btn  btn-info m-2">Detalhes</a>
                             </td>
                             <td>
-                                <a asp-controller="AdminUser" asp-action="UpdateRole" asp-route-id="@user.Id" class="btn btn-warning m-2">Redefinir privilégio</a>
+                                <a asp-controller="AdminUser" asp-action="UpdateRole" asp-route-id="@user.Id" class="btn  btn-warning m-2">Redefinir privilégio</a>
                             </td>
                             <td>
-                                <a asp-controller="AdminUser" asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger m-2">Excluir</a>
+                                <a asp-controller="AdminUser" asp-action="Delete" asp-route-id="@user.Id" class="btn  btn-danger m-2">Excluir</a>
                             </td>                                                
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
-        <a asp-controller="Admin" asp-action="Index" class="btn btn-primary mx-2 m-2"><i class="bi bi-arrow-return-left mx-2"></i>Voltar</a>
+        <a asp-controller="Admin" asp-action="Index" class="btn btn-primary mx-2 m-2">Voltar</a>
     </div>    
 }
 else

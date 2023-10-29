@@ -84,7 +84,7 @@ namespace Application.Services.Account
             {
                 currUser.EmailConfirmed = false;             
             }
-   
+
             currUser.UserName = model.Email;
             currUser.Nation = model.Nation;
             currUser.Email = model.Email;

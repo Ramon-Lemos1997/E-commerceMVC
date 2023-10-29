@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Application.Services.IdentityRoles
 {
+    //criar as roles e users iniciais
     public class UserRoleInitial : IUserRoleInitial
     {
         private readonly UserManager<ApplicationUser> _userManager;

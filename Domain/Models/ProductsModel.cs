@@ -5,13 +5,14 @@ namespace Domain.Models
 {
     public class ProductModel
     {
-        public int ID { get; set; }
+        public int ID { get; private set; }
 
         [Required(ErrorMessage = "O campo Nome é obrigatório.")]
         [Display(Name = "Nome")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "O campo Descrição é obrigatório.")]
+        [MaxLength(50000, ErrorMessage = "A descrição não pode ter mais de 50000 caracteres.")]
         [Display(Name = "Descrição")]
         public string Description { get; set; }
 
@@ -32,8 +33,8 @@ namespace Domain.Models
         public string Category { get; set; }
 
         [Required(ErrorMessage = "O campo Imagem é obrigatório.")]
-        [MaxFileSize(5 * 1024 * 1024, ErrorMessage = "A imagem não pode exceder 2 megabytes.")]
-        [Display(Name = "Imagem do produto (*Tamanho máximo 5 megabytes.)")]
+        [MaxFileSize(30 * 1024 * 1024, ErrorMessage = "A imagem não pode exceder 30 megabytes.")]
+        [Display(Name = "Imagem do produto (*Tamanho máximo 15 megabytes.)")]
         public IFormFile Image { get; set; }
 
 

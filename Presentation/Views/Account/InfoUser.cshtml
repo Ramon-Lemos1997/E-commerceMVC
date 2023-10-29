@@ -5,7 +5,7 @@
     <h1 class="text-center pt-5">Detalhes da conta</h1>
     @if (TempData["MessageSuccess"] != null)
     {
-        <div class="alert alert-success text-right" role="alert">
+        <div class="alert alert-light text-success border-success rounded mt-5" role="alert">
             @TempData["MessageSuccess"]
         </div>
     }
@@ -86,9 +86,9 @@
     </div>
 
     <div class="mt-3 mb-3">
-        <a asp-controller="Account" asp-action="MyAccount" class="btn btn-primary mx-2 m-2"><i class="bi bi-arrow-return-left mx-2"></i>Voltar</a>
-        <a asp-controller="Account" asp-action="UpdateInfoUser" class="btn btn-warning mx-2 m-2"><i class="bi bi-pen mx-2"></i>Atualizar dados</a>
-        <a asp-controller="Account" asp-action="UpdatePassword" class="btn btn-warning mx-2 m-2"><i class="bi bi-pen mx-2"></i>Alterar senha</a>
+        <a asp-controller="Account" asp-action="MyAccount" class="btn  btn-primary mx-2 m-2">Voltar</a>
+        <a asp-controller="Account" asp-action="UpdateInfoUser" class="btn  btn-warning mx-2 m-2">Atualizar dados</a>
+        <a asp-controller="Account" asp-action="UpdatePassword" class="btn  btn-warning mx-2 m-2">Alterar senha</a>
     </div>
 }
    

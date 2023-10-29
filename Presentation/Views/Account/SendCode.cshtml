@@ -4,7 +4,7 @@
 
 @if (ViewBag.ShowSuccessMessage != null && ViewBag.ShowSuccessMessage == true)
 {
-    <div class="alert alert-success mt-5 w-auto">
+    <div class="alert alert-light text-success border-success rounded mt-5">
         Foi enviado um link para a redefinição de senha para o email cadastrado.
     </div>
     <meta http-equiv="refresh" content="3;url=/Home/Index">
@@ -18,7 +18,7 @@
             <input asp-for="Email" class="form-control" placeholder="Insira seu email" required />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Enviar Link de Recuperação</button>
+        <button type="submit" class="btn  btn-primary mt-3">Enviar Link de Recuperação</button>
     </form>
 </div>
 

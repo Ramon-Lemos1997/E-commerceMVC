@@ -10,6 +10,7 @@ D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Azure.Core.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Azure.Identity.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Dapper.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Humanizer.dll
+D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\JetBrains.Annotations.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\MessagePack.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\MessagePack.Annotations.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
@@ -107,6 +108,8 @@ D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\System.Security
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\System.Text.Encodings.Web.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\System.Text.Json.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\System.Windows.Extensions.dll
+D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\X.PagedList.dll
+D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\X.PagedList.Mvc.Core.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\af\Humanizer.resources.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\ar\Humanizer.resources.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\az\Humanizer.resources.dll

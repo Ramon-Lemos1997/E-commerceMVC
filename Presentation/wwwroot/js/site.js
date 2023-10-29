@@ -36,6 +36,10 @@
     }, 5000)
 })
 
+//preloader
+//$(window).on('load', function () {
+//    $("#preloader").delay(200).fadeOut("slow");
+//});
 
 // Verifica o tamanho do conteúdo e aplica classe CSS ao rodapé
 

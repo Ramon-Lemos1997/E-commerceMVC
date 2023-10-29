@@ -2,12 +2,12 @@
 @using Domain.Entities;
 @model IEnumerable<ApplicationUser>
 
-@if (Model.Any())
+@if (Model != null && Model.Any())
 {
     <div class="container mt-5 mb-5">
         @if (TempData["MessageSuccess"] != null)
         {
-            <div class="alert alert-success text-right" role="alert">
+            <div class="alert alert-light text-success border-success rounded mt-5" role="alert">
                 @TempData["MessageSuccess"]
             </div>
         }
@@ -40,7 +40,7 @@
                 </tbody>
             </table>
         </div>
-        <a asp-controller="AdminRole" asp-action="Index" class="btn btn-primary mt-3 mx-2 "><i class="bi bi-arrow-return-left mx-2"></i>Voltar</a>
+        <a asp-controller="AdminRole" asp-action="Index" class="btn  btn-primary mt-3 mx-2 ">Voltar</a>
     </div>
 }
 else

@@ -86,11 +86,9 @@ namespace Presentation.Controllers
                 ViewBag.ShowSuccessMessage = true;
                 return View("VerifiedEmail");
             }
-            else
-            {
-                ModelState.AddModelError(string.Empty, result.Message);
-                return View("Error");
-            }
+
+            ModelState.AddModelError(string.Empty, result.Message);
+            return View("Error");           
         }
 
         [Authorize]
