@@ -16,6 +16,11 @@ namespace Application.Services.IdentityRoles
             _roleManager = roleManager;
         }
 
+
+        //-------------------------------------------------------------------------
+        /// <summary>
+        /// Verifica se as funções "Admin" e "User" existem no sistema e, se não existirem, cria essas funções.
+        /// </summary>
         public async Task RolesAsync()
         {           
             if (!await _roleManager.RoleExistsAsync("Admin"))
@@ -40,9 +45,11 @@ namespace Application.Services.IdentityRoles
 
         }
 
+        /// <summary>
+        /// Verifica se o usuário administrador com o e-mail "admin@localhost" existe no sistema e, se não existir, cria o usuário com a função "Admin".
+        /// </summary>
         public async Task UsersAsync()
-        {
-          
+        {         
             if (await _userManager.FindByEmailAsync("admin@localhost") == null)
             {
                 ApplicationUser user = new ApplicationUser();
@@ -62,9 +69,11 @@ namespace Application.Services.IdentityRoles
                     await _userManager.AddToRoleAsync(user, "Admin");
                 }
             }
-
-           
-
         }
+
+
+
+
+        //---------------------------------------------------------------------------------
     }
 }

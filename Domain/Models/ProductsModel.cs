@@ -5,7 +5,7 @@ namespace Domain.Models
 {
     public class ProductModel
     {
-        public int ID { get; private set; }
+        public int ID { get; set; }
 
         [Required(ErrorMessage = "O campo Nome é obrigatório.")]
         [Display(Name = "Nome")]
@@ -34,15 +34,15 @@ namespace Domain.Models
 
         [Required(ErrorMessage = "O campo Imagem é obrigatório.")]
         [MaxFileSize(30 * 1024 * 1024, ErrorMessage = "A imagem não pode exceder 30 megabytes.")]
-        [Display(Name = "Imagem do produto (*Tamanho máximo 15 megabytes.)")]
-        public IFormFile Image { get; set; }
+        [Display(Name = "Escolher imagem: (*Tamanho máximo 30 megabytes.)")]
+        public IFormFile Image { get; set; }  
 
-
+        public string PathImage { get; set; } = string.Empty;
         public ProductModel()
         {
             // Adicione inicializações padrão ou deixe o construtor vazio, se não for necessário fazer nada específico.
         }
-        public ProductModel(int id, string name, string description, decimal price, int stock, string category, IFormFile image)
+        public ProductModel(int id, string name, string description, decimal price, int stock, string category, IFormFile image, string pathImage)
         {
             ID = id;
             Name = name;
@@ -51,9 +51,10 @@ namespace Domain.Models
             Stock = stock;
             Category = category;
             Image = image;
+            PathImage = pathImage;
         }
 
-        public ProductModel(string name, string description, decimal price, int stock, string category, IFormFile image)
+        public ProductModel(string name, string description, decimal price, int stock, string category, IFormFile image, string pathImage)
         {
             Name = name;
             Description = description;
@@ -61,6 +62,7 @@ namespace Domain.Models
             Stock = stock;
             Category = category;
             Image = image;
+            PathImage = pathImage;
         }
 
        

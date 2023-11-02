@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Y7XT+WY9XiFO3wex8ml23+hUvrlOPru3ywp4OCfrOKw=",
+  "Hash": "7JEmpbMdPjTEhPY7+UbVrAxjkdqtJR4Auk4qxKoQw6w=",
   "Source": "Presentation",
   "BasePath": "_content/Presentation",
   "Mode": "Default",
@@ -85,12 +85,12 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\images\\18dea751-319f-40ad-900a-197c56c8162a.jpeg",
+      "Identity": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\images\\0d04e302-2b69-4eba-b0d2-89a9f7e49e9e.jpeg",
       "SourceId": "Presentation",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\",
       "BasePath": "_content/Presentation",
-      "RelativePath": "images/18dea751-319f-40ad-900a-197c56c8162a.jpeg",
+      "RelativePath": "images/0d04e302-2b69-4eba-b0d2-89a9f7e49e9e.jpeg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -99,15 +99,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\18dea751-319f-40ad-900a-197c56c8162a.jpeg"
+      "OriginalItemSpec": "wwwroot\\images\\0d04e302-2b69-4eba-b0d2-89a9f7e49e9e.jpeg"
     },
     {
-      "Identity": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\images\\4b1d71aa-110b-4ff9-93b7-d9a661ee9da9.jpeg",
+      "Identity": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\images\\256e22d3-886f-41c3-918c-aea0547b0bda.jpeg",
       "SourceId": "Presentation",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\",
       "BasePath": "_content/Presentation",
-      "RelativePath": "images/4b1d71aa-110b-4ff9-93b7-d9a661ee9da9.jpeg",
+      "RelativePath": "images/256e22d3-886f-41c3-918c-aea0547b0bda.jpeg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -116,15 +116,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\4b1d71aa-110b-4ff9-93b7-d9a661ee9da9.jpeg"
+      "OriginalItemSpec": "wwwroot\\images\\256e22d3-886f-41c3-918c-aea0547b0bda.jpeg"
     },
     {
-      "Identity": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\images\\58a47a06-b6c0-4d4f-8c1d-3ed1dd00376c.jpeg",
+      "Identity": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\images\\db865e49-972a-4fcf-b980-57aabb36fdfa.jpeg",
       "SourceId": "Presentation",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\",
       "BasePath": "_content/Presentation",
-      "RelativePath": "images/58a47a06-b6c0-4d4f-8c1d-3ed1dd00376c.jpeg",
+      "RelativePath": "images/db865e49-972a-4fcf-b980-57aabb36fdfa.jpeg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -133,15 +133,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\58a47a06-b6c0-4d4f-8c1d-3ed1dd00376c.jpeg"
+      "OriginalItemSpec": "wwwroot\\images\\db865e49-972a-4fcf-b980-57aabb36fdfa.jpeg"
     },
     {
-      "Identity": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\images\\618cc2eb-2a74-4097-8bbd-f3311bff80fb.jpeg",
+      "Identity": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\images\\ed2b08be-6991-4255-9e57-9e5a485a737e.jpeg",
       "SourceId": "Presentation",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\",
       "BasePath": "_content/Presentation",
-      "RelativePath": "images/618cc2eb-2a74-4097-8bbd-f3311bff80fb.jpeg",
+      "RelativePath": "images/ed2b08be-6991-4255-9e57-9e5a485a737e.jpeg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -150,15 +150,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\618cc2eb-2a74-4097-8bbd-f3311bff80fb.jpeg"
+      "OriginalItemSpec": "wwwroot\\images\\ed2b08be-6991-4255-9e57-9e5a485a737e.jpeg"
     },
     {
-      "Identity": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\images\\bcabbc47-d56e-4421-b1ce-7c96cd90cd24.jpeg",
+      "Identity": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\images\\fa44e43d-dc02-4a18-9d47-ada0cceb594c.jpeg",
       "SourceId": "Presentation",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\",
       "BasePath": "_content/Presentation",
-      "RelativePath": "images/bcabbc47-d56e-4421-b1ce-7c96cd90cd24.jpeg",
+      "RelativePath": "images/fa44e43d-dc02-4a18-9d47-ada0cceb594c.jpeg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -167,24 +167,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\bcabbc47-d56e-4421-b1ce-7c96cd90cd24.jpeg"
-    },
-    {
-      "Identity": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\images\\f5a7e3da-d287-46a2-a13d-a32f8798324a.jpeg",
-      "SourceId": "Presentation",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\",
-      "BasePath": "_content/Presentation",
-      "RelativePath": "images/f5a7e3da-d287-46a2-a13d-a32f8798324a.jpeg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\f5a7e3da-d287-46a2-a13d-a32f8798324a.jpeg"
+      "OriginalItemSpec": "wwwroot\\images\\fa44e43d-dc02-4a18-9d47-ada0cceb594c.jpeg"
     },
     {
       "Identity": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\images\\mark-konig-Tl8mDaue_II-unsplash.jpg",

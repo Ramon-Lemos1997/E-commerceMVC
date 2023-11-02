@@ -15,6 +15,14 @@ namespace Infra.Data.SendEmail
             _configuration = configuration;
         }
 
+        //___________________________________________________________________
+
+
+        /// <summary>
+        /// Envia um e-mail usando a API SendGrid.
+        /// </summary>
+        /// <param name="model">O modelo de e-mail a ser enviado.</param>
+        /// <returns>Verdadeiro se o e-mail for enviado com sucesso, caso contrário, falso.</returns>
         public async Task<bool> SendEmailAsync(SendEmailModel model)
         {
             try

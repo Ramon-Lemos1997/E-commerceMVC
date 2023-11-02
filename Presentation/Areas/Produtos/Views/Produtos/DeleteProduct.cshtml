@@ -1,0 +1,73 @@
+﻿@using Domain.Models;
+@using Domain.Enums;
+@model EditProductModel
+
+
+@if (TempData["MessageSuccess"] != null)
+{
+    <div class="alert alert-light text-success border-success rounded mt-5" role="alert">
+        @TempData["MessageSuccess"]
+    </div>
+}
+
+@if (TempData["MessageError"] != null)
+{
+    <div class="alert alert-light text-danger border border-danger rounded mt-5" role="alert">
+        @TempData["MessageError"]
+    </div>
+}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            @if (!string.IsNullOrEmpty(ViewBag.Image))
+            {
+                <p class="display-6">@Model.Name</p>
+                <img id="previewImage" src="~/images/@ViewBag.Image" class="img-thumbnail" style="max-width: 10em; max-height: 10em; margin-top: 10px; display: block;" />
+            }
+        </div>
+        <div class="col-md-8">
+            <p class="display-4 text-center">Tem certeza que deseja excluir este produto?</p>
+            <div class="container border rounded">
+                <div class="row mt-3">
+                    <div class="col">
+                        <label asp-for="Name" class="form-label"></label>
+                        <input asp-for="Name" class="form-control" placeholder="Insira o nome do produto" disabled />
+                    </div>
+                    <div class="col">
+                        <label class="form-label" asp-for="Category"></label>
+                        <select asp-for="Category" class="form-control" disabled>
+                            <option value="">Selecione uma categoria</option>
+                            @foreach (var category in Enum.GetValues(typeof(ProductsCategoryEnum)))
+                            {
+                                <option value="@category">@category</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col">
+                        <label asp-for="Price" class="form-label"></label>
+                        <input type="text" pattern="\d+(,\d{1,2})?" asp-for="Price" class="form-control" placeholder="Insira o preço do produto (formato aceito, 00,00)" disabled />
+                    </div>
+                    <div class="col">
+                        <label asp-for="Stock" class="form-label"></label>
+                        <input asp-for="Stock" class="form-control" placeholder="Insira a quantidade disponível" disabled />
+                    </div>
+                </div>
+
+                <div class="form-group mt-2">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control" placeholder="Descreva os pontos relevantes do produto " rows="6" disabled></textarea>
+                </div>
+                <div class="d-flex">
+                    <a asp-area="Produtos" asp-controller="Produtos" asp-action="AreaAdmin" class="btn btn-primary m-2">Voltar</a>
+                    <form asp-controller="Produtos" asp-action="DeleteProduct" method="post">
+                        <input type="hidden" name="productId" value="@Model.ID" class="form-control" />
+                        <button type="submit" class="btn btn-danger m-2">Excluir</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

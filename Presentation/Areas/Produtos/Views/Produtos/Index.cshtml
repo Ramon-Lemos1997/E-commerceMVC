@@ -5,6 +5,7 @@
 @using X.PagedList.Web.Common;
 @model IPagedList<Produtos>
 
+@* Carrosel *@
 <div id="carouselExampleIndicators" class="carousel slide mt-3">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -32,7 +33,7 @@
     </button>
 </div>
 
-
+@* Pesquisa pelo nome e categoria *@
 <div class="ms-5 d-flex col-8 col-md-6 mt-3  ">
     <div class="btn-group">
         <button type="button" class="btn dropdown-toggle custom-link bg-light text-dark border-0 " data-bs-toggle="dropdown" aria-expanded="false">
@@ -85,17 +86,48 @@
                                 @produto.Price.ToString("C2")
                             </button>
                         </form>
-                        <a class="position-absolute bottom-0 end-0 p-3 text-danger " id="favoriteButton" onclick="handleFavoriteClick('@produto.ID')">
-                            <i class="bi bi-heart" id="emptyHeartIcon" style="display: inline;"></i>
-                            <i class="bi bi-heart-fill" id="filledHeartIcon" style="display: none;"></i>
-                        </a>                       
+                        @* Mostrar o items favorites do usuário atual *@
+                        <a class="position-absolute bottom-0 end-0 p-3 text-danger">
+                            @{
+                                bool isFavorite = false;
+                                if (ViewBag.Favorites != null)
+                                {
+                                    foreach (var favorite in ViewBag.Favorites)
+                                    {
+                                        if (favorite.ProductId == produto.ID)
+                                        {
+                                            isFavorite = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            @if (isFavorite)
+                            {
+                                <form asp-area="Produtos" asp-controller="Produtos" asp-action="RemoveToFavorites1" method="post" style="display: inline-block;">
+                                    <input type="hidden" name="productId" value="@produto.ID" />
+                                    <button type="submit" style="background: none; border: none;">
+                                        <i class="bi bi-heart-fill" id="filledHeartIcon" style="display: inline; color: red;"></i>
+                                    </button>
+                                </form>                               
+                            }
+                            else
+                            {
+                                <form asp-area="Produtos" asp-controller="Produtos" asp-action="AddToFavorites1" method="post" style="display: inline-block;">
+                                    <input type="hidden" name="productId" value="@produto.ID" />
+                                    <button type="submit" style="background: none; border: none;">
+                                        <i class="bi bi-heart" id="emptyHeartIcon" style="display: inline;"></i>
+                                    </button>
+                                </form>
+                            }
+                        </a>
                     </div>
                 </div> 
              } 
          </div>
     </div>
 
-@*     Páginação da page
+@*Páginação da page
  *@    <div class="row mt-4 mt-5">
         <div class="col d-flex justify-content-center">
             @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
@@ -119,24 +151,4 @@ else
     </div>
 }
 
-
-@section Scripts {
-    <script>
-        var isFavorited = false;
-
-        function handleFavoriteClick(produtoId) {
-            this.isFavorited = !isFavorited;
-            var emptyHeartIcon = document.getElementById('emptyHeartIcon');
-            var filledHeartIcon = document.getElementById('filledHeartIcon');
-
-            if (this.isFavorited) {
-                emptyHeartIcon.style.display = 'none';
-                filledHeartIcon.style.display = 'inline';
-            } else {
-                emptyHeartIcon.style.display = 'inline';
-                filledHeartIcon.style.display = 'none';
-            }
-        }
-    </script>
-}
 

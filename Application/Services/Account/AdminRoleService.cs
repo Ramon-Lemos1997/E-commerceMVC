@@ -17,9 +17,16 @@ namespace Application.Services.Account
 
         //---------------------------------------------------------------------------------------------------------------------------------------
 
+        /// <summary>
+        /// Cria uma função com o nome fornecido.
+        /// </summary>
+        /// <param name="roleName">O nome da função a ser criada.</param>
+        /// <returns>
+        /// Um objeto <see cref="OperationResultModel"/> que indica se a operação de criação foi bem-sucedida ou não.
+        /// </returns>
         public async Task<OperationResultModel> CreateRoleAsync(string roleName)
         {
-            if (roleName == null)
+            if (string.IsNullOrWhiteSpace(roleName))
             {
                 return new OperationResultModel(false, "Nenhum cargo recebido.");
             }
@@ -34,9 +41,16 @@ namespace Application.Services.Account
             return new OperationResultModel(false, "Falha ao criar cargo.");
         }
 
+        /// <summary>
+        /// Exclui a função com base no ID da função fornecido.
+        /// </summary>
+        /// <param name="roleId">O ID da função que deve ser excluída.</param>
+        /// <returns>
+        /// Um objeto <see cref="OperationResultModel"/> que indica se a operação de exclusão foi bem-sucedida ou não.
+        /// </returns>
         public async Task<OperationResultModel> DeleteRoleByIdAsync(string roleId)
         {
-            if (roleId == null )
+            if (string.IsNullOrWhiteSpace(roleId))
             {
                 return new OperationResultModel(false, "Nenhum dado recebido.");
             }
@@ -63,9 +77,17 @@ namespace Application.Services.Account
             return new OperationResultModel(false, "falha ao  excluir privilégio.");
         }
 
+        /// <summary>
+        /// Obtém o nome da função com base no ID da função fornecido.
+        /// </summary>
+        /// <param name="roleId">O ID da função para a qual o nome deve ser obtido.</param>
+        /// <returns>
+        /// Uma tupla contendo um objeto <see cref="OperationResultModel"/> que indica se a operação foi bem-sucedida
+        /// e a identidade da função correspondente ao ID fornecido, ou nulo se não houver dados disponíveis.
+        /// </returns>
         public async Task<(OperationResultModel, IdentityRole role)> GetRoleNameByIdAsync(string roleId)
         {
-            if (roleId == null)
+            if (string.IsNullOrWhiteSpace(roleId))
             {
                 return (new OperationResultModel(false, "Nenhum dado recebido."), null);
             }
@@ -81,9 +103,17 @@ namespace Application.Services.Account
             return (new OperationResultModel(false, "Falha ao recuperar o nome do cargo."), null);
         }
 
+        /// <summary>
+        /// Obtém os usuários associados a uma função específica com base no ID da função.
+        /// </summary>
+        /// <param name="roleId">O ID da função para a qual os usuários devem ser obtidos.</param>
+        /// <returns>
+        /// Uma tupla contendo um objeto <see cref="OperationResultModel"/> que indica se a operação foi bem-sucedida,
+        /// o nome da função e uma coleção de usuários associados a essa função, ou nulo se não houver dados disponíveis.
+        /// </returns>
         public async Task<(OperationResultModel, string roleName, IEnumerable<ApplicationUser>)> GetUsersOfRoleAsync(string roleId)
         {
-            if (roleId == null)
+            if (string.IsNullOrWhiteSpace(roleId))
             {
                 return (new OperationResultModel(false, "Nenhum dado recebido."), null, null);
             }

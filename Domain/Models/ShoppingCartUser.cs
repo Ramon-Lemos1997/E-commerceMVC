@@ -9,6 +9,7 @@ namespace Domain.Models
         public int Quantity { get; set; }
         public decimal Price { get; set; }
         public string PathImage { get; set; }
+        public string Stock { get; set; }
     }
 
 }

@@ -1,0 +1,101 @@
+﻿@using Domain.Models;
+@using Domain.Enums;
+@model EditProductModel
+
+
+@if (TempData["MessageSuccess"] != null)
+{
+    <div class="alert alert-light text-success border-success rounded mt-5" role="alert">
+        @TempData["MessageSuccess"]
+    </div>
+}
+
+@if (TempData["MessageError"] != null)
+{
+    <div class="alert alert-light text-danger border border-danger rounded mt-5" role="alert">
+        @TempData["MessageError"]
+    </div>
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            @if (!string.IsNullOrEmpty(ViewBag.Image))
+            {
+                <p class="display-6">Atualizar foto</p>
+                <form asp-controller="Produtos" asp-action="UpdateImage" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="productId" value="@Model.ID" />
+                    <label for="Image" class="form-label">Escolher imagem: (*Tamanho máximo 30 megabytes.)</label>
+                    <input type="file" id="Image" name="Image" class="form-control" accept=".jpg, .jpeg, .png"  required/>
+                    <img id="previewImage" src="~/images/@ViewBag.Image" class="img-thumbnail" style="max-width: 10em; max-height: 10em; margin-top: 10px; display: block;" />
+
+                    <button type="submit" class="btn btn-primary mt-3 m-2" style="display: block;">Atualizar Imagem</button>
+                </form>
+
+            }
+        </div>
+        <div class="col-md-8">
+            <form class="p-2" asp-action="EditProduct" asp-controller="Produtos" method="post">
+                <input type="hidden" asp-for="ID" class="form-control" required />
+                <p class="display-4 text-center">Tem certeza que deseja editar este produto?</p>
+                <div class="container border rounded">
+                    <div class="row mt-3">
+                        <div class="col">
+                            <label asp-for="Name" class="form-label"></label>
+                            <input asp-for="Name" class="form-control" placeholder="Insira o nome do produto" required />
+                            <span class="text-danger" asp-validation-for="Name"></span>
+                        </div>
+                        <div class="col">
+                            <label class="form-label" asp-for="Category"></label>
+                            <select asp-for="Category" class="form-control" required>
+                                <option value="">Selecione uma categoria</option>
+                                @foreach (var category in Enum.GetValues(typeof(ProductsCategoryEnum)))
+                                {
+                                    <option value="@category">@category</option>
+                                }
+                            </select>
+                            <span class="text-danger" asp-validation-for="Category" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col">
+                            <label asp-for="Price" class="form-label"></label>
+                            <input type="text" pattern="\d+(,\d{1,2})?" asp-for="Price" class="form-control" placeholder="Insira o preço do produto (formato aceito, 00,00)" required />
+                            <span class="text-danger" asp-validation-for="Price"></span>
+                        </div>
+                        <div class="col">
+                            <label asp-for="Stock" class="form-label"></label>
+                            <input asp-for="Stock" class="form-control" placeholder="Insira a quantidade disponível" required />
+                            <span class="text-danger" asp-validation-for="Stock"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <label asp-for="Description" class="form-label"></label>
+                        <textarea asp-for="Description" class="form-control" placeholder="Descreva os pontos relevantes do produto " rows="6" required></textarea>
+                        <span class="text-danger" asp-validation-for="Description"></span>
+                    </div>
+
+                    <a asp-area="Produtos" asp-controller="Produtos" asp-action="AreaAdmin" class="btn btn-primary mt-3 m-2">Voltar</a>
+                    <button type="submit" class="btn btn-success mt-3 m-2">Editar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@* Script para mostrar image que o cliente irá subir, para ele ver qual está enviando *@
+@section Scripts {
+    <script>
+        document.getElementById('Image').addEventListener('change', function () {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('previewImage').src = e.target.result;
+            };
+            reader.readAsDataURL(this.files[0]);
+        });
+    </script>
+}
+

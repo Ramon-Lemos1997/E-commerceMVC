@@ -57,6 +57,9 @@ namespace Presentation.Areas.Admin.Controllers
             ModelState.AddModelError(string.Empty, result.Message);
             return View();
         }
+
+
+
         //------------------------------------------------------------------------------------------------------------------------
 
 
@@ -72,11 +75,9 @@ namespace Presentation.Areas.Admin.Controllers
                     TempData["MessageSuccess"] = "Privilégio criado com sucesso.";
                     return RedirectToAction("Index");
                 }
-           
-                
+                         
                 ModelState.AddModelError(string.Empty, result.Message);
-                return View();
-                
+                return View();               
             }
 
             return View();

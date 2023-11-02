@@ -38,13 +38,13 @@
                             <td>@user.FirstName</td>
                             <td>@user.Surname</td>                           
                             <td>
-                                <a asp-controller="AdminUser" asp-action="InfoUser" asp-route-id="@user.Id" class="btn  btn-info m-2">Detalhes</a>
+                                <a asp-controller="AdminUser" asp-action="InfoUser" asp-route-id="@user.Id" class="btn btn-sm  btn-info m-2">Detalhes</a>
                             </td>
                             <td>
-                                <a asp-controller="AdminUser" asp-action="UpdateRole" asp-route-id="@user.Id" class="btn  btn-warning m-2">Redefinir privilégio</a>
+                                <a asp-controller="AdminUser" asp-action="UpdateRole" asp-route-id="@user.Id" class="btn btn-sm btn-warning m-2">Redefinir privilégio</a>
                             </td>
                             <td>
-                                <a asp-controller="AdminUser" asp-action="Delete" asp-route-id="@user.Id" class="btn  btn-danger m-2">Excluir</a>
+                                <a asp-controller="AdminUser" asp-action="Delete" asp-route-id="@user.Id" class="btn btn-sm btn-danger m-2">Excluir</a>
                             </td>                                                
                         </tr>
                     }

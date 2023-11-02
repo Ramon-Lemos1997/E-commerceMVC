@@ -1,0 +1,89 @@
+﻿@using Domain.Entities;
+@model IEnumerable<Produtos>
+
+@if (Model != null && Model.Any())
+{
+    <div class="container mt-5">
+        @if (TempData["MessageSuccess"] != null)
+        {
+            <div class="alert alert-light text-success border-success rounded mt-5" role="alert">
+                @TempData["MessageSuccess"]
+            </div>
+        }
+        @if (TempData["MessageError"] != null)
+        {
+            <div class="alert alert-light text-danger border border-danger rounded mt-5" role="alert">
+                @TempData["MessageError"]
+            </div>
+        }
+        <h1 class="text-center pb-5">Produtos</h1>
+        <div class="table-responsive">
+            <table class="MyDataTables table table-white table-hover mt-5">
+                <thead>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Preço</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="~/images/@item.PathImage"
+                                         alt=""
+                                         style="width: 45px; height: 45px"
+                                         class="rounded-circle" />
+                                    <div class="ms-3">
+                                        <p class="fw-bold mb-1">@item.Name</p>           
+                                    </div>
+                                </div>
+                            </td>
+                            <td>@item.Category</td>
+                            <td>@item.Price</td>
+                            <td>
+                                <form asp-controller="Produtos" asp-action="Details" method="get">
+                                    <input type="hidden" name="id" value="@item.ID" />
+                                    <button type="submit" class="btn btn-sm  btn-info m-2">Detalhes</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form asp-controller="Produtos" asp-action="EditProduct" method="get">
+                                    <input type="hidden" name="id" value="@item.ID" />
+                                    <button type="submit" class="btn btn-sm btn-warning m-2">Editar produto</button>
+                                </form>                           
+                            </td>
+                            <td>
+                                <form asp-controller="Produtos" asp-action="DeleteProduct" method="get">
+                                    <input type="hidden" name="id" value="@item.ID" />
+                                    <button type="submit" class="btn btn-sm btn-danger m-2">Excluir produto</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <a asp-area="Admin" asp-controller="Admin" asp-action="Index" class="btn btn-primary mt-3 mx-2 ">Voltar</a>
+        <a class="btn  btn-success mt-3 mx-2" asp-area="Produtos" asp-controller="Produtos" asp-action="CreateProduct"> Cadastrar novo produto</a>
+    </div>
+    
+}
+else
+{
+    <div class="pt-5"></div>
+    <div class="pt-5"></div>
+    <div class="pt-5"></div>
+    <h1 class="pt-5 text-center">Não há produtos na aplicação.</h1>
+    <meta http-equiv="refresh" content="4;url=/Admin">
+}
+
+
+
+
+

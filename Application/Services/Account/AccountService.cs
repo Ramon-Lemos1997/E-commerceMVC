@@ -18,6 +18,12 @@ namespace Application.Services.Account
         }
 
         //______________________________________________________________________________________
+
+        /// <summary>
+        /// Obtém informações do usuário com base no <paramref name="user"/>.
+        /// </summary>
+        /// <param name="user">O usuário atualmente logado.</param>
+        /// <returns>Uma tupla contendo um <see cref="OperationResultModel"/> e um <see cref="InfoUserModel"/>.</returns>
         public async Task<(OperationResultModel, InfoUserModel)> GetInfoUserAsync(ClaimsPrincipal user)
         {
             if (user == null)
@@ -59,8 +65,14 @@ namespace Application.Services.Account
             return (new OperationResultModel(true, "Successo"), userModel);
         }
 
+        /// <summary>
+        /// Atualiza as informações do usuário com base no <paramref name="model"/>.
+        /// </summary>
+        /// <param name="model">O modelo contendo as informações a serem atualizadas.</param>
+        /// <param name="user">O usuário atualmente logado.</param>
+        /// <returns>Um <see cref="OperationResultModel"/> indicando o resultado da operação.</returns>
         public async Task<OperationResultModel> UpdateInfoUserAsync( InfoUserModel model, ClaimsPrincipal user)
-        {
+        {           
             if (user == null)
             {
                 return new OperationResultModel(false, "Nenhum dado recebido.");
@@ -110,9 +122,15 @@ namespace Application.Services.Account
             return new OperationResultModel(false, "Erro ao atualizar os dados");
         }
 
+        /// <summary>
+        /// Verifica o e-mail do usuário com base no <paramref name="userId"/> e <paramref name="token"/>.
+        /// </summary>
+        /// <param name="userId">O ID do usuário.</param>
+        /// <param name="token">O token de verificação do e-mail.</param>
+        /// <returns>Um <see cref="OperationResultModel"/> indicando o resultado da operação.</returns>
         public async Task<OperationResultModel> VerifyEmailAsync(string userId, string token)
         {
-            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
+            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(token))
             {
                 return new OperationResultModel(false, "Erro ao validar seus dados, tente novamente.");
             }
@@ -139,9 +157,15 @@ namespace Application.Services.Account
             return new OperationResultModel(false, "Erro ao confirmar o email, tente novamente ou entre em contato com o administrador.");          
         }
 
+        /// <summary>
+        /// Cria um novo usuário com o email especificado e a senha fornecida.
+        /// </summary>
+        /// <param name="userEmail">O email do usuário.</param>
+        /// <param name="password">A senha do usuário.</param>
+        /// <returns>Uma tupla contendo um <see cref="OperationResultModel"/> indicando o resultado da operação e um <see cref="ApplicationUser"/>.</returns>
         public async Task<(OperationResultModel, ApplicationUser user)> CreateUserAsync(string userEmail, string password)
         {
-            if (userEmail == null || password == null)
+            if (string.IsNullOrWhiteSpace(userEmail) || string.IsNullOrWhiteSpace(password))
             {
                 return (new OperationResultModel(false, "Nenhum dado recebido."), null);
             }
@@ -177,12 +201,15 @@ namespace Application.Services.Account
             }
             var errors = result.Errors.Select(e => e.Description);
             var errorMessage = string.Join(Environment.NewLine, errors);
+
             return (new OperationResultModel(false, errorMessage), null);
-
-
-
         }
 
+        /// <summary>
+        /// Obtém o email do usuário atual com base no objeto <see cref="ClaimsPrincipal"/>.
+        /// </summary>
+        /// <param name="user">O objeto <see cref="ClaimsPrincipal"/> do usuário.</param>
+        /// <returns>Uma tupla contendo um <see cref="OperationResultModel"/> indicando o resultado da operação e uma string representando o email do usuário.</returns>
         public async Task<(OperationResultModel, string userEmail)> GetUserEmailAsync(ClaimsPrincipal user)
         {
             if (user == null)
@@ -200,6 +227,11 @@ namespace Application.Services.Account
             return (new OperationResultModel(true, "Successo"), currUser.Email);
         }
 
+        /// <summary>
+        /// Verifica se o email do usuário atual foi confirmado.
+        /// </summary>
+        /// <param name="user">O objeto <see cref="ClaimsPrincipal"/> do usuário.</param>
+        /// <returns>Um valor booleano indicando se o email do usuário foi confirmado.</returns>
         public async Task<bool> IsEmailConfirmedAsync(ClaimsPrincipal user)
         {
             if (user == null)
@@ -217,9 +249,14 @@ namespace Application.Services.Account
             return await _userManager.IsEmailConfirmedAsync(currUser);
         }
 
+        /// <summary>
+        /// Verifica se o token de redefinição de senha do usuário foi usado.
+        /// </summary>
+        /// <param name="userId">O identificador exclusivo do usuário.</param>
+        /// <returns>Um objeto <see cref="OperationResultModel"/> indicando se o token foi usado.</returns>
         public async Task<OperationResultModel> CheckIfTokenResetPasswordIsUsedAsync(string userId)
         {
-            if (userId == null)
+            if (string.IsNullOrWhiteSpace(userId))
             {
                 return new OperationResultModel(false, "Usuário não encontrado");
             }
@@ -233,9 +270,14 @@ namespace Application.Services.Account
             return new OperationResultModel(true, "Sucesso.");
         }
 
+        /// <summary>
+        /// Envia um código de redefinição de senha para o email especificado.
+        /// </summary>
+        /// <param name="userEmail">O endereço de email do usuário para o qual o código será enviado.</param>
+        /// <returns>Um objeto <see cref="OperationResultModel"/> que indica se o email foi enviado com sucesso.</returns>
         public async Task<OperationResultModel> SendCodeAsync(string userEmail)
         {
-            if (userEmail == null)
+            if (string.IsNullOrWhiteSpace(userEmail))
             {
                 return new OperationResultModel(false, "Nenhum dado recebido.");
             }
@@ -282,14 +324,21 @@ namespace Application.Services.Account
                 return new OperationResultModel(false, "Erro ao enviar o e-mail para a camada de infraestrutura.");
             }
         }
-       
+
+        /// <summary>
+        /// Redefine a senha do usuário com o token fornecido e a nova senha especificada.
+        /// </summary>
+        /// <param name="userId">O ID do usuário cuja senha será redefinida.</param>
+        /// <param name="token">O token usado para redefinir a senha.</param>
+        /// <param name="newPassword">A nova senha a ser definida para o usuário.</param>
+        /// <returns>Um objeto <see cref="OperationResultModel"/> que indica se a redefinição de senha foi bem-sucedida.</returns>
         public async Task<OperationResultModel> ResetPasswordAsync(string userId, string token, string newPassword)
         {
-            if (userId == null || token == null || newPassword == null)
+            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(token) || string.IsNullOrWhiteSpace(newPassword))
             {
                 return new OperationResultModel(false, "Nenhum dado recebido.");
             }
-         
+
             var user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
@@ -310,9 +359,14 @@ namespace Application.Services.Account
             return new OperationResultModel(false, "Falha em redefinir senha.");
         }
 
+        /// <summary>
+        /// Envia um email de confirmação para o usuário com o endereço de email fornecido.
+        /// </summary>
+        /// <param name="userEmail">O endereço de email do usuário.</param>
+        /// <returns>Um objeto <see cref="OperationResultModel"/> que indica se o email de confirmação foi enviado com sucesso.</returns>
         public async Task<OperationResultModel> ConfirmEmailAsync(string userEmail)
         {
-            if (userEmail == null)
+            if (string.IsNullOrWhiteSpace(userEmail))
             {
                 return new OperationResultModel(false, "Nenhum dado recebido.");
             }
@@ -351,9 +405,16 @@ namespace Application.Services.Account
             return new OperationResultModel(true, "Successo.");
         }
 
+        /// <summary>
+        /// Atualiza a senha do usuário com a nova senha fornecida, desde que a senha atual também seja fornecida corretamente.
+        /// </summary>
+        /// <param name="newPassword">A nova senha desejada para o usuário.</param>
+        /// <param name="currPassword">A senha atual do usuário.</param>
+        /// <param name="user">O principal de reivindicações do usuário.</param>
+        /// <returns>Um objeto <see cref="OperationResultModel"/> que indica se a senha foi atualizada com sucesso ou se houve uma falha.</returns>
         public async Task<OperationResultModel> UpdatePasswordAsync(string newPassword, string currPassword, ClaimsPrincipal user)
         {
-            if (newPassword == null || currPassword == null || user == null)
+            if (string.IsNullOrWhiteSpace(newPassword) || string.IsNullOrWhiteSpace(currPassword) || user == null)
             {
                 return new OperationResultModel(false, "Nenhum dado recebido.");
             }

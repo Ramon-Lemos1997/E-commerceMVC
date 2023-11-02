@@ -4,12 +4,20 @@
 @inject UserManager<ApplicationUser> UserManager
 
 @if (SignInManager.IsSignedIn(User))
-{     
+{
+    <form class="pt-2" asp-area="Produtos" asp-controller="Produtos" asp-action="FavoriteCard" method="get">
+        <input type="hidden" name="value" value="" />
+        <button type="submit" class="btn bg-light position-relative"><i class="bi bi-heart-fill text-info"></i></button>
+    </form>
+    <form class="pt-2" asp-area="Produtos" asp-controller="Produtos" asp-action="ShoppingCart" method="get">
+        <input type="hidden" name="value" value="" />
+        <button type="submit" class="btn bg-light position-relative"><i class="bi bi-cart3 mx-1 text-info"></i></button>
+    </form>
     @if (User.IsInRole("Admin"))
     {
-        <a class="nav-link text-warning custom-link " asp-area="Admin" asp-controller="Admin" asp-action="Index"><i class="bi bi-star-fill mx-2"></i>Área do administrador</a>
+        <a class="nav-link text-warning custom-link mx-2 " asp-area="Admin" asp-controller="Admin" asp-action="Index"><i class="bi bi-star-fill mx-2"></i>Área do administrador</a>
     }
-           
+             
     var user = await UserManager.GetUserAsync(User);
     <div class="btn-group">
         <button type="button" class="dropdown btn btn-success dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -44,3 +52,4 @@ else
     <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Registrar-se</a>
     <a class="nav-link text-dark " asp-area="" asp-controller="Account" asp-action="Login">Conectar-se</a>
 }
+

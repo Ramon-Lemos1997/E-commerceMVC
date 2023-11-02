@@ -15,6 +15,7 @@
     </div>
 }
 
+
 @if (Model != null)
 { 
     <section class="bg-light m-5">
@@ -23,6 +24,41 @@
                 <div class="col-md-8 col-lg-6 col-xl-4 pb-2">
                     <div class="card text-black">
                         <img src="~/images/@Model.PathImage" class="card-img-top p-5 mx-auto" />
+                        @* Mostrar se o item é favorite ou não, e adicionar o remover do favorites *@
+                        <a class="position-absolute top-0 end-0 p-3 text-danger">
+                            @{
+                                bool isFavorite = false;
+                                if (ViewBag.Favorites != null)
+                                {
+                                    foreach (var favorite in ViewBag.Favorites)
+                                    {
+                                        if (favorite.ProductId == Model.ID)
+                                        {
+                                            isFavorite = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            @if (isFavorite)
+                            {
+                                <form asp-area="Produtos" asp-controller="Produtos" asp-action="RemoveToFavorites2" method="post" style="display: inline-block;">
+                                    <input type="hidden" name="productId" value="@Model.ID" />
+                                    <button type="submit" style="background: none; border: none;">
+                                        <i class="bi bi-heart-fill" id="filledHeartIcon" style="display: inline; color: red;"></i>
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form asp-area="Produtos" asp-controller="Produtos" asp-action="AddToFavorites2" method="post" style="display: inline-block;">
+                                    <input type="hidden" name="productId" value="@Model.ID" />
+                                    <button type="submit" style="background: none; border: none;">
+                                        <i class="bi bi-heart" id="emptyHeartIcon" style="display: inline;"></i>
+                                    </button>
+                                </form>
+                            }
+                        </a>
                         <div class="card-body">
                             <div class="text-center">
                                 <h5 class="card-title">@Model.Name</h5>             
@@ -65,21 +101,26 @@
                                 <div class="text-center">
                                     <p class="text-muted mb-4 h6 text-start">Quantidade: @Model.Stock</p>
                                 </div>
+                                @* Adicionar itens no carrinho de compras e comprar agora que joga para o carrinho de compras *@
                                 <div class="d-flex flex-column justify-content-center align-items-center mt-2">
-                                    <form asp-area="Produtos" asp-controller="Produtos" asp-action="ShoppingCart" method="get">
-                                        <input type="hidden"  value="" />
+                                    <form asp-area="Produtos" asp-controller="Produtos" asp-action="BuyNow" method="post">
+                                        <input type="hidden" name="productId" value="@Model.ID" />
                                         <button type="submit" class="btn btn-success m-2">Comprar</button>
                                     </form>
                              
-                                    <form asp-area="Produtos" asp-controller="Produtos" asp-action="AddToFavorites" method="post">
+                                    <form asp-area="Produtos" asp-controller="Produtos" asp-action="AddToShoppingCart" method="post">
                                         <input type="hidden" name="productId" value="@Model.ID" />
-                                        <button type="submit" class="btn btn-primary m-2">Adicionar aos Favoritos</button>
+                                        <button type="submit" class="btn btn-primary m-2">Adicionar ao carrinho</button>
                                     </form>
 
                                 </div>                         
                             </div>
                         </div>
-                    </div>                   
+                    </div>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-area="Produtos" asp-controller="Produtos" asp-action="AreaAdmin" class="btn btn-info mt-3 m-2">Configurações da loja</a>
+                    }
                 </div>
             </div>
         </div>

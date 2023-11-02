@@ -17,11 +17,11 @@ namespace Infra.Data.Images
 
         //--------------------------------------------------------------------------------------------------------------------------
 
-        //Este método recebe um arquivo de imagem por meio do parâmetro image e verifica se ele é uma imagem.Em seguida, cria um fluxo de memória
-        //para a imagem e copia o arquivo para esse fluxo.Define a posição do fluxo como 0 para garantir que a leitura comece no início. 
-        //Em seguida, gera um nome de arquivo exclusivo para a imagem com a extensão .jpeg.Utiliza o ambiente da web para acessar o caminho raiz da web e, 
-        //com isso, combina a pasta de imagens e o nome do arquivo para formar o caminho completo da imagem. Finalmente, chama o método SalvarImagemAsync 
-        //para realizar o processo de salvar a imagem.
+        /// <summary>
+        /// Faz o upload de uma imagem para o servidor, verificando se ela atende a requisitos específicos.
+        /// </summary>
+        /// <param name="image">O arquivo de imagem a ser carregado.</param>
+        /// <returns>Uma tupla contendo um objeto OperationResultModel indicando o resultado da operação de upload e o nome do arquivo salvo.</returns>
         public async Task<(OperationResultModel, string)> UploadImageAsync(IFormFile image)
         {
             if (!IsImage(image))
@@ -40,7 +40,7 @@ namespace Infra.Data.Images
 
             if (!IsImageSizeValid(image, maxSizeInBytes))
             {
-                return (new OperationResultModel(false, "O tamanho do arquivo excede o limite permitido de 15 MB."), null);
+                return (new OperationResultModel(false, "O tamanho do arquivo excede o limite permitido de 30 MB."), null);
             }
 
             var ms = new MemoryStream();
@@ -60,13 +60,15 @@ namespace Infra.Data.Images
         }
 
 
+        //------------------------------------------------------------------------------------------
 
-        //O método SaveImage foi cuidadosamente projetado para lidar com o redimensionamento e o armazenamento de imagens em formato JPEG.
-        //Ele inicia carregando a imagem de um fluxo de memória e, em seguida, redimensiona a imagem, se necessário, para um tamanho quadrado para o card.
-        //A função também garante que o diretório de imagens exista antes de salvar a imagem e ajusta o caminho de arquivo com a extensão JPEG. 
-        //Caso ocorra algum erro durante o processo, o método captura e trata exceções para evitar quebras inesperadas. Por fim, ele retorna
-        //um booleano indicando se a imagem foi salva com sucesso ou não. Este código promove a legibilidade, modularidade e manutenção adequada, 
-        //seguindo as melhores práticas de manipulação de imagens em um ambiente de aplicativo web.
+        /// <summary>
+        /// Salva uma imagem no servidor no caminho especificado, com opção de redimensionamento.
+        /// </summary>
+        /// <param name="imagePath">O caminho onde a imagem será salva.</param>
+        /// <param name="ms">O stream da imagem a ser salva.</param>
+        /// <param name="resize">Indica se a imagem deve ser redimensionada. O padrão é verdadeiro.</param>
+        /// <returns>Verdadeiro se a imagem for salva com sucesso, caso contrário, falso.</returns>
         private async Task<bool> SaveImage(string imagePath, MemoryStream ms, bool resize = true)
         {
             try
@@ -106,11 +108,11 @@ namespace Infra.Data.Images
             }
         }
 
-
-        /// Verifica se o arquivo fornecido é uma imagem com uma das extensões permitidas.
-        /// Retorna verdadeiro se o arquivo for uma imagem com uma das extensões .jpg, .jpeg, .png ou .gif.
-        /// Caso contrário, retorna falso.
-        /// Retorna um valor booleano indicando se o arquivo é uma imagem ou não.
+        /// <summary>
+        /// Verifica se o arquivo fornecido é uma imagem com base em sua extensão de arquivo.
+        /// </summary>
+        /// <param name="file">O arquivo a ser verificado.</param>
+        /// <returns>Verdadeiro se o arquivo for uma imagem nos formatos .jpg, .jpeg, .png ou .gif, caso contrário, falso.</returns>
         private bool IsImage(IFormFile file)
         {
             if (file == null) return false;
@@ -121,8 +123,12 @@ namespace Infra.Data.Images
             return allowedExtensions.Contains(fileExtension);
         }
 
-
-        //verifica se o tamanho é válido
+        /// <summary>
+        /// Verifica se o tamanho do arquivo de imagem está dentro do limite especificado.
+        /// </summary>
+        /// <param name="file">O arquivo de imagem a ser verificado.</param>
+        /// <param name="maxSizeInBytes">O tamanho máximo permitido em bytes.</param>
+        /// <returns>Verdadeiro se o tamanho do arquivo de imagem estiver abaixo do limite especificado, caso contrário, falso.</returns>
         private bool IsImageSizeValid(IFormFile file, int maxSizeInBytes)
         {
             if (file == null) return false;
@@ -130,7 +136,11 @@ namespace Infra.Data.Images
             return file.Length < maxSizeInBytes;
         }
 
-        //O método IsImageSizeMin que você definiu verifica se a imagem tem uma largura e altura mínimas de 200 pixels.
+        /// <summary>
+        /// Verifica se o tamanho da imagem atende ao requisito mínimo especificado em termos de largura e altura.
+        /// </summary>
+        /// <param name="image">O arquivo de imagem a ser verificado.</param>
+        /// <returns>Verdadeiro se a imagem atender ao tamanho mínimo especificado, caso contrário, falso.</returns>
         private bool IsImageSizeMin(IFormFile image)
         {
             using var img = Image.Load(image.OpenReadStream());

@@ -20,7 +20,13 @@ namespace Application.Services.Account
 
         //----------------------------------------------------------------------------------------------------------
 
-        //obter a lista de users
+        /// <summary>
+        /// Obtém a lista de todos os usuários.
+        /// </summary>
+        /// <returns>
+        /// Uma tupla contendo um objeto <see cref="OperationResultModel"/> indicando se a operação foi bem-sucedida
+        /// e uma lista de objetos <see cref="ApplicationUser"/> representando os usuários encontrados.
+        /// </returns>
         public async Task<(OperationResultModel, List<ApplicationUser>)> GetUsersAsync()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -33,7 +39,7 @@ namespace Application.Services.Account
             return (new OperationResultModel(true, "Usuários encontrados com sucesso."), users);
         }
 
-        ////não estou utilizando
+        ///não estou utilizando
         //public async Task<(OperationResultModel, ApplicationUser)> FindUserByIdAsync(string userId)
         //{
         //    if (userId == null)
@@ -51,9 +57,16 @@ namespace Application.Services.Account
         //    return (new OperationResultModel(false, "Usuário não encontrado."), null);
         //}
 
+        /// <summary>
+        /// Exclui um usuário com base no ID do usuário.
+        /// </summary>
+        /// <param name="userId">O ID do usuário que deve ser excluído.</param>
+        /// <returns>
+        /// Um objeto <see cref="OperationResultModel"/> indicando se a operação foi bem-sucedida.
+        /// </returns>
         public async Task<OperationResultModel> DeleteUserAsync(string userId)
         {
-            if (userId == null)
+            if (string.IsNullOrWhiteSpace(userId))
             {
                 return new OperationResultModel(false, "Nenhum dado recebio.");
             }
@@ -83,10 +96,17 @@ namespace Application.Services.Account
             
         }
 
-        //obter a info do user, utilizo tanto do detalhes, quanto na tela de redefinir o privilégio
+        /// <summary>
+        /// Obtém informações do usuário com base no ID do usuário.
+        /// </summary>
+        /// <param name="userId">O ID do usuário cujas informações devem ser recuperadas.</param>
+        /// <returns>
+        /// Uma tupla contendo um objeto <see cref="OperationResultModel"/> indicando se a operação foi bem-sucedida e um objeto 
+        /// <see cref="InfoUserForAdminModel"/> contendo as informações do usuário.
+        /// </returns>
         public async Task<(OperationResultModel, InfoUserForAdminModel)> GetInfoUserByIdAsync(string userId)
         {
-            if (userId == null)
+            if (string.IsNullOrWhiteSpace(userId))
             {
                 return (new OperationResultModel(false, "Nenhum dado recebido."), null);
             }
@@ -126,12 +146,17 @@ namespace Application.Services.Account
             return (new OperationResultModel(true, "Successo"), userModel);
         }
 
-        //recebo o user logado, o user que irá receber a modificação e a nova role, faço as verificações se existem e depois
-        // verifico se possui a mesma role, se não possuirem permito a mudança, somente admin podem fazer esta alteração
-        //utilizo o first para pega a role do user, cada user tem apenas uma
+        /// <summary>
+        /// Atualiza o privilégio de um usuário com base no ID do usuário e no privilégio selecionado.
+        /// </summary>
+        /// <param name="userId">O ID do usuário cujo privilégio será atualizado.</param>
+        /// <param name="selectedRole">O privilégio selecionado para ser atribuído ao usuário.</param>
+        /// <returns>
+        /// Um objeto <see cref="OperationResultModel"/> que indica se a operação de atualização foi bem-sucedida ou não.
+        /// </returns>
         public async Task<OperationResultModel> UpdateRoleUserAsync(string userId, string selectedRole)
         {
-            if (userId == null || selectedRole == null)
+            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(selectedRole))
             {
                 return new OperationResultModel(false, "Nenhum dado recebido.");
             }      
