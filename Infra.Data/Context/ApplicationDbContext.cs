@@ -10,6 +10,7 @@ namespace Infra.Data.Context
         {
         }
 
+        public DbSet<Order> Orders { get; set; }
         public DbSet<Produtos> Produtos { get; set; }
         public DbSet<ShoppingCart> ShoppingCartUser { get; set; }
         public DbSet<FavoriteProducts> FavoriteProductsUser { get; set; }

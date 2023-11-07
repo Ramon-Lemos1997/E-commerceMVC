@@ -2706,6 +2706,23 @@
           "lib/netstandard2.1/StarkbankEcdsa.dll": {}
         }
       },
+      "Stripe.net/43.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.3",
+          "System.Configuration.ConfigurationManager": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Stripe.net.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Stripe.net.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.AppContext/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -4349,6 +4366,7 @@
         "dependencies": {
           "Microsoft.AspNetCore.Http.Features": "5.0.17",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.22",
+          "Stripe.net": "43.1.0",
           "X.PagedList": "8.4.7",
           "X.PagedList.Mvc.Core": "8.4.7"
         },
@@ -4370,6 +4388,7 @@
           "SendGrid": "9.28.1",
           "SixLabors.ImageSharp": "3.0.2",
           "SixLabors.ImageSharp.Web": "3.0.1",
+          "Stripe.net": "43.1.0",
           "X.PagedList": "8.4.7",
           "X.PagedList.Mvc.Core": "8.4.7"
         },
@@ -8197,6 +8216,29 @@
         "lib/netstandard2.1/StarkbankEcdsa.dll",
         "starkbank-ecdsa.1.3.3.nupkg.sha512",
         "starkbank-ecdsa.nuspec"
+      ]
+    },
+    "Stripe.net/43.1.0": {
+      "sha512": "yPHXg2+LoGBtX2Qhoa5hIVGtGZPZk2NJsmVEF7oWhWbnLl3KXLs6A7TzY8O7PH4FwJ7eQpO7liOtpdF8IPoEgg==",
+      "type": "package",
+      "path": "stripe.net/43.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "icon.png",
+        "lib/net461/Stripe.net.dll",
+        "lib/net461/Stripe.net.xml",
+        "lib/net5.0/Stripe.net.dll",
+        "lib/net5.0/Stripe.net.xml",
+        "lib/net6.0/Stripe.net.dll",
+        "lib/net6.0/Stripe.net.xml",
+        "lib/netcoreapp3.1/Stripe.net.dll",
+        "lib/netcoreapp3.1/Stripe.net.xml",
+        "lib/netstandard2.0/Stripe.net.dll",
+        "lib/netstandard2.0/Stripe.net.xml",
+        "stripe.net.43.1.0.nupkg.sha512",
+        "stripe.net.nuspec"
       ]
     },
     "System.AppContext/4.3.0": {

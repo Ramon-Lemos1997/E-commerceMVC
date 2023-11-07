@@ -15,6 +15,8 @@ using Infra.Data.Images;
 using Domain.Interfaces.Produtos;
 using Application.Services.Loja;
 using Infra.Data.Pagination;
+using Domain.Interfaces.Payment;
+using Infra.Data.Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -97,6 +99,8 @@ builder.Services.AddImageSharp(options =>
 
 
 //injeções de dependências gerais
+builder.Services.AddScoped<IPaymentInterface, PaymentService>();
+builder.Services.AddScoped<IStripeInterface, StripeService>();
 builder.Services.AddScoped<IPagesInterface, PagesService>();
 builder.Services.AddScoped<IProdutosInterface, ProdutosService>();
 builder.Services.AddScoped<IImagesInterface, ImagesService>();
@@ -140,6 +144,14 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllerRoute(
       name: "Produtos",
       pattern: "{area:exists}/{controller=Produtos}/{action=Index}/{id?}"
+    );
+});
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+      name: "Payment",
+      pattern: "{area:exists}/{controller=Payment}/{action=Index}/{id?}"
     );
 });
 

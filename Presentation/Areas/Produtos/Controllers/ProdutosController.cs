@@ -11,7 +11,6 @@ using JetBrains.Annotations;
 namespace Presentation.Areas.Produtos.Controllers
 {
     [Area("Produtos")]
-
     public class ProdutosController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -23,6 +22,7 @@ namespace Presentation.Areas.Produtos.Controllers
         }
 
         //------------------------------------------------------------------------------------------------
+
         [HttpGet]
         public async Task<IActionResult> Index(string? category, string? searchString, int? page)
         {
@@ -35,7 +35,7 @@ namespace Presentation.Areas.Produtos.Controllers
             }
 
             ViewBag.Favorites = favorites;
-            return View(produtos);
+            return View(produtos);           
         }
 
         [Authorize(Roles = "Admin")]
@@ -66,7 +66,7 @@ namespace Presentation.Areas.Produtos.Controllers
             if (result.Success)
             {
                 ViewBag.Image = pathImage;
-                return View(produto);
+                return View(produto);              
             }
 
             ModelState.AddModelError(string.Empty, result.Message);
@@ -89,6 +89,7 @@ namespace Presentation.Areas.Produtos.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> ShoppingCart()
         {

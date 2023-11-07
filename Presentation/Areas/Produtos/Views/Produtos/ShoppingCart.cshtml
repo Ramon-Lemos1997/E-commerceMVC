@@ -25,13 +25,14 @@
                 <div class="row justify-content-center mt-5">
                     <div class="col-md-6 text-center">
                         <p class="mx-4 h4" style="display: inline;">Total: R$@totalPrice</p>
-                        @* Enviar dados da compra para api da stipe, ainda irei implementar esta parte *@
-                        <form id="finalizarPedidoForm" asp-area="Produtos" asp-controller="Produtos" asp-action="FinalizarPedido" method="post" style="display: inline;">
+                        @* Enviar dados da compra para api da stipe*@
+                        <form asp-area="Payment" asp-controller="Payment" asp-action="CreateOrder" method="post" style="display: inline;">
                             @foreach (var item in Model)
                             {
-                                var dataObject = new { ProductId = item.ProductId, Quantity = item.Quantity };
-                                <input type="hidden" name="items" value='@Json.Serialize(dataObject)' />
+                                <input type="hidden" name="productsId" value="@item.ProductId" />
+                                <input type="hidden" name="productsQuantity" value="@item.Quantity" />
                             }
+                            <input type="hidden" name="totalPrice" value="@totalPrice" />
                             <button class="btn btn-success w-auto" type="submit">Finalizar pedido</button>
                         </form>
                     </div>
@@ -167,13 +168,3 @@ else
     </div>
 }
 
-<script>
-    document.getElementById('finalizarPedidoForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        for (let pair of formData.entries()) {
-            console.log(pair[0] + ': ' + pair[1]);
-        }
-        // Aqui você pode adicionar código adicional para enviar os dados ou realizar outras operações.
-    });
-</script>

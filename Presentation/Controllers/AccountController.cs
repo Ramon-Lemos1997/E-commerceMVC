@@ -22,11 +22,17 @@ namespace Presentation.Controllers
 
         //________________________________________________________________________________________________________________________________________________________
         
-        //verifica se o usuário já está conectado, se estiver joga para o index
+        /// <summary>
+        /// verifica se o usuário já está conectado, se estiver joga para o index
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Register() => (User.Identity.IsAuthenticated ? RedirectToAction("Index", "Home") : View());
 
-        //verifica se o usuário já está conectado, se estiver joga para o index
+        /// <summary>
+        /// verifica se o usuário já está conectado, se estiver joga para o index
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Login() => (User.Identity.IsAuthenticated ? RedirectToAction("Index", "Home") : View());     
 
@@ -36,7 +42,12 @@ namespace Presentation.Controllers
         [HttpGet]
         public IActionResult SendCode() => View();
 
-        //verifica se o token já foi usado, tenho um column resetPassword, onde quando acontece o reset password mudo para true e faço esta verificação antes de exibir a tela 
+        /// <summary>
+        /// verifica se o token já foi usado, tenho um column resetPassword, onde quando acontece o reset password mudo para true e faço esta verificação antes de exibir a tela 
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> ResetPassword(string token, string userId)
         {          
@@ -54,7 +65,10 @@ namespace Presentation.Controllers
             return View();
         }
 
-        //recupero o user do usuário atual conectado e também de o se o email do mesmo já foi confirmado para exibir corretamente a tela, permitindo ou não que envie um post para confirmar a conta
+        /// <summary>
+        /// recupero o user do usuário atual conectado e também de o se o email do mesmo já foi confirmado para exibir corretamente a tela, permitindo ou não que envie um post para confirmar a conta
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> ConfirmEmail()
@@ -74,7 +88,12 @@ namespace Presentation.Controllers
             return View();
         }
 
-        //recebo o id e o token e confirmo o seu email
+        /// <summary>
+        /// recebo o id e o token e confirmo o seu email
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> VerifiedEmail(string userId, string token)
@@ -95,7 +114,7 @@ namespace Presentation.Controllers
         [HttpGet]
         public IActionResult MyAccount() => View();
 
-        //recupero a informações do usuário atual para exibir
+        ///recupero a informações do usuário atual para exibir
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> InfoUser()
@@ -111,7 +130,10 @@ namespace Presentation.Controllers
             return View(userModel);
         }
 
-        //recupero a informações do usuário atual e atualizo
+        /// <summary>
+        /// recupero a informações do usuário atual e atualizo
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> UpdateInfoUser()
@@ -186,7 +208,11 @@ namespace Presentation.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //enviar email para resetar a senha, pois esqueçeu da mesma
+        /// <summary>
+        /// enviar email para resetar a senha, pois esqueçeu da mesma
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendCode(EmailModel model)
@@ -207,7 +233,11 @@ namespace Presentation.Controllers
             return View(model);
         }
 
-        //resetar a senha 
+        /// <summary>
+        /// resetar a senha 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPasswordModel model)
@@ -230,7 +260,11 @@ namespace Presentation.Controllers
             return View(model);
         }
 
-        //enviar um email para confirmar a conta através do email
+        /// <summary>
+        /// enviar um email para confirmar a conta através do email
+        /// </summary>
+        /// <param name="Email"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> ConfirmEmail(string Email)
@@ -246,7 +280,11 @@ namespace Presentation.Controllers
             return View();           
         }
 
-        //atualizar informações do usuário
+        /// <summary>
+        /// atualizar informações do usuário
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -268,7 +306,11 @@ namespace Presentation.Controllers
             return View(model);
         }
 
-        //atualizar senha do usuário
+        /// <summary>
+        /// atualizar senha do usuário
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdatePassword(UpdatePasswordModel model)

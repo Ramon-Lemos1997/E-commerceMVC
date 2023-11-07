@@ -5,9 +5,8 @@
     "\\Application\\Services",
     "\\Application\\Services\\Account",
     "\\Presentation",
-    "\\Presentation\\Views",
-    "\\Presentation\\Views\\Account"
+    "\\Presentation\\Views"
   ],
-  "SelectedNode": "\\Application\\Services\\Account\\AccountService.cs",
+  "SelectedNode": "\\E-commerceMvcAspNet.sln",
   "PreviewInSolutionExplorer": false
 }

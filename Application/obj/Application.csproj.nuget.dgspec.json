@@ -120,6 +120,10 @@
               "target": "Package",
               "version": "[6.0.22, )"
             },
+            "Stripe.net": {
+              "target": "Package",
+              "version": "[43.1.0, )"
+            },
             "X.PagedList": {
               "target": "Package",
               "version": "[8.4.7, )"
@@ -224,6 +228,10 @@
             "SixLabors.ImageSharp.Web": {
               "target": "Package",
               "version": "[3.0.1, )"
+            },
+            "Stripe.net": {
+              "target": "Package",
+              "version": "[43.1.0, )"
             },
             "X.PagedList": {
               "target": "Package",

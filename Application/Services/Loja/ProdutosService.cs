@@ -46,54 +46,61 @@ namespace Application.Services.Loja
         /// <returns>Uma tupla contendo um objeto OperationResultModel indicando o resultado da operação, uma coleção de objetos Produtos correspondente aos produtos recuperados e uma coleção de objetos FavoriteProducts correspondente aos produtos favoritos do usuário atual.</returns>
         public async Task<(OperationResultModel, IEnumerable<Produtos>, IEnumerable<FavoriteProducts>)> GetProductsAsync(ClaimsPrincipal user, string? category, string? searchString, int? page)
         {
-            var currUser = await _userManager.GetUserAsync(user);
-            string userId = null;
-
-            if (currUser != null)
+            try
             {
-                userId = currUser.Id;
-            }
+                var currUser = await _userManager.GetUserAsync(user);
+                string userId = null;
 
-            var userFavorites = await GetFavoritesByUserIdAsync(userId);
-
-            if (!string.IsNullOrWhiteSpace(searchString))
-            {
-                var filter = await FilteredProductsBySearch(searchString);
-                var pagedListFilteredBySearch = await _pagesService.PaginationProductsAsync(filter, page);
-
-                if (pagedListFilteredBySearch != null && pagedListFilteredBySearch.Any())
+                if (currUser != null)
                 {
-                    return (new OperationResultModel(true, "Dados obtidos com sucesso."), pagedListFilteredBySearch, userFavorites);
+                    userId = currUser.Id;
                 }
 
-            }
+                var userFavorites = await GetFavoritesByUserIdAsync(userId);
 
-            if (!string.IsNullOrWhiteSpace(category))
-            {
-                var categoryFilter = await FilteredProductsByCategory(category);
-                var pagedListFilteredByCategory = await _pagesService.PaginationProductsAsync(categoryFilter, page);
-
-                if (pagedListFilteredByCategory != null && pagedListFilteredByCategory.Any())
+                if (!string.IsNullOrWhiteSpace(searchString))
                 {
-                    return (new OperationResultModel(true, "Dados obtidos com sucesso."), pagedListFilteredByCategory, userFavorites);
+                    var filter = await FilteredProductsBySearch(searchString);
+                    var pagedListFilteredBySearch = await _pagesService.PaginationProductsAsync(filter, page);
+
+                    if (pagedListFilteredBySearch != null && pagedListFilteredBySearch.Any())
+                    {
+                        return (new OperationResultModel(true, "Dados obtidos com sucesso."), pagedListFilteredBySearch, userFavorites);
+                    }
+
                 }
+
+                if (!string.IsNullOrWhiteSpace(category))
+                {
+                    var categoryFilter = await FilteredProductsByCategory(category);
+                    var pagedListFilteredByCategory = await _pagesService.PaginationProductsAsync(categoryFilter, page);
+
+                    if (pagedListFilteredByCategory != null && pagedListFilteredByCategory.Any())
+                    {
+                        return (new OperationResultModel(true, "Dados obtidos com sucesso."), pagedListFilteredByCategory, userFavorites);
+                    }
+                }
+
+                var produtos = await _context.Produtos.ToListAsync();
+
+                if (produtos == null || produtos.Count == 0)
+                {
+                    return (new OperationResultModel(false, "Não há produtos para ser exibido."), null, null);
+                }
+
+                var pagedList = await _pagesService.PaginationProductsAsync(produtos, page);
+
+                if (pagedList == null)
+                {
+                    return (new OperationResultModel(false, "Falha no processamento, contacte o administrador."), null, null);
+                }
+
+                return (new OperationResultModel(true, "Dados obtidos com sucesso."), pagedList, userFavorites);
             }
-
-            var produtos = await _context.Produtos.ToListAsync();
-
-            if (produtos == null || produtos.Count == 0)
+            catch (Exception ex)
             {
-                return (new OperationResultModel(false, "Não há produtos para ser exibido."), null, null);
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null, null);
             }
-
-            var pagedList = await _pagesService.PaginationProductsAsync(produtos, page);
-
-            if (pagedList == null)
-            {
-                return (new OperationResultModel(false, "Falha no processamento, contacte o administrador."), null, null);
-            }
-
-            return (new OperationResultModel(true, "Dados obtidos com sucesso."), pagedList, userFavorites);
         }
 
         /// <summary>
@@ -264,28 +271,35 @@ namespace Application.Services.Loja
         /// <returns>Uma tupla contendo um objeto OperationResultModel indicando o resultado da operação, um objeto Produtos correspondente ao produto recuperado e uma coleção de objetos FavoriteProducts correspondente aos produtos favoritos do usuário atual.</returns>
         public async Task<(OperationResultModel, Produtos, IEnumerable<FavoriteProducts>)> GetProductByIdAsync(int id, ClaimsPrincipal user)
         {
-            if (id == 0)
+            try
             {
-                return (new OperationResultModel(true, "Nenhum dado recebido."), null, null);
-            }  
+                if (id == 0)
+                {
+                    return (new OperationResultModel(true, "Nenhum dado recebido."), null, null);
+                }
 
-            var currUser = await _userManager.GetUserAsync(user);
-            string userId = null;
+                var currUser = await _userManager.GetUserAsync(user);
+                string userId = null;
 
-            if (currUser != null)
-            {
-                userId = currUser.Id;
+                if (currUser != null)
+                {
+                    userId = currUser.Id;
+                }
+
+                var userFavorites = await GetFavoritesByUserIdAsync(userId);
+                var result = await RetrieveProductFromDatabaseAsync(id);
+
+                if (result != null)
+                {
+                    return (new OperationResultModel(true, "Operação bem sucedida."), result, userFavorites);
+                }
+
+                return (new OperationResultModel(false, "Nenhum produto encontrado com base nos dados recebidos. Se estiver tudo correto, recarregue a página. Se o problema persistir, entre em contato com o administrador."), null, null);
             }
-
-            var userFavorites = await GetFavoritesByUserIdAsync(userId);
-            var result = await RetrieveProductFromDatabaseAsync(id);
-
-            if (result != null)
+            catch (Exception ex)
             {
-                return (new OperationResultModel(true, "Operação bem sucedida."), result, userFavorites);
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null, null);
             }
-
-            return (new OperationResultModel(false, "Nenhum produto encontrado com base nos dados recebidos. Se estiver tudo correto, recarregue a página. Se o problema persistir, entre em contato com o administrador."), null, null);
         }
 
         /// <summary>
@@ -296,36 +310,36 @@ namespace Application.Services.Loja
         /// <returns>Um objeto OperationResultModel indicando o resultado da operação de adição.</returns>
         public async Task<OperationResultModel> AddProductToFavorites(int productId, ClaimsPrincipal user)
         {
-            if (productId == 0|| user == null)
-            {
-                return new OperationResultModel(false, "Nenhum dado recebido.");
-            }
-
-            var currUser = await _userManager.GetUserAsync(user);
-
-            if (currUser == null)
-            {
-                return new OperationResultModel(false, "Usuário não encontrado.");
-            }
-
-            var isFavorited = await CheckIfProductIsFavoritedAsync(productId, currUser.Id);
-
-            if (isFavorited)
-            {
-                return new OperationResultModel(false, "Este produto já foi adicionado aos favoritos.");
-            }
-
-            var favoriteProduct = new FavoriteProducts(productId, currUser.Id);
-
             try
             {
+                if (productId == 0 || user == null)
+                {
+                    return new OperationResultModel(false, "Nenhum dado recebido.");
+                }
+
+                var currUser = await _userManager.GetUserAsync(user);
+
+                if (currUser == null)
+                {
+                    return new OperationResultModel(false, "Usuário não encontrado.");
+                }
+
+                var isFavorited = await CheckIfProductIsFavoritedAsync(productId, currUser.Id);
+
+                if (isFavorited)
+                {
+                    return new OperationResultModel(false, "Este produto já foi adicionado aos favoritos.");
+                }
+
+                var favoriteProduct = new FavoriteProducts(productId, currUser.Id);
+
                 _context.FavoriteProductsUser.Add(favoriteProduct);
                 await _context.SaveChangesAsync();
                 return new OperationResultModel(true, "Produto adicionado aos favoritos com sucesso.");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new OperationResultModel(false, "Ocorreu um erro ao adicionar o produto aos favoritos.");
+                return new OperationResultModel(false, $"Exceção não planejada: {ex.Message}");
             }
         }
 
@@ -337,27 +351,27 @@ namespace Application.Services.Loja
         /// <returns>Um objeto OperationResultModel indicando o resultado da operação de remoção.</returns>
         public async Task<OperationResultModel> RemoveProductFromFavorites(int productId, ClaimsPrincipal user)
         {
-            if (productId == 0 || user == null)
-            {
-                return new OperationResultModel(false, "Nenhum dado recebido.");
-            }
-
-            var currUser = await _userManager.GetUserAsync(user);
-
-            if (currUser == null)
-            {
-                return new OperationResultModel(false, "Usuário não encontrado.");
-            }
-
-            var isFavorited = await CheckIfProductIsFavoritedAsync(productId, currUser.Id);
-
-            if (!isFavorited)
-            {
-                return new OperationResultModel(false, "Este produto não foi adicionado aos favoritos.");
-            }
-
             try
             {
+                if (productId == 0 || user == null)
+                {
+                    return new OperationResultModel(false, "Nenhum dado recebido.");
+                }
+
+                var currUser = await _userManager.GetUserAsync(user);
+
+                if (currUser == null)
+                {
+                    return new OperationResultModel(false, "Usuário não encontrado.");
+                }
+
+                var isFavorited = await CheckIfProductIsFavoritedAsync(productId, currUser.Id);
+
+                if (!isFavorited)
+                {
+                    return new OperationResultModel(false, "Este produto não foi adicionado aos favoritos.");
+                }
+
                 var favoriteProductToRemove = await _context.FavoriteProductsUser.FirstOrDefaultAsync(item => item.ProductId == productId && item.UserId == currUser.Id);
 
                 if (favoriteProductToRemove != null)
@@ -366,12 +380,12 @@ namespace Application.Services.Loja
                     await _context.SaveChangesAsync();
                     return new OperationResultModel(true, "Produto removido dos favoritos com sucesso.");
                 }
-               
-                return new OperationResultModel(false, "O produto não foi encontrado nos favoritos.");               
+
+                return new OperationResultModel(false, "O produto não foi encontrado nos favoritos.");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new OperationResultModel(false, "Ocorreu um erro ao remover o produto dos favoritos.");
+                return new OperationResultModel(false, $"Exceção não planejada: {ex.Message}");
             }
         }
 
@@ -383,36 +397,36 @@ namespace Application.Services.Loja
         /// <returns>Um objeto OperationResultModel indicando o resultado da operação de adição.</returns>
         public async Task<OperationResultModel> AddProductToShoppingCart(int productId, ClaimsPrincipal user)
         {
-            if (productId == 0 || user == null)
-            {
-                return new OperationResultModel(false, "Nenhum dado recebido.");
-            }
-
-            var currUser = await _userManager.GetUserAsync(user);
-
-            if (currUser == null)
-            {
-                return new OperationResultModel(false, "Usuário não encontrado.");
-            }
-
-            var canAddProduct = await CheckIfProductCanBeAddedToShoppingCartAsync(productId, currUser.Id);
-
-            if (!canAddProduct)
-            {
-                return new OperationResultModel(false, "Você atingiu o limite do estoque deste produto.");
-            }
-
-            var shoppingCart = new ShoppingCart(productId, currUser.Id);
-
             try
             {
+                if (productId == 0 || user == null)
+                {
+                    return new OperationResultModel(false, "Nenhum dado recebido.");
+                }
+
+                var currUser = await _userManager.GetUserAsync(user);
+
+                if (currUser == null)
+                {
+                    return new OperationResultModel(false, "Usuário não encontrado.");
+                }
+
+                var canAddProduct = await CheckIfProductCanBeAddedToShoppingCartAsync(productId, currUser.Id);
+
+                if (!canAddProduct)
+                {
+                    return new OperationResultModel(false, "Você atingiu o limite do estoque deste produto.");
+                }
+
+                var shoppingCart = new ShoppingCart(productId, currUser.Id);
+
                 _context.ShoppingCartUser.Add(shoppingCart);
                 await _context.SaveChangesAsync();
                 return new OperationResultModel(true, "Produto adicionado ao carrinho de compras com sucesso.");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new OperationResultModel(false, "Ocorreu um erro ao adicionar o produto ao carrinho de compras.");
+                return new OperationResultModel(false, $"Exceção não planejada: {ex.Message}");
             }
         }
 
@@ -424,20 +438,20 @@ namespace Application.Services.Loja
         /// <returns>Um objeto OperationResultModel indicando o resultado da operação de remoção.</returns>
         public async Task<OperationResultModel> RemoveProductFromShoppingCart(int productId, ClaimsPrincipal user)
         {
-            if (productId == 0 || user == null)
-            {
-                return new OperationResultModel(false, "Nenhum dado recebido.");
-            }
-
-            var currUser = await _userManager.GetUserAsync(user);
-
-            if (currUser == null)
-            {
-                return new OperationResultModel(false, "Usuário não encontrado.");
-            }
-
             try
             {
+                if (productId == 0 || user == null)
+                {
+                    return new OperationResultModel(false, "Nenhum dado recebido.");
+                }
+
+                var currUser = await _userManager.GetUserAsync(user);
+
+                if (currUser == null)
+                {
+                    return new OperationResultModel(false, "Usuário não encontrado.");
+                }
+
                 var itemToRemove = await _context.ShoppingCartUser.FirstOrDefaultAsync(item => item.ProductId == productId && item.UserId == currUser.Id);
 
                 if (itemToRemove != null)
@@ -446,12 +460,12 @@ namespace Application.Services.Loja
                     await _context.SaveChangesAsync();
                     return new OperationResultModel(true, "Produto removido do carrinho de compras com sucesso.");
                 }
-               
-                return new OperationResultModel(false, "O produto não foi encontrado no carrinho de compras.");               
+
+                return new OperationResultModel(false, "O produto não foi encontrado no carrinho de compras.");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new OperationResultModel(false, "Ocorreu um erro ao remover o produto do carrinho de compras.");
+                return new OperationResultModel(false, $"Exceção não planejada: {ex.Message}");
             }
         }
 
@@ -462,25 +476,31 @@ namespace Application.Services.Loja
         /// <returns>Uma tupla contendo o resultado da operação, os itens do carrinho de compras e os produtos favoritos do usuário.</returns>
         public async Task<(OperationResultModel, IEnumerable<ShoppingCartUser>, IEnumerable<FavoriteProducts>)> GetShoppingCartAsync(ClaimsPrincipal user)
         {
-            var currUser = await _userManager.GetUserAsync(user);
-
-            if (currUser == null)
+            try
             {
-                return (new OperationResultModel(false, "Usuário não encontrado."), null, null);
+                var currUser = await _userManager.GetUserAsync(user);
+
+                if (currUser == null)
+                {
+                    return (new OperationResultModel(false, "Usuário não encontrado."), null, null);
+                }
+
+                var userId = currUser.Id;
+
+                var userFavorites = await GetFavoritesByUserIdAsync(userId);
+                var shoppingCartItems = await GetShoppingCartItemsAsync(userId);
+
+                if (shoppingCartItems != null && shoppingCartItems.Any())
+                {
+                    return (new OperationResultModel(true, "Itens do carrinho de compras recuperados com sucesso."), shoppingCartItems, userFavorites);
+                }
+
+                return (new OperationResultModel(false, "Nenhum item encontrado no carrinho de compras."), null, null);
             }
-
-            var userId = currUser.Id;
-
-            var userFavorites = await GetFavoritesByUserIdAsync(userId);
-            var shoppingCartItems = await GetShoppingCartItemsAsync(userId);
-
-            if (shoppingCartItems != null && shoppingCartItems.Any())
+            catch (Exception ex)
             {
-                return (new OperationResultModel(true, "Itens do carrinho de compras recuperados com sucesso."), shoppingCartItems, userFavorites);
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null, null);
             }
-            
-            return (new OperationResultModel(false, "Nenhum item encontrado no carrinho de compras."), null, null);
-            
         }
 
         /// <summary>
@@ -490,20 +510,21 @@ namespace Application.Services.Loja
         /// <returns>Uma tupla contendo o resultado da operação e a lista de produtos favoritos do usuário.</returns>
         public async Task<(OperationResultModel, IEnumerable<Produtos>)> GetFavoriteCardAsync(ClaimsPrincipal user)
         {
-            if (user == null)
-            {
-                return (new OperationResultModel(false, "Nenhum dado recebido."), null);
-            }
-
-            var currUser = await _userManager.GetUserAsync(user);
-
-            if (currUser == null)
-            {
-                return (new OperationResultModel(false, "Usuário não encontrado."), null);
-            }
-
             try
             {
+                if (user == null)
+                {
+                    return (new OperationResultModel(false, "Nenhum dado recebido."), null);
+                }
+
+                var currUser = await _userManager.GetUserAsync(user);
+
+                if (currUser == null)
+                {
+                    return (new OperationResultModel(false, "Usuário não encontrado."), null);
+                }
+
+            
                 var userId = currUser.Id;
                 var favoritesProductsUser = await GetFavoriteProductsAsync(userId);
 
@@ -526,33 +547,40 @@ namespace Application.Services.Loja
         /// <returns>Uma tupla contendo um objeto OperationResultModel indicando o resultado da operação e uma lista de produtos.</returns>
         public async Task<(OperationResultModel, IEnumerable<Produtos>)> GetAllProductsForAdminAsync(ClaimsPrincipal user)
         {
-            if (user == null)
-            {
-                return (new OperationResultModel(false, "Nenhum dado recebido."), null);
+            try 
+            { 
+                if (user == null)
+                {
+                    return (new OperationResultModel(false, "Nenhum dado recebido."), null);
+                }
+
+                var currUser = await _userManager.GetUserAsync(user);
+
+                if (currUser == null)
+                {
+                    return (new OperationResultModel(false, "Usuário não encontrado."), null);
+                }
+
+                var isAdmin = await _userManager.IsInRoleAsync(currUser, "Admin");
+
+                if (!isAdmin)
+                {
+                    return (new OperationResultModel(false, "Este recurso pode ser acessado apenas por administradores."), null);
+                }
+
+                var produtos = await _context.Produtos.ToListAsync();
+
+                if (produtos == null || produtos.Count == 0)
+                {
+                    return (new OperationResultModel(false, "Não há produtos para ser exibido."), null);
+                }
+
+                return (new OperationResultModel(true, "Dados obtidos com sucesso."), produtos);
             }
-
-            var currUser = await _userManager.GetUserAsync(user);
-
-            if (currUser == null)
+            catch (Exception ex)
             {
-                return (new OperationResultModel(false, "Usuário não encontrado."), null);
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null);
             }
-
-            var isAdmin = await _userManager.IsInRoleAsync(currUser, "Admin");
-
-            if (!isAdmin)
-            {
-                return (new OperationResultModel(false, "Este recurso pode ser acessado apenas por administradores."), null);
-            }
-
-            var produtos = await _context.Produtos.ToListAsync();
-
-            if (produtos == null || produtos.Count == 0)
-            {
-                return (new OperationResultModel(false, "Não há produtos para ser exibido."), null);
-            }
-
-            return (new OperationResultModel(true, "Dados obtidos com sucesso."), produtos);
         }
 
         /// <summary>
@@ -562,28 +590,35 @@ namespace Application.Services.Loja
         /// <returns>Uma tupla contendo um objeto OperationResultModel indicando o resultado da operação e o modelo de produto recuperado.</returns>
         public async Task<(OperationResultModel, EditProductModel model, string pathImage)> GetProductForEditAndDeleteAsync(int id)
         {
-            if (id == 0)
-            {
-                return (new OperationResultModel(false, "Nenhum dado recebido."), null, null);
-            }
-
-            var product = await RetrieveProductFromDatabaseAsync(id);
-
-            if (product != null)
-            {
-                var model = new EditProductModel
+            try 
+            { 
+                if (id == 0)
                 {
-                    ID = product.ID,
-                    Name = product.Name,
-                    Description = product.Description,
-                    Price = product.Price,
-                    Stock = product.Stock,
-                    Category = product.Category,
-                };
-                return (new OperationResultModel(true, "Dados recuperados com sucesso."), model, product.PathImage);
-            }
+                    return (new OperationResultModel(false, "Nenhum dado recebido."), null, null);
+                }
 
-            return (new OperationResultModel(false, "Erro ao recuperar os dados."), null, null);
+                var product = await RetrieveProductFromDatabaseAsync(id);
+
+                if (product != null)
+                {
+                    var model = new EditProductModel
+                    {
+                        ID = product.ID,
+                        Name = product.Name,
+                        Description = product.Description,
+                        Price = product.Price,
+                        Stock = product.Stock,
+                        Category = product.Category,
+                    };
+                    return (new OperationResultModel(true, "Dados recuperados com sucesso."), model, product.PathImage);
+                }
+
+                return (new OperationResultModel(false, "Erro ao recuperar os dados."), null, null);
+            }
+            catch (Exception ex)
+            {
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null, null);
+            }
         }
 
 

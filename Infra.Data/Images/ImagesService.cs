@@ -24,39 +24,46 @@ namespace Infra.Data.Images
         /// <returns>Uma tupla contendo um objeto OperationResultModel indicando o resultado da operação de upload e o nome do arquivo salvo.</returns>
         public async Task<(OperationResultModel, string)> UploadImageAsync(IFormFile image)
         {
-            if (!IsImage(image))
+            try
             {
-                return (new OperationResultModel(false, "O arquivo fornecido não é uma imagem válida. Certifique-se de enviar uma imagem nos formatos" +
-                    " .jpg, .jpeg, .png ou .gif.\"."), null);              
-            }
+                if (!IsImage(image))
+                {
+                    return (new OperationResultModel(false, "O arquivo fornecido não é uma imagem válida. Certifique-se de enviar uma imagem nos formatos" +
+                        " .jpg, .jpeg, .png ou .gif.\"."), null);
+                }
 
-            if (!IsImageSizeMin(image))
+                if (!IsImageSizeMin(image))
+                {
+                    return (new OperationResultModel(false, "A imagem deve ter o tamanho mínimo de 200x200 pixels."), null);
+                }
+
+
+                var maxSizeInBytes = 30 * 1024 * 1024;
+
+                if (!IsImageSizeValid(image, maxSizeInBytes))
+                {
+                    return (new OperationResultModel(false, "O tamanho do arquivo excede o limite permitido de 30 MB."), null);
+                }
+
+                var ms = new MemoryStream();
+                await image.CopyToAsync(ms);
+                ms.Position = 0;
+                var fileName = $"{Guid.NewGuid()}.jpeg";
+                var imagePath = Path.Combine(_environment.WebRootPath, "images", fileName);
+                var success = await SaveImage(imagePath, ms, true);
+
+                if (success)
+                {
+                    return (new OperationResultModel(true, "Imagem salva com sucesso."), fileName);
+
+                }
+
+                return (new OperationResultModel(false, "Falha ao salvar a imagem no servidor."), null);
+            }
+            catch (Exception ex)
             {
-                return (new OperationResultModel(false, "A imagem deve ter o tamanho mínimo de 200x200 pixels."), null);
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null);
             }
-
-
-            var maxSizeInBytes = 30 * 1024 * 1024; 
-
-            if (!IsImageSizeValid(image, maxSizeInBytes))
-            {
-                return (new OperationResultModel(false, "O tamanho do arquivo excede o limite permitido de 30 MB."), null);
-            }
-
-            var ms = new MemoryStream();
-            await image.CopyToAsync(ms);
-            ms.Position = 0;
-            var fileName = $"{Guid.NewGuid()}.jpeg";
-            var imagePath = Path.Combine(_environment.WebRootPath, "images", fileName);
-            var success = await SaveImage(imagePath, ms, true);
-
-            if (success)
-            {
-                return (new OperationResultModel(true, "Imagem salva com sucesso."), fileName);
-
-            }
-
-            return (new OperationResultModel(false, "Falha ao salvar a imagem no servidor."), null);            
         }
 
 
