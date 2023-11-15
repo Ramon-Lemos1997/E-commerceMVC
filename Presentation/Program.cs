@@ -17,8 +17,17 @@ using Application.Services.Loja;
 using Infra.Data.Pagination;
 using Domain.Interfaces.Payment;
 using Infra.Data.Stripe;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+//settings para log
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
+builder.Logging.AddSerilog();
 
 //settings para usar o appsettinhs json no projeto
 builder.Configuration.AddJsonFile("appsettings.json");
@@ -43,7 +52,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
           .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders()
           .AddErrorDescriber<PortugueseMessages>();
-
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -161,7 +169,11 @@ app.MapControllerRoute(
 
 app.Run();
 
-//criar roles iniciais e usuários e claim's
+/// <summary>
+/// Cria perfis de usuários assincronamente.
+/// </summary>
+/// <param name="app">Instância da aplicação web.</param>
+/// <returns>Uma tarefa que representa a execução assíncrona do método.</returns>
 //async Task CriarPerfisUsuariosAsync(WebApplication app)
 //{
 //    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();

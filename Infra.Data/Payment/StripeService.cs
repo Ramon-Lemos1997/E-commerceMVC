@@ -1,8 +1,10 @@
-﻿using Domain.Interfaces.Payment;
+﻿using Azure.Core;
+using Domain.Interfaces.Payment;
 using Domain.Models;
 using Microsoft.Extensions.Configuration;
 using Stripe;
 using Stripe.Checkout;
+using static Infra.Data.Stripe.StripeService;
 
 namespace Infra.Data.Stripe
 {
@@ -68,7 +70,6 @@ namespace Infra.Data.Stripe
 
                 var service = new SessionService();
                 Session session = service.Create(options);
-
                 return (new OperationResultModel(true, "Sessão construída com sucesso."), session.Url);
             }
             catch (Exception ex)

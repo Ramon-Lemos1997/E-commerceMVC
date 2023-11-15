@@ -1,14 +1,15 @@
-﻿
-
-using Dapper;
+﻿using Dapper;
 using Domain.Entities;
 using Domain.Interfaces.Payment;
 using Domain.Models;
 using Infra.Data.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Stripe;
 using System.Security.Claims;
+using System.Transactions;
 
 namespace Application.Services.Loja
 { 
@@ -31,10 +32,26 @@ namespace Application.Services.Loja
 
         //--------------------------------------------------------------------------------------------------
 
+        /// <summary>
+        /// Cria um pedido para pagamento, verificando a disponibilidade dos produtos, calculando o valor total, e obtendo a URL de checkout do Stripe.
+        /// </summary>
+        /// <param name="user">O objeto ClaimsPrincipal que representa o usuário atual.</param>
+        /// <param name="productsId">A lista de IDs dos produtos do pedido.</param>
+        /// <param name="productsQuantity">A lista de quantidades correspondentes aos produtos do pedido.</param>
+        /// <returns>
+        /// Uma tupla contendo um objeto OperationResultModel indicando o resultado da operação e uma string contendo a URL de checkout do Stripe, se o pedido for criado com sucesso.
+        /// </returns>
         public async Task<(OperationResultModel, string url)> CreateOrderForPayAsync(ClaimsPrincipal user, IEnumerable<int> productsId, IEnumerable<int> productsQuantity)
         {
             try
             {
+                var isAvailability = await VerifyProductAvailability(productsId, productsQuantity);
+
+                if (!isAvailability.Success)
+                {
+                    return (new OperationResultModel(false, isAvailability.Message), null);
+                }
+
                 var (userResult, currentUser) = await GetCurrentUser(user);
 
                 if (!userResult.Success)
@@ -68,6 +85,54 @@ namespace Application.Services.Loja
             catch (Exception ex)
             {
                 return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null);
+            }
+        }
+
+        /// <summary>
+        /// Atualiza um pedido no banco de dados, confirmando o pagamento e processando a transação.
+        /// </summary>
+        /// <param name="orderId">ID do pedido a ser atualizado.</param>
+        /// <returns>
+        /// Um objeto OperationResultModel indicando o resultado da atualização do pedido.
+        /// Se a atualização for bem-sucedida, retorna um OperationResultModel com sucesso.
+        /// Em caso de erro (pedido não encontrado, erro de concorrência ou outro erro inesperado), retorna um OperationResultModel indicando o motivo do erro.
+        /// </returns>
+        public async Task<OperationResultModel> UpdateOrderAsync(int orderId)
+        {
+            try
+            {
+                using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+                {
+                    var order = await RetrieveOrderFromDatabaseAsync(orderId);
+                    if (order == null)
+                    {
+                        return HandleError("Pedido não encontrado");
+                    }
+
+                    order.PaymentConfirmed = true;
+                    _context.Entry(order).State = EntityState.Modified;
+
+                    var productResult = await ProcessProduct(order.ProductId, order.Quantity);
+                    if (!productResult.Success)
+                    {
+                        return productResult;
+                    }
+
+                    await ResetShoppingCart(order.UserId);
+
+                    await _context.SaveChangesAsync();
+                    scope.Complete();
+
+                    return new OperationResultModel(true, "Pedido processado com sucesso");
+                }
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return HandleError($"Erro de concorrência ao processar pedido: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                return HandleError($"Erro ao processar pedido: {ex.Message}");
             }
         }
 
@@ -200,8 +265,128 @@ namespace Application.Services.Loja
             }
         }
 
+        /// <summary>
+        /// Verifica a disponibilidade dos produtos com base em seus IDs e quantidades correspondentes.
+        /// </summary>
+        /// <param name="productsId">A lista de IDs dos produtos.</param>
+        /// <param name="productsQuantity">A lista de quantidades correspondentes aos produtos.</param>
+        /// <returns>
+        /// Um objeto OperationResultModel indicando se os produtos estão disponíveis em quantidades suficientes.
+        /// Se um produto não estiver disponível, o método retornará uma mensagem de erro especificando o motivo.
+        /// </returns>
+        private async Task<OperationResultModel> VerifyProductAvailability(IEnumerable<int> productsId, IEnumerable<int> productsQuantity)
+        {
+            for (int i = 0; i < productsId.Count(); i++)
+            {
+                int productId = productsId.ElementAt(i);
+                int quantity = productsQuantity.ElementAt(i);
+
+                var product = await RetrieveProductFromDatabaseAsync(productId);
+
+                if (product == null)
+                {
+                    return new OperationResultModel(false, $"Produto não encontrado para o ID: {productId}");
+                }
+
+                if (product.Stock < quantity)
+                {
+                    return new OperationResultModel(false, $"Verifique o estoque do produto {product.Name}, pois o mesmo tem estoque inferior a quantidade que você deseja comprar, atualize seu carrinho e tente novamente.");
+                }
+            }
+
+            return new OperationResultModel(true, "Todos os produtos estão disponíveis em quantidades suficientes.");
+        }
+
+        /// <summary>
+        /// Recupera os detalhes de uma ordem do banco de dados com base no ID da ordem.
+        /// </summary>
+        /// <param name="orderId">O ID da ordem a ser recuperada.</param>
+        /// <returns>Os detalhes da ordem se encontrados, caso contrário, null.</returns>
+        private async Task<Order> RetrieveOrderFromDatabaseAsync(int orderId)
+        {
+            using (var connection = new SqlConnection(_getConnection))
+            {
+                var query = "SELECT * FROM Orders WHERE OrderId = @Id";
+                var parameters = new { Id = orderId };
+                var result = await connection.QueryFirstOrDefaultAsync<Order>(query, parameters);
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Recupera um usuário do banco de dados com base no ID do usuário.
+        /// </summary>
+        /// <param name="userId">ID do usuário a ser recuperado.</param>
+        /// <returns>
+        /// Um objeto ApplicationUser correspondente ao usuário com o ID fornecido.
+        /// Se nenhum usuário for encontrado, retorna null.
+        /// </returns>
+        //private async Task<ApplicationUser> RetrieveUserFromDatabaseAsync(string userId)
+        //{
+        //    using (var connection = new SqlConnection(_getConnection))
+        //    {
+        //        var query = "SELECT * FROM AspNetUsers WHERE Id = @Id";
+        //        var parameters = new { Id = userId };
+        //        var result = await connection.QueryFirstOrDefaultAsync<ApplicationUser>(query, parameters);
+        //        return result;
+        //    }
+        //}
+
+        /// <summary>
+        /// Cria um objeto OperationResultModel para lidar com erros, usando a mensagem de erro fornecida.
+        /// </summary>
+        /// <param name="errorMessage">A mensagem de erro a ser incluída no objeto OperationResultModel.</param>
+        /// <returns>O objeto OperationResultModel com indicador de falha e a mensagem de erro especificada.</returns>
+        private OperationResultModel HandleError(string errorMessage)
+        {
+            return new OperationResultModel(false, errorMessage);
+        }
+
+        /// <summary>
+        /// Remove todos os itens do carrinho de compras de um usuário no banco de dados.
+        /// </summary>
+        /// <param name="userId">ID do usuário para o qual os itens do carrinho serão removidos.</param>
+        private async Task ResetShoppingCart(string userId)
+        {
+            var resetShoppingCartItems = await _context.ShoppingCartUser.Where(i => i.UserId == userId).ToListAsync();
+            _context.ShoppingCartUser.RemoveRange(resetShoppingCartItems);
+        }
+
+        /// <summary>
+        /// Processa um produto verificando sua disponibilidade no estoque e atualiza o estoque após a compra.
+        /// </summary>
+        /// <param name="productId">ID do produto a ser processado.</param>
+        /// <param name="quantity">Quantidade do produto a ser processada.</param>
+        /// <returns>
+        /// Um objeto OperationResultModel indicando o resultado do processamento do produto.
+        /// Se o processamento for bem-sucedido, retorna um OperationResultModel com sucesso.
+        /// Em caso de erro (produto não encontrado ou estoque insuficiente), retorna um OperationResultModel indicando o motivo do erro.
+        /// </returns>
+        private async Task<OperationResultModel> ProcessProduct(int productId, int quantity)
+        {
+            var product = await RetrieveProductFromDatabaseAsync(productId);
+
+            if (product == null)
+            {
+                return HandleError("Produto associado ao pedido não encontrado");
+            }
+
+            if (product.Stock < quantity)
+            {
+                return HandleError("Estoque insuficiente para processar o pedido");
+            }
+
+            product.Stock -= quantity;
+            _context.Entry(product).State = EntityState.Modified;
+
+            return new OperationResultModel(true, string.Empty);
+        }
+
 
 
         //_____________________________________________________________________________________________
     }
 }
+
+
+

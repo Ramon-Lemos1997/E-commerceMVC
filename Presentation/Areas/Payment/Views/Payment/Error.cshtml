@@ -2,17 +2,16 @@
 <div class="pt-5"></div>
 <div class="pt-5"></div>
 
-<h1 class="text-center p-3">Erro</h1>
 
-<div class="alert alert-light text-danger border border-danger rounded mt-2">
-    <p>Ocorreu um erro durante a sua solicitação.</p>
-    <ul>
-        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-        {
-            <li>@error.ErrorMessage</li>
-        }
-    </ul>
-</div>
+<p class="display-5 text-center">Ocorreu um erro durante a sua solicitação.</p>
+
+@if (TempData["MessageError"] != null)
+{
+    <div class="alert alert-light text-danger mt-5 text-start" role="alert">
+        @TempData["MessageError"]
+    </div>
+}
+
 
 
 

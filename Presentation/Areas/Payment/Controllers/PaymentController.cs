@@ -1,6 +1,8 @@
 ﻿using Domain.Interfaces.Payment;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Stripe;
+using Stripe.Checkout;
 
 namespace Presentation.Areas.Payment.Controllers
 {
@@ -8,9 +10,11 @@ namespace Presentation.Areas.Payment.Controllers
     public class PaymentController : Controller
     {
         private readonly IPaymentInterface _paymentService;
-        public PaymentController(IPaymentInterface paymentService)
+        private readonly ILogger<PaymentController> _logger;
+        public PaymentController(IPaymentInterface paymentService, ILogger<PaymentController> logger)
         {
             _paymentService = paymentService;
+            _logger = logger;
         }
 
         //_______________________________________________________________________________________
@@ -38,15 +42,36 @@ namespace Presentation.Areas.Payment.Controllers
 
             if (!result.Success)
             {
-                ModelState.AddModelError(string.Empty, result.Message);
+                TempData["MessageError"] = result.Message;
                 return RedirectToAction(nameof(Error));
             }
 
             return Redirect(url);
         }
 
+        [HttpPost]
+        public async Task HandleOrder([FromBody] int orderId)
+        {
+            var result = await _paymentService.UpdateOrderAsync(orderId);
 
-    //-------------------------------------------------------------------------------------------------------------------------
+            if (!result.Success)
+            {
+                _logger.LogError($"Erro ao processar pedido com ID {orderId}: {result.Message}");
+            }
+
+            else
+            {
+                _logger.LogWarning($"Pedido com ID {orderId} processado com sucesso.");
+            }
+
+        }
+
+
+
+
+
+
+        //-------------------------------------------------------------------------------------------------------------------------
 
     }
 }

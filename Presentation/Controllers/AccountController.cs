@@ -4,6 +4,8 @@ using Domain.Interfaces.Identity;
 using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Domain.Entities;
+using Stripe;
+using Stripe.Checkout;
 
 //Sigo um padrão basicamente em toda controller, onde espero receber um operationResultModel do servince, e quando necessário algum dado adicional, o operation
 //possui Success = bit e Message = string
@@ -12,6 +14,7 @@ namespace Presentation.Controllers
 {
     public class AccountController : Controller
     {
+        const string secret = "whsec_907dc1d3de674873c6704c793981386a16e13471226fa19a951a84352d8e60208";
         private readonly IAccountInterface _accountService;
         private readonly SignInManager<ApplicationUser> _signInManager;
         public AccountController(SignInManager<ApplicationUser> signInManager, IAccountInterface accountService)
@@ -332,6 +335,8 @@ namespace Presentation.Controllers
             return View(model);
         }
 
+
+      
 
 
 

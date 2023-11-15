@@ -1,0 +1,225 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Presentation
+build_property.RootNamespace = Presentation
+build_property.ProjectDir = D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\Projetos\E-commerce.MVC_ASP.NET\Presentation
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Admin/Views/AdminRole/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQWRtaW5Sb2xlXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Admin/Views/AdminRole/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQWRtaW5Sb2xlXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Admin/Views/AdminRole/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQWRtaW5Sb2xlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Admin/Views/AdminRole/UsersOfRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQWRtaW5Sb2xlXFVzZXJzT2ZSb2xlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Admin/Views/AdminUser/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQWRtaW5Vc2VyXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Admin/Views/AdminUser/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQWRtaW5Vc2VyXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Admin/Views/AdminUser/InfoUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQWRtaW5Vc2VyXEluZm9Vc2VyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Admin/Views/AdminUser/UpdateRole.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQWRtaW5Vc2VyXFVwZGF0ZVJvbGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Admin/Views/Admin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQWRtaW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Admin/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Admin/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Admin/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Payment/Views/Payment/Cancel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUGF5bWVudFxWaWV3c1xQYXltZW50XENhbmNlbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Payment/Views/Payment/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUGF5bWVudFxWaWV3c1xQYXltZW50XEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Payment/Views/Payment/Success.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUGF5bWVudFxWaWV3c1xQYXltZW50XFN1Y2Nlc3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Payment/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUGF5bWVudFxWaWV3c1xTaGFyZWRcX0xvZ2luUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Payment/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUGF5bWVudFxWaWV3c1xfVmlld0ltcG9ydHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Payment/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUGF5bWVudFxWaWV3c1xfVmlld1N0YXJ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Produtos/Views/Produtos/AreaAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHV0b3NcVmlld3NcUHJvZHV0b3NcQXJlYUFkbWluLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Produtos/Views/Produtos/CreateProduct.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHV0b3NcVmlld3NcUHJvZHV0b3NcQ3JlYXRlUHJvZHVjdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Produtos/Views/Produtos/DeleteProduct.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHV0b3NcVmlld3NcUHJvZHV0b3NcRGVsZXRlUHJvZHVjdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Produtos/Views/Produtos/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHV0b3NcVmlld3NcUHJvZHV0b3NcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Produtos/Views/Produtos/EditProduct.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHV0b3NcVmlld3NcUHJvZHV0b3NcRWRpdFByb2R1Y3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Produtos/Views/Produtos/FavoriteCard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHV0b3NcVmlld3NcUHJvZHV0b3NcRmF2b3JpdGVDYXJkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Produtos/Views/Produtos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHV0b3NcVmlld3NcUHJvZHV0b3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Produtos/Views/Produtos/ShoppingCart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHV0b3NcVmlld3NcUHJvZHV0b3NcU2hvcHBpbmdDYXJ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Produtos/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHV0b3NcVmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Produtos/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHV0b3NcVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Produtos/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHV0b3NcVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/AccessDenied.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxBY2Nlc3NEZW5pZWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/ConfirmEmail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxDb25maXJtRW1haWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxFcnJvci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/InfoUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxJbmZvVXNlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/MyAccount.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxNeUFjY291bnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/ResetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZXNldFBhc3N3b3JkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/SendCode.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxTZW5kQ29kZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/UpdateInfoUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxVcGRhdGVJbmZvVXNlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/UpdatePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxVcGRhdGVQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Account/VerifiedEmail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxWZXJpZmllZEVtYWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Admin/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-bh1d04gv6z
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Payment/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUGF5bWVudFxWaWV3c1xTaGFyZWRcX0xheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = b-n3iqvm7uot
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Areas/Produtos/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJvZHV0b3NcVmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-sfs1u6ap34
+
+[D:/Projetos/E-commerce.MVC_ASP.NET/Presentation/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-fhvjq1vla1

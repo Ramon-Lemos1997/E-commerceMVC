@@ -33,7 +33,7 @@
         $(".alert").fadeOut("slow", () => {
             $(this).alert("close");
         })
-    }, 5000)
+    }, 15000)
 })
 
 //preloader
