@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "vfhgP8yV3ffj0v8VI3BCOvMSXmz+frKqWq8TYu7jdN8=",
+  "Hash": "Vb0/rzh5aXVOdiGDCWfnWKm94CW6fq0pFQGh1TXNpfk=",
   "Source": "Presentation",
   "BasePath": "_content/Presentation",
   "Mode": "Default",
@@ -117,6 +117,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\256e22d3-886f-41c3-918c-aea0547b0bda.jpeg"
+    },
+    {
+      "Identity": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\images\\514643f2-1c93-46d7-9f1d-8d3e0ef9b175.jpeg",
+      "SourceId": "Presentation",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\",
+      "BasePath": "_content/Presentation",
+      "RelativePath": "images/514643f2-1c93-46d7-9f1d-8d3e0ef9b175.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\514643f2-1c93-46d7-9f1d-8d3e0ef9b175.jpeg"
     },
     {
       "Identity": "D:\\Projetos\\E-commerce.MVC_ASP.NET\\Presentation\\wwwroot\\images\\9e3d5eb2-453c-4de8-8e94-1cdeeeac5c29.jpeg",

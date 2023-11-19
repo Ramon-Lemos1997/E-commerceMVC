@@ -1,8 +1,6 @@
 ﻿using Domain.Interfaces.Payment;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Stripe;
-using Stripe.Checkout;
 
 namespace Presentation.Areas.Payment.Controllers
 {
