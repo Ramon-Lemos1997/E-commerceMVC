@@ -1,5 +1,4 @@
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\appsettings.Development.json
-D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\appsettings.json
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Presentation.staticwebassets.runtime.json
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Presentation.exe
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Presentation.deps.json
@@ -315,3 +314,4 @@ D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Serilog.Sinks.C
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Serilog.Sinks.Debug.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Serilog.Sinks.MSSqlServer.dll
 D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\Serilog.Sinks.PeriodicBatching.dll
+D:\Projetos\E-commerce.MVC_ASP.NET\Presentation\bin\Debug\net6.0\appsettings.json
