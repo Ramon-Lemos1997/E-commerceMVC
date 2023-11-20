@@ -14,7 +14,6 @@ namespace Presentation.Controllers
 {
     public class AccountController : Controller
     {
-        const string secret = "whsec_907dc1d3de674873c6704c793981386a16e13471226fa19a951a84352d8e60208";
         private readonly IAccountInterface _accountService;
         private readonly SignInManager<ApplicationUser> _signInManager;
         public AccountController(SignInManager<ApplicationUser> signInManager, IAccountInterface accountService)
