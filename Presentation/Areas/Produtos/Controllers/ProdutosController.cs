@@ -7,6 +7,7 @@ using Application.Services.Account;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Presentation.Areas.Produtos.Controllers
 {
@@ -133,6 +134,20 @@ namespace Presentation.Areas.Produtos.Controllers
             return View();
         }
 
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> ProductsPaid()
+        {
+
+            var (result, product) = await _produtosService.GetProductsPaid(User);
+            if (result.Success)
+            {
+                return View(product);
+            }
+
+            TempData["MessageError"] = result.Message;
+            return View();
+        }
 
         //----------------------------------------------------------------------------------------------------
 

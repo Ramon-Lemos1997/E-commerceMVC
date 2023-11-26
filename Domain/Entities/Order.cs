@@ -14,6 +14,8 @@ namespace Domain.Entities
         public int ProductId { get; set; }
         public int Quantity { get; set; }
         public bool PaymentConfirmed { get; set; } = false;
+        public DateTime DateOfBuy { get; set; } = DateTime.MinValue;
+
 
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; } 

@@ -22,6 +22,7 @@ namespace Domain.Interfaces.Produtos
         Task<(OperationResultModel, IEnumerable<Entities.Produtos>)> GetAllProductsForAdminAsync(ClaimsPrincipal user);
         Task<(OperationResultModel, EditProductModel model, string pathImage)> GetProductForEditAndDeleteAsync(int id);
         Task<OperationResultModel> UpdateImageAsync(int productId, IFormFile image);
+        Task<(OperationResultModel, Dictionary<Entities.Produtos, Order>)> GetProductsPaid(ClaimsPrincipal user);
 
     }
 

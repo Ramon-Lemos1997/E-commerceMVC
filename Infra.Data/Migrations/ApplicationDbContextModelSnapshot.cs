@@ -179,6 +179,9 @@ namespace Infra.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
 
+                    b.Property<DateTime>("DateOfBuy")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("PaymentConfirmed")
                         .HasColumnType("bit");
 

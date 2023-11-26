@@ -5,9 +5,13 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
+    <form asp-area="Produtos" asp-controller="Produtos" asp-action="ProductsPaid" method="get">
+        <input type="hidden" name="value" value="" />
+        <button type="submit" class="btn bg-light position-relative custom-link"><i class="bi bi-house-check-fill mx-2"></i>Pedidos</button>
+    </form>
     <form asp-area="Produtos" asp-controller="Produtos" asp-action="FavoriteCard" method="get">
         <input type="hidden" name="value" value="" />
-        <button type="submit" class="btn bg-light position-relative custom-link"><i class="bi bi-heart-fill text-info mx-2"></i>Produtos salvos</button>
+        <button type="submit" class="btn bg-light position-relative custom-link"><i class="bi bi-heart-fill text-danger mx-2"></i>Favoritos</button>
     </form>
     <form asp-area="Produtos" asp-controller="Produtos" asp-action="ShoppingCart" method="get">
         <input type="hidden" name="value" value="" />

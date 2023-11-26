@@ -621,6 +621,33 @@ namespace Application.Services.Loja
             }
         }
 
+        public async Task<(OperationResultModel, Dictionary<Produtos, Order>)> GetProductsPaid(ClaimsPrincipal user)
+        {
+            try
+            {
+                if (user == null)
+                {
+                    return (new OperationResultModel(false, "Nenhum usuário recebido."), new Dictionary<Produtos, Order>());
+                }
+
+                var currUser = await _userManager.GetUserAsync(user);
+
+                if (currUser == null)
+                {
+                    return (new OperationResultModel(false, "Usuário não encontrado."), new Dictionary<Produtos, Order>());
+                }
+
+                var productsPaid = await RetrieveProductsPaidAsync(currUser.Id);
+                var order = await GetOrberByUserIdAsync(currUser.Id);
+
+                return (new OperationResultModel(true, "Produtos pagos recuperados com sucesso."), productsPaid);
+            }
+            catch (Exception ex)
+            {
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), new Dictionary<Produtos, Order>());
+            }
+        }
+
 
         //---------------------------------------------------------------------------------------------------------
 
@@ -796,8 +823,47 @@ namespace Application.Services.Loja
             }
         }
 
+        private async Task<Dictionary<Produtos, Order>> RetrieveProductsPaidAsync(string userId)
+        {
+            using (var connection = new SqlConnection(_getConnection))
+            {
+                var orders = (await connection.QueryAsync<Order>(
+                "SELECT * FROM Orders WHERE UserId = @UserId AND PaymentConfirmed = @confirmed",
+                new { UserId = userId, confirmed = 1 })).ToList();
 
 
+                var productQuantities = new Dictionary<Produtos, Order>();
+
+                foreach (var order in orders)
+                {
+                    var product = await RetrieveProductFromDatabaseAsync(order.ProductId);
+
+                    if (product != null)
+                    {                           
+                      productQuantities.Add(product, order);                     
+                    }
+                }
+
+                return productQuantities;
+            }
+        }
+
+
+
+        private async Task<IEnumerable<Order>> GetOrberByUserIdAsync(string userId)
+        {
+            if (userId == null)
+            {
+                return Enumerable.Empty<Order>();
+            }
+            using (var connection = new SqlConnection(_getConnection))
+            {
+                var query = "SELECT * FROM Orders WHERE UserId = @UserId";
+                var orders = await connection.QueryAsync<Order>(query, new { UserId = userId });
+
+                return orders ?? Enumerable.Empty<Order>();
+            }
+        }
 
 
 

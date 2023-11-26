@@ -108,6 +108,7 @@ namespace Application.Services.Loja
                         return HandleError("Pedido não encontrado");
                     }
 
+                    order.DateOfBuy = DateTime.UtcNow;
                     order.PaymentConfirmed = true;
                     _context.Entry(order).State = EntityState.Modified;
 
