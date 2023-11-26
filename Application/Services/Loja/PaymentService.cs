@@ -48,42 +48,42 @@ namespace Application.Services.Loja
 
                 if (!isAvailability.Success)
                 {
-                    return (new OperationResultModel(false, isAvailability.Message), null);
+                    return (new OperationResultModel(false, isAvailability.Message), string.Empty);
                 }
 
                 var (userResult, currentUser) = await GetCurrentUser(user);
 
                 if (!userResult.Success)
                 {
-                    return (new OperationResultModel(false, userResult.Message), null);
+                    return (new OperationResultModel(false, userResult.Message), string.Empty);
                 }
 
                 decimal totalAmount = await CalculateTotalAmount(productsId, productsQuantity);
 
                 if (totalAmount == 0)
                 {
-                    return (new OperationResultModel(false, "Erro ao somar o preço total a ser cobrado."), null);
+                    return (new OperationResultModel(false, "Erro ao somar o preço total a ser cobrado."), string.Empty);
                 }
 
                 var orderIds = await SaveOrders(currentUser.Id, productsId, productsQuantity);
 
-                if (orderIds == null)
+                if (orderIds.Count == 0)
                 {
-                    return (new OperationResultModel(false, "Erro no processamento das ordens."), null);
+                    return (new OperationResultModel(false, "Erro no processamento das ordens."), string.Empty);
                 }
 
                 var (result, url) = await _stripeService.GetStripeCheckoutUrl(orderIds, totalAmount);
 
                 if (!result.Success)
                 {
-                    return (new OperationResultModel(false, result.Message), null);
+                    return (new OperationResultModel(false, result.Message), string.Empty);
                 }
 
                 return (new OperationResultModel(true, "Pedido criado com sucesso"), url);
             }
             catch (Exception ex)
             {
-                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null);
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), string.Empty);
             }
         }
 
@@ -165,7 +165,7 @@ namespace Application.Services.Loja
                 totalAmount += productTotal;
             }
 
-            return totalAmount != null ? totalAmount : 0;
+            return totalAmount != 0 ? totalAmount : 0;
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Application.Services.Loja
                 }
             }
 
-            return createdOrderIds.Count > 0 ? createdOrderIds : null;
+            return createdOrderIds.Count > 0 ? createdOrderIds : new List<int>();
         }
 
         /// <summary>
@@ -240,28 +240,28 @@ namespace Application.Services.Loja
             {
                 if (user == null)
                 {
-                    return (new OperationResultModel(false, "Nenhum dado recebido"), null);
+                    return (new OperationResultModel(false, "Nenhum dado recebido"), new ApplicationUser());
                 }
 
                 var userId = _userManager.GetUserId(user);
 
                 if (userId == null)
                 {
-                    return (new OperationResultModel(false, "Dados inválidos"), null);
+                    return (new OperationResultModel(false, "Dados inválidos"), new ApplicationUser());
                 }
 
                 var currentUser = await _userManager.FindByIdAsync(userId);
 
                 if (currentUser == null)
                 {
-                    return (new OperationResultModel(false, "Usuário não encontrado"), null);
+                    return (new OperationResultModel(false, "Usuário não encontrado"), new ApplicationUser());
                 }
 
                 return (new OperationResultModel(true, "Usuário encontrado com sucesso"), currentUser);
             }
             catch (Exception ex)
             {
-                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null);
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), new ApplicationUser());
             }
         }
 

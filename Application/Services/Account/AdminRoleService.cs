@@ -105,7 +105,7 @@ namespace Application.Services.Account
             {
                 if (string.IsNullOrWhiteSpace(roleId))
                 {
-                    return (new OperationResultModel(false, "Nenhum dado recebido."), null);
+                    return (new OperationResultModel(false, "Nenhum dado recebido."), new IdentityRole());
                 }
 
                 var role = await _roleManager.FindByIdAsync(roleId);
@@ -116,11 +116,11 @@ namespace Application.Services.Account
 
                 }
 
-                return (new OperationResultModel(false, "Falha ao recuperar o nome do cargo."), null);
+                return (new OperationResultModel(false, "Falha ao recuperar o nome do cargo."), new IdentityRole());
             }
             catch (Exception ex)
             {
-                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null);
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), new IdentityRole());
             }
         }
 
@@ -138,7 +138,7 @@ namespace Application.Services.Account
             {
                 if (string.IsNullOrWhiteSpace(roleId))
                 {
-                    return (new OperationResultModel(false, "Nenhum dado recebido."), null, null);
+                    return (new OperationResultModel(false, "Nenhum dado recebido."), string.Empty, Enumerable.Empty<ApplicationUser>());
                 }
                 var role = await _roleManager.FindByIdAsync(roleId);
 
@@ -148,11 +148,11 @@ namespace Application.Services.Account
                     return (new OperationResultModel(true, "Usuários recuperados com sucesso."), role.Name, usersOfRoles);
                 }
 
-                return (new OperationResultModel(false, "Privilégio não encontrado."), null, null);
+                return (new OperationResultModel(false, "Privilégio não encontrado."), string.Empty, Enumerable.Empty<ApplicationUser>());
             }
             catch (Exception ex)
             {
-                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null, null);
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), string.Empty, Enumerable.Empty<ApplicationUser>());
             }
         }
 

@@ -123,14 +123,14 @@ namespace Application.Services.Account
             {
                 if (string.IsNullOrWhiteSpace(userId))
                 {
-                    return (new OperationResultModel(false, "Nenhum dado recebido."), null);
+                    return (new OperationResultModel(false, "Nenhum dado recebido."), new InfoUserForAdminModel());
                 }
 
                 var currUser = await _userManager.FindByIdAsync(userId);
 
                 if (currUser == null)
                 {
-                    return (new OperationResultModel(false, "Usuário não encontrado."), null);
+                    return (new OperationResultModel(false, "Usuário não encontrado."), new InfoUserForAdminModel());
                 }
 
                 var allRoles = await _roleManager.Roles.Select(r => r.Name).ToListAsync();
@@ -162,7 +162,7 @@ namespace Application.Services.Account
             }
             catch (Exception ex)
             {
-                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null);
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), new InfoUserForAdminModel());
             }
         }
 

@@ -3,11 +3,6 @@ using Domain.Interfaces.Produtos;
 using Infra.Data.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Application.Services.Account;
-using Domain.Entities;
-using Microsoft.AspNetCore.Identity;
-using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Presentation.Areas.Produtos.Controllers
 {

@@ -30,21 +30,21 @@ namespace Application.Services.Account
             {
                 if (user == null)
                 {
-                    return (new OperationResultModel(false, "Nenhum dado recebido."), null);
+                    return (new OperationResultModel(false, "Nenhum dado recebido."), new InfoUserModel());
                 }
 
                 var User = _userManager.GetUserId(user);
 
                 if (User == null)
                 {
-                    return (new OperationResultModel(false, "Nenhum Id encontrado."), null);
+                    return (new OperationResultModel(false, "Nenhum Id encontrado."), new InfoUserModel());
                 }
 
                 var currUser = await _userManager.FindByIdAsync(User);
 
                 if (currUser == null)
                 {
-                    return (new OperationResultModel(false, "Usuário não encontrado."), null);
+                    return (new OperationResultModel(false, "Usuário não encontrado."), new InfoUserModel());
                 }
 
                 var userModel = new InfoUserModel
@@ -68,7 +68,7 @@ namespace Application.Services.Account
             }
             catch (Exception ex)
             {
-                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null);
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), new InfoUserModel());
             }
         }
 
@@ -190,7 +190,7 @@ namespace Application.Services.Account
             {
                 if (string.IsNullOrWhiteSpace(userEmail) || string.IsNullOrWhiteSpace(password))
                 {
-                    return (new OperationResultModel(false, "Nenhum dado recebido."), null);
+                    return (new OperationResultModel(false, "Nenhum dado recebido."), new ApplicationUser());
                 }
 
                 // Obtém a data e hora atual no fuso horário do Brasil
@@ -225,11 +225,11 @@ namespace Application.Services.Account
                 var errors = result.Errors.Select(e => e.Description);
                 var errorMessage = string.Join(Environment.NewLine, errors);
 
-                return (new OperationResultModel(false, errorMessage), null);
+                return (new OperationResultModel(false, errorMessage), new ApplicationUser());
             }
             catch (Exception ex)
             {
-                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null);
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), new ApplicationUser());
             }
         }
 
@@ -244,21 +244,21 @@ namespace Application.Services.Account
             {
                 if (user == null)
                 {
-                    return (new OperationResultModel(false, "Nenhum dado recebido."), null);
+                    return (new OperationResultModel(false, "Nenhum dado recebido."), string.Empty);
                 }
 
                 var currUser = await _userManager.GetUserAsync(user);
 
                 if (currUser == null)
                 {
-                    return (new OperationResultModel(false, "Usuário não encontrado."), null);
+                    return (new OperationResultModel(false, "Usuário não encontrado."), string.Empty);
                 }
 
                 return (new OperationResultModel(true, "Successo"), currUser.Email);
             }
             catch (Exception ex)
             {
-                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null);
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), string.Empty);
             }
         }
 

@@ -11,6 +11,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Application.Services.Loja
 {
@@ -49,7 +50,7 @@ namespace Application.Services.Loja
             try
             {
                 var currUser = await _userManager.GetUserAsync(user);
-                string userId = null;
+                string userId = string.Empty;
 
                 if (currUser != null)
                 {
@@ -85,21 +86,21 @@ namespace Application.Services.Loja
 
                 if (produtos == null || produtos.Count == 0)
                 {
-                    return (new OperationResultModel(false, "Não há produtos para ser exibido."), null, null);
+                    return (new OperationResultModel(false, "Não há produtos para ser exibido."), Enumerable.Empty<Produtos>(), Enumerable.Empty<FavoriteProducts>());
                 }
 
                 var pagedList = await _pagesService.PaginationProductsAsync(produtos, page);
 
                 if (pagedList == null)
                 {
-                    return (new OperationResultModel(false, "Falha no processamento, contacte o administrador."), null, null);
+                    return (new OperationResultModel(false, "Falha no processamento, contacte o administrador."), Enumerable.Empty<Produtos>(), Enumerable.Empty<FavoriteProducts>());
                 }
 
                 return (new OperationResultModel(true, "Dados obtidos com sucesso."), pagedList, userFavorites);
             }
             catch (Exception ex)
             {
-                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null, null);
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), Enumerable.Empty<Produtos>(), Enumerable.Empty<FavoriteProducts>());
             }
         }
 
@@ -268,14 +269,16 @@ namespace Application.Services.Loja
         /// </summary>
         /// <param name="id">O ID do produto a ser recuperado.</param>
         /// <param name="user">O usuário atual.</param>
-        /// <returns>Uma tupla contendo um objeto OperationResultModel indicando o resultado da operação, um objeto Produtos correspondente ao produto recuperado e uma coleção de objetos FavoriteProducts correspondente aos produtos favoritos do usuário atual.</returns>
+        /// <returns>Uma tupla contendo um objeto OperationResultModel indicando o resultado da operação, um objeto Produtos 
+        /// correspondente ao produto recuperado e uma coleção de objetos FavoriteProducts correspondente aos 
+        /// produtos favoritos do usuário atual.</returns>
         public async Task<(OperationResultModel, Produtos, IEnumerable<FavoriteProducts>)> GetProductByIdAsync(int id, ClaimsPrincipal user)
         {
             try
             {
                 if (id == 0)
                 {
-                    return (new OperationResultModel(true, "Nenhum dado recebido."), null, null);
+                    return (new OperationResultModel(true, "Nenhum dado recebido."), new Produtos(), Enumerable.Empty<FavoriteProducts>()); 
                 }
 
                 var currUser = await _userManager.GetUserAsync(user);
@@ -294,11 +297,12 @@ namespace Application.Services.Loja
                     return (new OperationResultModel(true, "Operação bem sucedida."), result, userFavorites);
                 }
 
-                return (new OperationResultModel(false, "Nenhum produto encontrado com base nos dados recebidos. Se estiver tudo correto, recarregue a página. Se o problema persistir, entre em contato com o administrador."), null, null);
+                return (new OperationResultModel(false, "Nenhum produto encontrado com base nos dados recebidos. " + "Se estiver tudo correto, " +
+                    "recarregue a página. Se o problema persistir, entre em contato com o administrador."), new Produtos(), Enumerable.Empty<FavoriteProducts>());
             }
             catch (Exception ex)
             {
-                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null, null);
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), new Produtos(), Enumerable.Empty<FavoriteProducts>());
             }
         }
 
@@ -482,7 +486,7 @@ namespace Application.Services.Loja
 
                 if (currUser == null)
                 {
-                    return (new OperationResultModel(false, "Usuário não encontrado."), null, null);
+                    return (new OperationResultModel(false, "Usuário não encontrado."), Enumerable.Empty<ShoppingCartUser>(), Enumerable.Empty<FavoriteProducts>());
                 }
 
                 var userId = currUser.Id;
@@ -495,11 +499,11 @@ namespace Application.Services.Loja
                     return (new OperationResultModel(true, "Itens do carrinho de compras recuperados com sucesso."), shoppingCartItems, userFavorites);
                 }
 
-                return (new OperationResultModel(false, "Nenhum item encontrado no carrinho de compras."), null, null);
+                return (new OperationResultModel(false, "Nenhum item encontrado no carrinho de compras."), Enumerable.Empty<ShoppingCartUser>(), Enumerable.Empty<FavoriteProducts>()); ;
             }
             catch (Exception ex)
             {
-                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null, null);
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), Enumerable.Empty<ShoppingCartUser>(), Enumerable.Empty<FavoriteProducts>()); ;
             }
         }
 
@@ -514,14 +518,14 @@ namespace Application.Services.Loja
             {
                 if (user == null)
                 {
-                    return (new OperationResultModel(false, "Nenhum dado recebido."), null);
+                    return (new OperationResultModel(false, "Nenhum dado recebido."), Enumerable.Empty<Produtos>());
                 }
 
                 var currUser = await _userManager.GetUserAsync(user);
 
                 if (currUser == null)
                 {
-                    return (new OperationResultModel(false, "Usuário não encontrado."), null);
+                    return (new OperationResultModel(false, "Usuário não encontrado."), Enumerable.Empty<Produtos>());
                 }
 
             
@@ -532,11 +536,11 @@ namespace Application.Services.Loja
                 {
                     return (new OperationResultModel(true, "Itens recuperados com sucesso."), favoritesProductsUser);
                 }
-                return (new OperationResultModel(false, "Não há produtos salvos."), null);
+                return (new OperationResultModel(false, "Não há produtos salvos."), Enumerable.Empty<Produtos>());
             }
             catch (Exception ex)
             {
-                return (new OperationResultModel(false, $"Erro ao recuperar itens favoritos: {ex.Message}"), null);
+                return (new OperationResultModel(false, $"Erro ao recuperar itens favoritos: {ex.Message}"), Enumerable.Empty<Produtos>());
             }
         }
 
@@ -551,35 +555,35 @@ namespace Application.Services.Loja
             { 
                 if (user == null)
                 {
-                    return (new OperationResultModel(false, "Nenhum dado recebido."), null);
+                    return (new OperationResultModel(false, "Nenhum dado recebido."), Enumerable.Empty<Produtos>());
                 }
 
                 var currUser = await _userManager.GetUserAsync(user);
 
                 if (currUser == null)
                 {
-                    return (new OperationResultModel(false, "Usuário não encontrado."), null);
+                    return (new OperationResultModel(false, "Usuário não encontrado."), Enumerable.Empty<Produtos>());
                 }
 
                 var isAdmin = await _userManager.IsInRoleAsync(currUser, "Admin");
 
                 if (!isAdmin)
                 {
-                    return (new OperationResultModel(false, "Este recurso pode ser acessado apenas por administradores."), null);
+                    return (new OperationResultModel(false, "Este recurso pode ser acessado apenas por administradores."), Enumerable.Empty<Produtos>());
                 }
 
                 var produtos = await _context.Produtos.ToListAsync();
 
                 if (produtos == null || produtos.Count == 0)
                 {
-                    return (new OperationResultModel(false, "Não há produtos para ser exibido."), null);
+                    return (new OperationResultModel(false, "Não há produtos para ser exibido."), Enumerable.Empty<Produtos>());
                 }
 
                 return (new OperationResultModel(true, "Dados obtidos com sucesso."), produtos);
             }
             catch (Exception ex)
             {
-                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null);
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), Enumerable.Empty<Produtos>());
             }
         }
 
@@ -594,7 +598,7 @@ namespace Application.Services.Loja
             { 
                 if (id == 0)
                 {
-                    return (new OperationResultModel(false, "Nenhum dado recebido."), null, null);
+                    return (new OperationResultModel(false, "Nenhum dado recebido."), new EditProductModel(), string.Empty);
                 }
 
                 var product = await RetrieveProductFromDatabaseAsync(id);
@@ -613,14 +617,23 @@ namespace Application.Services.Loja
                     return (new OperationResultModel(true, "Dados recuperados com sucesso."), model, product.PathImage);
                 }
 
-                return (new OperationResultModel(false, "Erro ao recuperar os dados."), null, null);
+                return (new OperationResultModel(false, "Erro ao recuperar os dados."), new EditProductModel(), string.Empty);
             }
             catch (Exception ex)
             {
-                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), null, null);
+                return (new OperationResultModel(false, $"Exceção não planejada: {ex.Message}"), new EditProductModel(), string.Empty);
             }
         }
 
+        /// <summary>
+        /// Recupera os produtos pagos para um usuário específico, juntamente com as informações do pedido.
+        /// </summary>
+        /// <param name="user">O objeto ClaimsPrincipal do usuário.</param>
+        /// <returns>
+        /// Uma tupla contendo um modelo de resultado da operação e um dicionário de produtos e pedidos,
+        /// indicando se a operação foi bem-sucedida e, em caso afirmativo, os produtos pagos associados
+        /// ao usuário e informações do pedido.
+        /// </returns>
         public async Task<(OperationResultModel, Dictionary<Produtos, Order>)> GetProductsPaid(ClaimsPrincipal user)
         {
             try
@@ -638,7 +651,6 @@ namespace Application.Services.Loja
                 }
 
                 var productsPaid = await RetrieveProductsPaidAsync(currUser.Id);
-                var order = await GetOrberByUserIdAsync(currUser.Id);
 
                 return (new OperationResultModel(true, "Produtos pagos recuperados com sucesso."), productsPaid);
             }
@@ -677,7 +689,7 @@ namespace Application.Services.Loja
             using (var connection = new SqlConnection(_getConnection))
             {
                 var result = await connection.QueryAsync<Produtos>("SELECT * FROM Produtos WHERE Category = @Category", new { Category = category });
-                return result ?? null;
+                return result ?? Enumerable.Empty<Produtos>();
             }
         }
 
@@ -691,7 +703,7 @@ namespace Application.Services.Loja
             using (var connection = new SqlConnection(_getConnection))
             {
                 var result = await connection.QueryAsync<Produtos>("SELECT * FROM Produtos WHERE LOWER(Name) LIKE @SearchString", new { SearchString = $"{searchString}%" });
-                return result ?? null;
+                return result ?? Enumerable.Empty<Produtos>();
             }
         }
 
@@ -731,7 +743,7 @@ namespace Application.Services.Loja
 
                 var shoppingCartItems = await connection.QueryAsync<ShoppingCartUser>(query, parameters);
 
-                return shoppingCartItems ?? null;
+                return shoppingCartItems ?? Enumerable.Empty<ShoppingCartUser>();
             }
         }
 
@@ -771,12 +783,7 @@ namespace Application.Services.Loja
 
                 string cartQuery = "SELECT COUNT(*) FROM ShoppingCartUser WHERE ProductId = @ProductId AND UserId = @UserId";
                 var cartParameters = new { ProductId = productId, UserId = userId };
-                var cartItemCount = await connection.QueryFirstOrDefaultAsync<int>(cartQuery, cartParameters);
-
-                if (cartItemCount == null)
-                {
-                    cartItemCount = 0;
-                }
+                var cartItemCount = await connection.QueryFirstOrDefaultAsync<int>(cartQuery, cartParameters);          
 
                 if (cartItemCount < stock)
                 {
@@ -823,6 +830,13 @@ namespace Application.Services.Loja
             }
         }
 
+        /// <summary>
+        /// Recupera os produtos pagos associados a pedidos confirmados para um determinado usuário.
+        /// </summary>
+        /// <param name="userId">O ID do usuário para o qual os produtos pagos estão sendo recuperados.</param>
+        /// <returns>
+        /// Um dicionário que mapeia produtos aos pedidos  e as ordens de compra correspondentes para o usuário fornecido.
+        /// </returns>
         private async Task<Dictionary<Produtos, Order>> RetrieveProductsPaidAsync(string userId)
         {
             using (var connection = new SqlConnection(_getConnection))
@@ -830,7 +844,6 @@ namespace Application.Services.Loja
                 var orders = (await connection.QueryAsync<Order>(
                 "SELECT * FROM Orders WHERE UserId = @UserId AND PaymentConfirmed = @confirmed",
                 new { UserId = userId, confirmed = 1 })).ToList();
-
 
                 var productQuantities = new Dictionary<Produtos, Order>();
 
@@ -848,22 +861,27 @@ namespace Application.Services.Loja
             }
         }
 
+        /// <summary>
+        /// Obtém todos os pedidos associados a um usuário com base no ID do usuário.
+        /// </summary>
+        /// <param name="userId">O ID do usuário para o qual os pedidos estão sendo recuperados.</param>
+        /// <returns>
+        /// Uma coleção de pedidos correspondentes ao ID do usuário fornecido, ou uma coleção vazia se nenhum pedido for encontrado ou se o ID do usuário for nulo.
+        /// </returns>
+        //private async Task<IEnumerable<Order>> GetOrberByUserIdAsync(string userId)
+        //{
+        //    if (userId == null)
+        //    {
+        //        return Enumerable.Empty<Order>();
+        //    }
+        //    using (var connection = new SqlConnection(_getConnection))
+        //    {
+        //        var query = "SELECT * FROM Orders WHERE UserId = @UserId";
+        //        var orders = await connection.QueryAsync<Order>(query, new { UserId = userId });
 
-
-        private async Task<IEnumerable<Order>> GetOrberByUserIdAsync(string userId)
-        {
-            if (userId == null)
-            {
-                return Enumerable.Empty<Order>();
-            }
-            using (var connection = new SqlConnection(_getConnection))
-            {
-                var query = "SELECT * FROM Orders WHERE UserId = @UserId";
-                var orders = await connection.QueryAsync<Order>(query, new { UserId = userId });
-
-                return orders ?? Enumerable.Empty<Order>();
-            }
-        }
+        //        return orders ?? Enumerable.Empty<Order>();
+        //    }
+        //}
 
 
 
